@@ -26,3 +26,13 @@ Morning market hub for KMEFIC Operations, Electronic Trading, Asset Management a
 5. The Arabic is formal. Cite a source for every figure. If a figure can't be confirmed, say so in the `sources` gaps line rather than guessing.
 6. Save the plaintext outside the repo (for example `/tmp/YYYY-MM-DD.plain.json`). If `key.json` exists in the repo root, encrypt it into place with `node tools/encrypt.mjs /tmp/YYYY-MM-DD.plain.json data/YYYY-MM-DD.json` (same for studies). If there is no `key.json` yet, copy the plaintext into `data/`. Never commit plaintext once `key.json` exists.
 7. Add the date to `data/index.json` → `dates`, set `latest`, then commit and push to `main`.
+
+## Intraday additions (hourly 09:05–17:05 Kuwait, Sunday–Friday)
+
+- Each run adds only what is new since the last publication: news, corporate actions, priority items, and closes (Kuwait/GCC close after 13:00, US moves later). It writes `data/updates/<date>/<HHMM>.json`, encrypted when `key.json` exists, and adds `HHMM` to `index.json` → `upd[<date>]`. If nothing is new, it writes nothing.
+- The page merges these into the day and tags them "New · HH:MM". Market entries in an update replace the entry with the same `id`.
+- Duplicate check: `data/updates/<date>/seen.json` holds sha256 hashes of normalized titles/URLs already published that day. The morning run writes it too. Hashes reveal no content.
+
+## Markets: top movers for every market
+
+Sources in order: Kamco Invest "MENA Markets Daily Report" (all GCC + Egypt, top 5 each; MENAFN mirrors the PDF), then Investing.com "... at close of trade" reports (top 3 each; US Dow/S&P/Nasdaq, Saudi, UAE, Egypt, UK, Turkey), then official bulletins (Saudi Exchange daily report, DFM bulletin) and Business Recorder/Reuters and Arabic market wraps (e.g. Al-Shorouk). Never invent movers; say why when missing.

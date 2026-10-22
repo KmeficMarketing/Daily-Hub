@@ -399,7 +399,10 @@
     "mon",
     "info"
    ]
-  }
+  },
+  "rebuilt": "Optional boolean. true only for archive days rebuilt later (1–20 Oct 2026 backfill).",
+  "mk_movers": "Every market entry in mk should carry g and l (up to 5 each) as [[nameAr,nameEn],'price','+x.xx%'] plus unit [ar,en] (Kuwait: فلس/fils; Saudi: ريال/SAR; UAE: درهم/AED; Qatar: ريال/QAR; Oman: ريال/OMR; Bahrain: دينار/BHD; Egypt: جنيه/EGP; US: $/$; UK: بنس/GBp). If unavailable, omit g/l and say why in note.",
+  "updates": "Intraday additions go to data/updates/<date>/<HHMM>.json (encrypted), listed in index.json upd[<date>]. Add-only: never repeat items already published that day (use data/updates/<date>/seen.json, a list of sha256 hashes of normalized titles/URLs)."
  },
  "_studies_example": [
   {
@@ -429,5 +432,35 @@
     "<English>"
    ]
   }
- ]
+ ],
+ "_update_example": {
+  "at": "HH:MM",
+  "news": [
+   "<same shape as news items>"
+  ],
+  "pri": [
+   "<same shape as pri items>"
+  ],
+  "ev": [
+   "<same shape as ev rows>"
+  ],
+  "ev2": [
+   "<same shape as ev2 items>"
+  ],
+  "mk": [
+   "<full market entry; replaces the entry with the same id>"
+  ],
+  "stk": {
+   "<code>": "<stock card>"
+  },
+  "tape": [
+   "<optional full replacement>"
+  ],
+  "sources": [
+   [
+    "<Arabic sources line>",
+    "<English sources line>"
+   ]
+  ]
+ }
 }
