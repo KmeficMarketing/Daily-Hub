@@ -36,3 +36,9 @@ Morning market hub for KMEFIC Operations, Electronic Trading, Asset Management a
 ## Markets: top movers for every market
 
 Sources in order: Kamco Invest "MENA Markets Daily Report" (all GCC + Egypt, top 5 each; MENAFN mirrors the PDF), then Investing.com "... at close of trade" reports (top 3 each; US Dow/S&P/Nasdaq, Saudi, UAE, Egypt, UK, Turkey), then official bulletins (Saudi Exchange daily report, DFM bulletin) and Business Recorder/Reuters and Arabic market wraps (e.g. Al-Shorouk). Never invent movers; say why when missing.
+
+## Market making, studies by department, holidays
+
+- `mm`: the four companies KMEFIC makes a market in (FACIL, MADAR, THURAYA, TAM): last session close, % change, volume, value, trades and volume vs 20-day average, plus alerts (disclosures, assemblies, record dates, unusual-trading clarifications) and a short summary of market-maker obligations under Boursa Kuwait rules. The intraday run after the Kuwait close replaces `mm.co` with today's session.
+- Studies carry `dep` (ops, am, wm, mm) and an optional `a` ("Action for the department"). Sundays: all departments; Wednesdays: Operations only. Dates per department are in `index.json` → `studiesDep`.
+- `hol`: upcoming exchange holidays for the market-hours board (regular hours are built into the page).

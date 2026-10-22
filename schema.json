@@ -402,7 +402,10 @@
   },
   "rebuilt": "Optional boolean. true only for archive days rebuilt later (1–20 Oct 2026 backfill).",
   "mk_movers": "Every market entry in mk should carry g and l (up to 5 each) as [[nameAr,nameEn],'price','+x.xx%'] plus unit [ar,en] (Kuwait: فلس/fils; Saudi: ريال/SAR; UAE: درهم/AED; Qatar: ريال/QAR; Oman: ريال/OMR; Bahrain: دينار/BHD; Egypt: جنيه/EGP; US: $/$; UK: بنس/GBp). If unavailable, omit g/l and say why in note.",
-  "updates": "Intraday additions go to data/updates/<date>/<HHMM>.json (encrypted), listed in index.json upd[<date>]. Add-only: never repeat items already published that day (use data/updates/<date>/seen.json, a list of sha256 hashes of normalized titles/URLs)."
+  "updates": "Intraday additions go to data/updates/<date>/<HHMM>.json (encrypted), listed in index.json upd[<date>]. Add-only: never repeat items already published that day (use data/updates/<date>/seen.json, a list of sha256 hashes of normalized titles/URLs).",
+  "mm": "Market-making companies (always these four, in this order): FACIL Commercial Facilities (التسهيلات التجارية), MADAR Al Madar Kuwait Holding (المدار الكويتية القابضة), THURAYA Dar Al Thuraya Real Estate (دار الثريا العقارية), TAM Tamdeen Real Estate (التمدين العقارية). Mubasher announcement pages are good for disclosures; Mubasher price snapshots have been inconsistent, so cross-check prices with Kamco, Argaam, Boursa Kuwait or newspapers.",
+  "hol": "Upcoming exchange holidays within the next 60 days for the markets in the hours board.",
+  "studies_dep": "Each study has dep: ops|am|wm|mm and optional a:[ar,en] 'Action for the department'. Files data/studies/<date>.json hold one or more departments; index.json studiesDep[dep] lists the dates per department. Sundays: ops (2–3), am (2–3), wm (2–3), mm (1 weekly liquidity study). Wednesdays: ops only (corporate-actions map)."
  },
  "_studies_example": [
   {
@@ -429,6 +432,11 @@
    ],
    "v": [
     "<Arabic (formal)>",
+    "<English>"
+   ],
+   "dep": "ops|am|wm|mm",
+   "a": [
+    "<Arabic>",
     "<English>"
    ]
   }
@@ -462,5 +470,91 @@
     "<English sources line>"
    ]
   ]
- }
+ },
+ "mm": {
+  "d": [
+   "<session label ar>",
+   "<en>"
+  ],
+  "co": [
+   {
+    "code": "FACIL|MADAR|THURAYA|TAM",
+    "n": [
+     "<Arabic>",
+     "<English>"
+    ],
+    "last": "<fils>",
+    "chg": "+x.xx%",
+    "vol": "<shares>",
+    "val": "<KD>",
+    "trades": "<count>",
+    "rel": "<volume ÷ 20-day average, e.g. 1.8x>",
+    "note": [
+     "<Arabic>",
+     "<English>"
+    ]
+   }
+  ],
+  "alerts": [
+   {
+    "k": "<code>",
+    "d": "YYYY-MM-DD",
+    "imp": "high|med|low",
+    "t": [
+     "<Arabic>",
+     "<English>"
+    ],
+    "o": [
+     "<Arabic>",
+     "<English>"
+    ],
+    "b": [
+     "<Arabic>",
+     "<English>"
+    ],
+    "s": [
+     [
+      "<label>",
+      "<url>"
+     ]
+    ]
+   }
+  ],
+  "rules": {
+   "t": [
+    "<Arabic>",
+    "<English>"
+   ],
+   "o": [
+    "<Arabic>",
+    "<English>"
+   ],
+   "b": [
+    "<Arabic>",
+    "<English>"
+   ],
+   "s": [
+    [
+     "<label>",
+     "<url>"
+    ]
+   ]
+  },
+  "src": [
+   [
+    "<label>",
+    "<url>"
+   ]
+  ]
+ },
+ "hol": [
+  {
+   "m": "kw|sa|ae|qa|bh|om|eg|us|uk|tr",
+   "d": "YYYY-MM-DD",
+   "n": [
+    "<Arabic>",
+    "<English>"
+   ]
+  }
+ ]
 }
