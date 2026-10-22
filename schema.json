@@ -1,0 +1,433 @@
+{
+ "today": "YYYY-MM-DD",
+ "stamp": [
+  "<Arabic (formal)>",
+  "<English>"
+ ],
+ "signal": {
+  "t": [
+   "<Arabic (formal)>",
+   "<English>"
+  ],
+  "s": [
+   "<Arabic (formal)>",
+   "<English>"
+  ],
+  "p": [
+   "<Arabic (formal)>",
+   "<English>"
+  ]
+ },
+ "tape": [
+  [
+   [
+    "<Arabic (formal)>",
+    "<English>"
+   ]
+  ]
+ ],
+ "pri": [
+  {
+   "st": "mgmt",
+   "when": [
+    "<Arabic (formal)>",
+    "<English>"
+   ],
+   "t": [
+    "<Arabic (formal)>",
+    "<English>"
+   ],
+   "o": [
+    "<Arabic (formal)>",
+    "<English>"
+   ],
+   "w": [
+    "<Arabic (formal)>",
+    "<English>"
+   ],
+   "b": [
+    "<Arabic (formal)>",
+    "<English>"
+   ],
+   "s": [
+    [
+     "<Arabic (formal)>",
+     "<English>"
+    ]
+   ]
+  }
+ ],
+ "agenda": [
+  [
+   "<text>"
+  ]
+ ],
+ "agendaSrc": [
+  "<Arabic (formal)>",
+  "<English>"
+ ],
+ "mgmt": [
+  {
+   "st": "info",
+   "when": [
+    "<Arabic (formal)>",
+    "<English>"
+   ],
+   "t": [
+    "<Arabic (formal)>",
+    "<English>"
+   ],
+   "o": [
+    "<Arabic (formal)>",
+    "<English>"
+   ],
+   "w": [
+    "<Arabic (formal)>",
+    "<English>"
+   ],
+   "b": [
+    "<Arabic (formal)>",
+    "<English>"
+   ],
+   "s": []
+  }
+ ],
+ "stk": {},
+ "mk": [
+  {
+   "id": "kw",
+   "n": [
+    "<Arabic (formal)>",
+    "<English>"
+   ],
+   "st": "ok",
+   "d": [
+    "<Arabic (formal)>",
+    "<English>"
+   ],
+   "idx": [
+    [
+     [
+      "<Arabic (formal)>",
+      "<English>"
+     ]
+    ]
+   ],
+   "note": [
+    "<Arabic (formal)>",
+    "<English>"
+   ],
+   "src": [
+    [
+     "<Arabic (formal)>",
+     "<English>"
+    ]
+   ],
+   "g": [
+    [
+     [
+      "<Arabic (formal)>",
+      "<English>"
+     ]
+    ]
+   ],
+   "l": [
+    [
+     [
+      "<Arabic (formal)>",
+      "<English>"
+     ]
+    ]
+   ],
+   "unit": [
+    "<Arabic (formal)>",
+    "<English>"
+   ]
+  }
+ ],
+ "otcSrc": "<url>",
+ "ev": [
+  [
+   "YYYY-MM-DD"
+  ]
+ ],
+ "ev2": [
+  {
+   "d": "YYYY-MM-DD",
+   "a": "<text>",
+   "e": "<text>",
+   "m": "listed",
+   "k": [
+    "<Arabic (formal)>",
+    "<English>"
+   ],
+   "x": [
+    "<Arabic (formal)>",
+    "<English>"
+   ],
+   "v": "ok",
+   "src": "<url>"
+  }
+ ],
+ "caNotes": [
+  {
+   "st": "info",
+   "when": [
+    "<Arabic (formal)>",
+    "<English>"
+   ],
+   "t": [
+    "<Arabic (formal)>",
+    "<English>"
+   ],
+   "o": [
+    "<Arabic (formal)>",
+    "<English>"
+   ],
+   "w": [
+    "<Arabic (formal)>",
+    "<English>"
+   ],
+   "b": [
+    "<Arabic (formal)>",
+    "<English>"
+   ],
+   "s": [
+    [
+     "<Arabic (formal)>",
+     "<English>"
+    ]
+   ]
+  }
+ ],
+ "dept": {
+  "ops": {
+   "n": [
+    "<Arabic (formal)>",
+    "<English>"
+   ],
+   "items": [
+    0
+   ],
+   "extra": [
+    {
+     "st": "rev",
+     "when": [
+      "<Arabic (formal)>",
+      "<English>"
+     ],
+     "t": [
+      "<Arabic (formal)>",
+      "<English>"
+     ],
+     "o": [
+      "<Arabic (formal)>",
+      "<English>"
+     ],
+     "w": [
+      "<Arabic (formal)>",
+      "<English>"
+     ],
+     "b": [
+      "<Arabic (formal)>",
+      "<English>"
+     ],
+     "s": []
+    }
+   ]
+  },
+  "et": {
+   "n": [
+    "<Arabic (formal)>",
+    "<English>"
+   ],
+   "items": [
+    6
+   ],
+   "qa": [
+    [
+     [
+      "<Arabic (formal)>",
+      "<English>"
+     ]
+    ]
+   ]
+  },
+  "am": {
+   "n": [
+    "<Arabic (formal)>",
+    "<English>"
+   ],
+   "items": [
+    1
+   ],
+   "extra": [
+    {
+     "st": "mon",
+     "when": [
+      "<Arabic (formal)>",
+      "<English>"
+     ],
+     "t": [
+      "<Arabic (formal)>",
+      "<English>"
+     ],
+     "o": [
+      "<Arabic (formal)>",
+      "<English>"
+     ],
+     "w": [
+      "<Arabic (formal)>",
+      "<English>"
+     ],
+     "b": [
+      "<Arabic (formal)>",
+      "<English>"
+     ],
+     "s": [
+      [
+       "<Arabic (formal)>",
+       "<English>"
+      ]
+     ]
+    }
+   ]
+  },
+  "wm": {
+   "n": [
+    "<Arabic (formal)>",
+    "<English>"
+   ],
+   "items": [
+    4
+   ],
+   "extra": [
+    {
+     "st": "rev",
+     "when": [
+      "<Arabic (formal)>",
+      "<English>"
+     ],
+     "t": [
+      "<Arabic (formal)>",
+      "<English>"
+     ],
+     "o": [
+      "<Arabic (formal)>",
+      "<English>"
+     ],
+     "w": [
+      "<Arabic (formal)>",
+      "<English>"
+     ],
+     "b": [
+      "<Arabic (formal)>",
+      "<English>"
+     ],
+     "s": []
+    }
+   ]
+  }
+ },
+ "sources": [
+  [
+   "<Arabic (formal)>",
+   "<English>"
+  ]
+ ],
+ "news": [
+  {
+   "imp": "high",
+   "reg": "me",
+   "when": [
+    "<Arabic (formal)>",
+    "<English>"
+   ],
+   "t": [
+    "<Arabic (formal)>",
+    "<English>"
+   ],
+   "o": [
+    "<Arabic (formal)>",
+    "<English>"
+   ],
+   "what": [
+    "<Arabic (formal)>",
+    "<English>"
+   ],
+   "kw": [
+    "<Arabic (formal)>",
+    "<English>"
+   ],
+   "us": [
+    "<Arabic (formal)>",
+    "<English>"
+   ],
+   "km": [
+    "<Arabic (formal)>",
+    "<English>"
+   ],
+   "s": [
+    [
+     "<Arabic (formal)>",
+     "<English>"
+    ]
+   ]
+  }
+ ],
+ "_notes": {
+  "studies": "Not in day files. On Sundays write data/studies/YYYY-MM-DD.json (array, same shape as studies.example) and add the date to index.json 'studies'.",
+  "enums": {
+   "news.imp": [
+    "high",
+    "med",
+    "low"
+   ],
+   "news.reg": [
+    "me",
+    "us",
+    "gl"
+   ],
+   "mk.st": [
+    "ok",
+    "part",
+    "na"
+   ],
+   "pri.st": [
+    "mgmt",
+    "rev",
+    "mon",
+    "info"
+   ]
+  }
+ },
+ "_studies_example": [
+  {
+   "k": "01",
+   "t": [
+    "<Arabic (formal)>",
+    "<English>"
+   ],
+   "q": [
+    "<Arabic (formal)>",
+    "<English>"
+   ],
+   "e": [
+    "<Arabic (formal)>",
+    "<English>"
+   ],
+   "f": [
+    "<Arabic (formal)>",
+    "<English>"
+   ],
+   "i": [
+    "<Arabic (formal)>",
+    "<English>"
+   ],
+   "v": [
+    "<Arabic (formal)>",
+    "<English>"
+   ]
+  }
+ ]
+}

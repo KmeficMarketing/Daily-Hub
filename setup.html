@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>KMEFIC Hub · Password setup</title>
+<style>
+:root{--bg:#0b1a24;--card:#10232f;--line:#1f3a4a;--text:#e8f0f3;--muted:#9fb3bd;--gold:#e0b25a;--red:#e57373;--green:#6fcf97}
+@media (prefers-color-scheme:light){:root{--bg:#f3f7f8;--card:#fff;--line:#d5e2e6;--text:#0d2730;--muted:#55707a;--gold:#00788B;--red:#c0392b;--green:#1e8449}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:"IBM Plex Sans Arabic",system-ui,sans-serif;line-height:1.7;padding:24px 16px}
+main{max-width:560px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px}
+h1{font-size:20px;margin:0 0 6px}
+p,li{font-size:14px;color:var(--muted)}
+ol{padding-inline-start:20px}
+label{display:block;font-size:13px;margin-top:12px}
+input{width:100%;font:inherit;font-size:15px;padding:10px 12px;margin-top:4px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--text)}
+button{margin-top:16px;width:100%;font:inherit;font-weight:600;padding:11px;border:0;border-radius:8px;background:var(--gold);color:var(--bg);cursor:pointer}
+button:disabled{opacity:.5;cursor:default}
+.msg{margin-top:12px;font-size:13.5px}
+.err{color:var(--red)}.ok{color:var(--green)}
+.en{direction:ltr;text-align:left;border-top:1px solid var(--line);margin-top:18px;padding-top:12px}
+code{font-size:13px}
+</style>
+</head>
+<body>
+<main>
+  <h1>إعداد كلمة مرور الملخص الصباحي</h1>
+  <p>هذه الصفحة تعمل على جهازك فقط ولا ترسل كلمة المرور إلى أي مكان. تُنشئ ملف <code>key.json</code> يحتوي على مفتاح فك التشفير مقفلًا بكلمة المرور.</p>
+  <ol>
+    <li>اكتب كلمة مرور قوية (12 حرفًا على الأقل) مرتين، ثم اضغط "إنشاء الملف".</li>
+    <li>سيُحمَّل الملف <code>key.json</code> على جهازك.</li>
+    <li>ارفعه إلى المستودع KmeficMarketing/Daily-Hub على GitHub: Add file ثم Upload files، في المجلد الرئيسي، ثم Commit changes.</li>
+    <li>احفظ كلمة المرور في مكان آمن. إذا ضاعت لا يمكن فتح الأرشيف.</li>
+  </ol>
+  <form id="f">
+    <label for="p1">كلمة المرور · Password</label>
+    <input id="p1" type="password" autocomplete="new-password" minlength="12" required>
+    <label for="p2">تأكيد كلمة المرور · Confirm password</label>
+    <input id="p2" type="password" autocomplete="new-password" minlength="12" required>
+    <button id="go" type="submit">إنشاء الملف · Create key.json</button>
+  </form>
+  <div id="msg" class="msg" role="status"></div>
+  <div class="en">
+    <p>This page runs only on your device and never sends the password anywhere. It creates <code>key.json</code>, which holds the decryption key sealed with your password. Upload it to the root of KmeficMarketing/Daily-Hub on GitHub (Add file → Upload files → Commit changes). Keep the password safe: if it is lost, the archive cannot be opened.</p>
+  </div>
+</main>
+<script>
+const S=crypto.subtle;
+const b64=buf=>{const u=new Uint8Array(buf);let s="";for(let i=0;i<u.length;i+=32768)s+=String.fromCharCode.apply(null,u.subarray(i,i+32768));return btoa(s)};
+const unb64=s=>{const b=atob(s),u=new Uint8Array(b.length);for(let i=0;i<b.length;i++)u[i]=b.charCodeAt(i);return u};
+const msg=(t,c)=>{const m=document.getElementById("msg");m.textContent=t;m.className="msg "+(c||"")};
+async function seal(pw){
+  const kp=await S.generateKey({name:"RSA-OAEP",modulusLength:3072,publicExponent:new Uint8Array([1,0,1]),hash:"SHA-256"},true,["encrypt","decrypt"]);
+  const spki=await S.exportKey("spki",kp.publicKey),pk8=await S.exportKey("pkcs8",kp.privateKey);
+  const salt=crypto.getRandomValues(new Uint8Array(16)),iv=crypto.getRandomValues(new Uint8Array(12)),iter=600000;
+  const base=await S.importKey("raw",new TextEncoder().encode(pw),"PBKDF2",false,["deriveKey"]);
+  const ak=await S.deriveKey({name:"PBKDF2",salt,iterations:iter,hash:"SHA-256"},base,{name:"AES-GCM",length:256},false,["encrypt","decrypt"]);
+  const ct=await S.encrypt({name:"AES-GCM",iv},ak,pk8);
+  const kj={v:1,alg:"RSA-OAEP-3072-SHA256/AES-256-GCM",kdf:"PBKDF2-SHA256",pub:b64(spki),salt:b64(salt),iter,iv:b64(iv),ct:b64(ct),created:new Date().toISOString()};
+  // self-test: unseal with the same password and round-trip a message
+  const ak2=await S.deriveKey({name:"PBKDF2",salt:unb64(kj.salt),iterations:iter,hash:"SHA-256"},await S.importKey("raw",new TextEncoder().encode(pw),"PBKDF2",false,["deriveKey"]),{name:"AES-GCM",length:256},false,["decrypt"]);
+  const priv=await S.importKey("pkcs8",await S.decrypt({name:"AES-GCM",iv:unb64(kj.iv)},ak2,unb64(kj.ct)),{name:"RSA-OAEP",hash:"SHA-256"},false,["decrypt"]);
+  const pub=await S.importKey("spki",unb64(kj.pub),{name:"RSA-OAEP",hash:"SHA-256"},false,["encrypt"]);
+  const probe=new TextDecoder().decode(await S.decrypt({name:"RSA-OAEP"},priv,await S.encrypt({name:"RSA-OAEP"},pub,new TextEncoder().encode("ok"))));
+  if(probe!=="ok")throw new Error("self-test failed");
+  return kj;
+}
+document.getElementById("f").addEventListener("submit",async e=>{
+  e.preventDefault();const p1=document.getElementById("p1"),p2=document.getElementById("p2"),go=document.getElementById("go");
+  if(p1.value.length<12){msg("كلمة المرور أقصر من 12 حرفًا. · Password is shorter than 12 characters.","err");return}
+  if(p1.value!==p2.value){msg("كلمتا المرور غير متطابقتين. · Passwords do not match.","err");return}
+  go.disabled=true;msg("جارٍ الإنشاء… · Creating…");
+  try{const kj=await seal(p1.value);p1.value=p2.value="";
+    const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(kj,null,1)],{type:"application/json"}));a.download="key.json";document.body.appendChild(a);a.click();a.remove();
+    msg("تم إنشاء key.json وتحميله. ارفعه الآن إلى المستودع على GitHub. · key.json was created and downloaded. Upload it to the GitHub repository now.","ok")}
+  catch(err){go.disabled=false;msg("تعذر الإنشاء في هذا المتصفح. جرّب Chrome أو Edge. · Could not create the key in this browser. Try Chrome or Edge.","err")}
+});
+</script>
+</body>
+</html>
