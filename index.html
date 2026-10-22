@@ -92,8 +92,9 @@ button:focus-visible,summary:focus-visible,a:focus-visible{outline:2px solid var
 .cdf button{background:var(--gold);color:var(--bg);border:0;border-radius:8px;padding:8px 14px;font:inherit;font-weight:600;cursor:pointer}
 
 /* ===== V2 desk view ===== */
-body.mode-desk .seg:has(#expandAll),body.mode-desk .signal,body.mode-desk .tape,body.mode-desk .nav,body.mode-desk section.panel,body.mode-desk .dk-back{display:none!important}
-body.mode-all #deskView{display:none}
+.dk-back,.dk-all{display:none!important}
+#deskView{margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid var(--line2)}
+.dk-showall{background:none;border:0;color:var(--gold2);font:inherit;font-size:13.5px;cursor:pointer;padding:10px 0 0;text-decoration:underline}
 .dk-back{margin:14px 0 4px}
 .dk-ghost{background:none;border:1px solid var(--line2);color:var(--text);border-radius:10px;padding:9px 16px;font:inherit;font-size:13.5px;cursor:pointer}
 .dk-ghost:hover{border-color:var(--gold)}
@@ -103,8 +104,8 @@ body.mode-all #deskView{display:none}
 .dk-tabs button[aria-selected="true"]{color:var(--text);border-bottom-color:var(--gold)}
 .dk-tabs small{display:inline-block;margin-inline-start:6px;font-size:11px;min-width:20px;padding:0 6px;border-radius:999px;background:var(--raise);color:var(--muted);text-align:center}
 .dk-tabs button[aria-selected="true"] small{background:var(--gold);color:var(--bg)}
-.dk-hero{display:grid;grid-template-columns:1fr auto;gap:18px;align-items:end;padding:24px 0 18px}
-.dk-hero h2{margin:0;font-size:28px;font-weight:600;line-height:1.25}
+.dk-hero{display:grid;grid-template-columns:1fr auto;gap:18px;align-items:end;padding:18px 0 12px}
+.dk-hero h2{margin:0;font-size:22px;font-weight:600;line-height:1.3}
 .dk-hero p{margin:6px 0 0;color:var(--muted);font-size:14px}
 .dk-ring{display:flex;align-items:center;gap:12px}
 .dk-ring svg{width:64px;height:64px;transform:rotate(-90deg)}
@@ -709,7 +710,7 @@ function renderNews(){const el=document.getElementById("newsList");if(!el)return
 document.getElementById("nsw").addEventListener("click",e=>{const b=e.target.closest("[data-nreg]");if(b){nreg=b.dataset.nreg;renderNews()}});
 
 /* ===== DAILY DATA + ARCHIVE ===== */
-const BUILD="435222099b";
+const BUILD="3a4c00254b";
 const ROOTS=["https://kmeficmarketing.github.io/Daily-Hub/","https://raw.githubusercontent.com/KmeficMarketing/Daily-Hub/main/"];
 let IXSD={},PREV=null,PC={},UPD={},LOADSIG="",CALM=null,SDATES=[],SCACHE={},DATES=[],LATEST=null,VIEW=D.today,NOTE=null,BUSY=false;
 const ls={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}},del(k){try{localStorage.removeItem(k)}catch(e){}}};
@@ -902,24 +903,26 @@ const getDone=()=>{try{return new Set(JSON.parse(localStorage.getItem(doneKey())
 const setDone=s=>{try{localStorage.setItem(doneKey(),JSON.stringify([...s]))}catch(e){}};
 const uniqT=l=>{const s=new Set();return l.filter(t=>{if(!t.t||s.has(t.t))return false;s.add(t.t);return true})};
 const ORD={hot:0,due:1,"":2,ok:3};
-function renderDesk(){document.body.classList.toggle("mode-desk",mode==="desk");document.body.classList.toggle("mode-all",mode!=="desk");
+let dkAll=false;
+function renderDesk(){
  if(!DESKS[desk])desk="ops";let lists={};
  try{Object.keys(DESKS).forEach(k=>lists[k]=uniqT(DESKS[k].tasks()))}catch(e){Object.keys(DESKS).forEach(k=>lists[k]=lists[k]||[])}
  document.getElementById("dkTabs").innerHTML=Object.entries(DESKS).map(([k,v])=>`<button role="tab" data-desk="${k}" aria-selected="${k===desk}">${L(v.n)}<small>${lists[k].length}</small></button>`).join("");
  const Dk=DESKS[desk],tasks=lists[desk].slice().sort((a,b)=>ORD[a.cls]-ORD[b.cls]),done=getDone();
  const nd=tasks.filter(t=>done.has(t.id)).length,hot=tasks.filter(t=>t.cls==="hot"&&!done.has(t.id)).length;
  const C=2*Math.PI*26,off=tasks.length?C*(1-nd/tasks.length):C;let nums=[],info=[];try{nums=Dk.nums()}catch(e){}try{info=Dk.info()}catch(e){}
- document.getElementById("dkBody").innerHTML=`<section class="dk-hero"><div><h2>${L(["صباح الخير، ","Good morning, "])}${esc(L(Dk.n))}</h2><p>${tasks.length?L([`${tasks.length} بنود اليوم، منها ${hot} عاجلة.`,`${tasks.length} items today, ${hot} urgent.`]):L(["لا بنود لهذا اليوم.","Nothing for this day."])}</p>${Dk.client?`<button type="button" class="dk-cta" id="dkClient">${L(["تجهيز ملخص للعملاء","Prepare client summary"])}</button>`:""}${Dk.link?`<button type="button" class="dk-ghost" style="margin-top:12px" data-goall="${Dk.link}">${L(["صفحة صانع السوق الكاملة","Full market-making page"])}</button>`:""}</div>
+ document.getElementById("dkBody").innerHTML=`<section class="dk-hero"><div><h2>${L(["صباح الخير، ","Good morning, "])}${esc(L(Dk.n))}</h2><p>${tasks.length?L([`${tasks.length} بنود اليوم، منها ${hot} عاجلة.`,`${tasks.length} items today, ${hot} urgent.`]):L(["لا بنود لهذا اليوم.","Nothing for this day."])}</p>${Dk.client?`<button type="button" class="dk-cta" id="dkClient">${L(["تجهيز ملخص للعملاء","Prepare client summary"])}</button>`:""}${Dk.link?`<button type="button" class="dk-ghost" style="margin-top:12px" data-goall="${Dk.link}">${L(["تاب صانع السوق بالتفاصيل","Market-making tab with details"])}</button>`:""}</div>
  <div class="dk-ring"><svg viewBox="0 0 60 60" aria-hidden="true"><circle cx="30" cy="30" r="26" fill="none" stroke="var(--line2)" stroke-width="6"/><circle cx="30" cy="30" r="26" fill="none" stroke="var(--gold)" stroke-width="6" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${off}"/></svg><div class="t"><b>${nd} / ${tasks.length}</b>${L(["تم على هذا الجهاز","done on this device"])}</div></div></section>
  <section class="dk-sec"><h3>${L(["مطلوب منك اليوم","Your work today"])}<span>${L(["مرتبة حسب الإلحاح","by urgency"])}</span></h3>
- ${tasks.length?`<ul class="dk-tasks">${tasks.map((t,i)=>`<li class="dk-task ${t.cls}${done.has(t.id)?" done":""}"><input type="checkbox" class="dk-chk" data-done="${esc(t.id)}" ${done.has(t.id)?"checked":""} aria-label="${esc(t.t)}"><span class="bar"></span><div><h4>${esc(t.t)}${t.at?newTag(t.at):""}</h4><p>${esc(t.o)}</p></div><div class="dk-side"><span class="dk-when">${esc(t.w||"")}</span><div class="dk-acts">${t.more||(t.s&&t.s.length)?`<button type="button" data-dkmore="${i}">${L(["التفاصيل","Details"])}</button>`:""}${t.d?calBtns(t.d,t.t+" · "+t.o,(t.s&&t.s[0]&&t.s[0][1])||""):""}</div></div><div class="dk-more" id="dkm${i}" hidden>${t.more?`<p>${esc(t.more)}</p>`:""}${srcLinks(t.s)}</div></li>`).join("")}</ul>`:`<p class="dk-empty">${L(["لا توجد بنود لهذه الإدارة في هذا اليوم.","No items for this desk on this day."])}</p>`}</section>
+ ${tasks.length?`<ul class="dk-tasks">${tasks.slice(0,dkAll?999:5).map((t,i)=>`<li class="dk-task ${t.cls}${done.has(t.id)?" done":""}"><input type="checkbox" class="dk-chk" data-done="${esc(t.id)}" ${done.has(t.id)?"checked":""} aria-label="${esc(t.t)}"><span class="bar"></span><div><h4>${esc(t.t)}${t.at?newTag(t.at):""}</h4><p>${esc(t.o)}</p></div><div class="dk-side"><span class="dk-when">${esc(t.w||"")}</span><div class="dk-acts">${t.more||(t.s&&t.s.length)?`<button type="button" data-dkmore="${i}">${L(["التفاصيل","Details"])}</button>`:""}${t.d?calBtns(t.d,t.t+" · "+t.o,(t.s&&t.s[0]&&t.s[0][1])||""):""}</div></div><div class="dk-more" id="dkm${i}" hidden>${t.more?`<p>${esc(t.more)}</p>`:""}${srcLinks(t.s)}</div></li>`).join("")}</ul>${tasks.length>5?`<button type="button" class="dk-showall" id="dkAllBtn">${dkAll?L(["عرض أقل","Show less"]):L([`عرض كل البنود (${tasks.length})`,`Show all items (${tasks.length})`])}</button>`:""}`:`<p class="dk-empty">${L(["لا توجد بنود لهذه الإدارة في هذا اليوم.","No items for this desk on this day."])}</p>`}</section>
  ${nums.length?`<section class="dk-sec"><h3>${L(["أرقامك","Your numbers"])}</h3><div class="dk-nums">${nums.slice(0,4).map(n=>`<div><small>${esc(n.l)}</small><b>${esc(n.v)}</b>${n.c?`<em class="${n.cls||""}">${esc(n.c)}</em>`:""}</div>`).join("")}</div></section>`:""}
  <section class="dk-sec"><h3>${L(["للاطلاع","For your information"])}</h3><div class="dk-info">${info.map(c=>`<article class="dk-card"><div class="k">${esc(c.k)}</div><h4>${esc(c.t)}${c.at?newTag(c.at):""}</h4><p>${esc(c.p)}</p>${c.imp?`<div class="imp">${esc(c.imp)}</div>`:""}</article>`).join("")||`<p class="dk-empty">${L(["لا شيء إضافي اليوم.","Nothing extra today."])}</p>`}</div></section>`;
  saveDesk()}
-document.addEventListener("click",e=>{const b=e.target.closest("[data-desk]");if(b){desk=b.dataset.desk;renderDesk();return}
+document.addEventListener("click",e=>{const b=e.target.closest("[data-desk]");if(b){desk=b.dataset.desk;dkAll=false;renderDesk();return}
  const m=e.target.closest("[data-dkmore]");if(m){const el=document.getElementById("dkm"+m.dataset.dkmore);if(el)el.hidden=!el.hidden;return}
  const md=e.target.closest("[data-mode]");if(md){mode=md.dataset.mode;renderDesk();window.scrollTo({top:0});return}
- const ga=e.target.closest("[data-goall]");if(ga){mode="all";renderDesk();show(ga.dataset.goall);window.scrollTo({top:0});return}
+ const ga=e.target.closest("[data-goall]");if(ga){show(ga.dataset.goall);const nv=document.querySelector(".nav");if(nv)nv.scrollIntoView({behavior:"smooth",block:"start"});return}
+ if(e.target.closest("#dkAllBtn")){dkAll=!dkAll;renderDesk();return}
  if(e.target.closest("#dkClient")){document.getElementById("clientBtn").click()}});
 document.addEventListener("change",e=>{const c=e.target.closest("[data-done]");if(!c)return;const s=getDone();c.checked?s.add(c.dataset.done):s.delete(c.dataset.done);setDone(s);renderDesk()});
 
