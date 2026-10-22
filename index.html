@@ -722,7 +722,7 @@ function renderNews(){const el=document.getElementById("newsList");if(!el)return
 document.getElementById("nsw").addEventListener("click",e=>{const b=e.target.closest("[data-nreg]");if(b){nreg=b.dataset.nreg;renderNews()}});
 
 /* ===== DAILY DATA + ARCHIVE ===== */
-const BUILD="cebfafd491";
+const BUILD="022db1f43b";
 const ROOTS=["https://kmeficmarketing.github.io/Daily-Hub/","https://raw.githubusercontent.com/KmeficMarketing/Daily-Hub/main/"];
 let IXSD={},PREV=null,PC={},UPD={},LOADSIG="",CALM=null,SDATES=[],SCACHE={},DATES=[],LATEST=null,VIEW=D.today,NOTE=null,BUSY=false;
 const ls={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}},del(k){try{localStorage.removeItem(k)}catch(e){}}};
@@ -913,11 +913,8 @@ const DESKS={
   tasks:()=>{const M=D.mm||{co:[],alerts:[]};return[...(M.co||[]).filter(c=>Math.abs(parseFloat(String(c.chg||"0").replace("−","-")))>=5).map(c=>({id:"m|"+c.code+"|"+c.chg,cls:"hot",t:`${L(c.n)} ${c.chg}`,o:L(["حركة كبيرة في آخر جلسة.","Large move in the last session."]),w:L(["آخر جلسة","Last session"]),at:c.at})),...(M.alerts||[]).filter(a=>a.d&&Math.abs(diff(a.d))<=14).map(a=>({id:"al|"+a.k+"|"+a.d+"|"+(a.t||["",""])[1],cls:a.imp==="high"?"hot":a.imp==="med"?"due":"",t:L(a.t),o:L(((M.co||[]).find(c=>c.code===a.k)||{n:[a.k,a.k]}).n)+" · "+L(a.o||["",""]),w:whenTxt(a.d),d:a.d,s:a.s,at:a.at}))]},
   nums:()=>((D.mm&&D.mm.co)||[]).map(c=>({l:L(c.n),v:c.last||"—",c:c.chg||"",cls:/^[−-]/.test(c.chg||"")?"down":"up"})),
   info:()=>[...studyC("mm"),...((D.mm&&D.mm.alerts)||[]).filter(a=>a.d&&Math.abs(diff(a.d))>14).slice(0,2).map(a=>({k:a.d,t:L(a.t),p:L(a.o||["",""])}))],
-  link:"mm"},
- lead:{n:["الإدارة العليا","Management"],
-  tasks:()=>[...(D.mgmt||[]).filter(x=>!/decision|required|needed/i.test((x.t||["",""])[1])).map(priT),...(D.pri||[]).filter(p=>p.st==="mgmt").map(priT)],
-  nums:()=>tapeK(["Kuwait","Saudi","S&P","Brent"]),
-  info:()=>[{k:L(D.signal.s||["",""]),t:L(D.signal.t||["",""]),p:L(D.signal.p||["",""])},...newsC("kw",2)]}};
+  link:"mm"}
+};
 const doneKey=()=>`hubDone:${VIEW||D.today}:${desk}`;
 const getDone=()=>{try{return new Set(JSON.parse(localStorage.getItem(doneKey())||"[]"))}catch(e){return new Set()}};
 const setDone=s=>{try{localStorage.setItem(doneKey(),JSON.stringify([...s]))}catch(e){}};
