@@ -242,8 +242,9 @@ body.locked{overflow:hidden}
 .calnote{font-size:12px;text-align:end;color:var(--amber);background:rgba(239,189,104,.08);border:1px solid rgba(239,189,104,.3);border-radius:8px;padding:6px 10px}
 .calnote button{background:none;border:0;color:var(--gold2);text-decoration:underline;cursor:pointer;font:inherit;padding:0}
 .stamp b{color:var(--gold2);font-weight:500}
-.signal{position:relative;z-index:1;margin-top:16px;display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:center;padding:12px 14px;border-radius:12px;background:var(--panel);border:1px solid var(--line2)}
-.signal .s{font-family:var(--display);font-size:17px;color:var(--amber);white-space:nowrap}
+.signal{position:relative;z-index:1;margin-top:16px;display:grid;grid-template-columns:minmax(0,max-content) minmax(0,1fr);gap:14px;align-items:center;padding:12px 14px;border-radius:12px;background:var(--panel);border:1px solid var(--line2)}
+.signal .s{font-family:var(--display);font-size:17px;color:var(--amber);max-width:34ch;overflow-wrap:anywhere}
+.signal p{min-width:0;overflow-wrap:anywhere}
 .signal .s small{display:block;font-family:var(--body);font-size:10.5px;color:var(--muted)}
 .signal p{margin:0;color:var(--soft);font-size:13px}
 .tape{position:relative;z-index:1;display:grid;grid-template-columns:repeat(auto-fit,minmax(132px,1fr));margin-top:12px;border:1px solid var(--line2);border-radius:12px;overflow:hidden;background:var(--panel)}
@@ -253,7 +254,7 @@ body.locked{overflow:hidden}
 .tape b{display:block;font-family:var(--mono);font-size:15px;font-weight:500}
 .tape i{font-style:normal;font-family:var(--mono);font-size:12px;display:block}
 .tape .when{color:var(--muted);font-size:10px}
-@media (max-width:620px){.signal{grid-template-columns:1fr}.hero{padding:18px 16px}.hero h1{font-size:21px}.logo{width:52px}.side{justify-items:start}.stamp{text-align:start}.ctrls{justify-content:start}.cal{justify-content:start}.calnote{text-align:start}}
+@media (max-width:620px){.signal{grid-template-columns:minmax(0,1fr)}.signal .s{max-width:none}.hero{padding:18px 16px}.hero h1{font-size:21px}.logo{width:52px}.side{justify-items:start}.stamp{text-align:start}.ctrls{justify-content:start}.cal{justify-content:start}.calnote{text-align:start}}
 
 /* nav */
 .nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;margin:14px 0 4px;background:var(--bg);border-bottom:1px solid var(--line);display:flex;gap:2px;overflow-x:auto;scrollbar-width:none}
@@ -402,6 +403,7 @@ dialog::backdrop{background:var(--scrim)}
 footer{margin-top:34px;padding-top:14px;border-top:1px solid var(--line);color:var(--muted);font-size:12px}
 footer details summary{cursor:pointer;color:var(--soft)}
 footer ul{margin:6px 0;padding-inline-start:18px}
+#app{overflow-wrap:break-word}
 </style>
 
 <div class="wrap" id="app" dir="rtl" lang="ar">
@@ -750,7 +752,7 @@ function renderNews(){const el=document.getElementById("newsList");if(!el)return
 document.getElementById("nsw").addEventListener("click",e=>{const b=e.target.closest("[data-nreg]");if(b){nreg=b.dataset.nreg;renderNews()}});
 
 /* ===== DAILY DATA + ARCHIVE ===== */
-const BUILD="b3a8de841f";
+const BUILD="c6c3721237";
 const ROOTS=["https://kmeficmarketing.github.io/Daily-Hub/","https://raw.githubusercontent.com/KmeficMarketing/Daily-Hub/main/"];
 let IXSD={},PREV=null,PC={},UPD={},LOADSIG="",CALM=null,SDATES=[],SCACHE={},DATES=[],LATEST=null,VIEW=D.today,NOTE=null,BUSY=false;
 const ls={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}},del(k){try{localStorage.removeItem(k)}catch(e){}}};
