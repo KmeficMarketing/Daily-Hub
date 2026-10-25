@@ -405,7 +405,8 @@
   "updates": "Intraday additions go to data/updates/<date>/<HHMM>.json (encrypted), listed in index.json upd[<date>]. Add-only: never repeat items already published that day (use data/updates/<date>/seen.json, a list of sha256 hashes of normalized titles/URLs).",
   "mm": "Market-making companies (always these four, in this order): FACIL Commercial Facilities (التسهيلات التجارية), MADAR Al Madar Kuwait Holding (المدار الكويتية القابضة), THURAYA Dar Al Thuraya Real Estate (دار الثريا العقارية), TAM Tamdeen Real Estate (التمدين العقارية). Mubasher announcement pages are good for disclosures; Mubasher price snapshots have been inconsistent, so cross-check prices with Kamco, Argaam, Boursa Kuwait or newspapers.",
   "hol": "Upcoming exchange holidays within the next 60 days for the markets in the hours board.",
-  "studies_dep": "Each study has dep: ops|am|wm|mm and optional a:[ar,en] 'Action for the department'. Files data/studies/<date>.json hold one or more departments; index.json studiesDep[dep] lists the dates per department. Sundays: ops (2–3), am (2–3), wm (2–3), mm (1 weekly liquidity study). Wednesdays: ops only (corporate-actions map)."
+  "studies_dep": "Each study has dep: ops|am|wm|mm and optional a:[ar,en] 'Action for the department'. Files data/studies/<date>.json hold one or more departments; index.json studiesDep[dep] lists the dates per department. Sundays: ops (2–3), am (2–3), wm (2–3), mm (1 weekly liquidity study). Wednesdays: ops only (corporate-actions map).",
+  "inf": "Conclusions layer (internal, for KMEFIC department heads and staff; never shown to clients). 4–8 items; each links today's facts into an equation, says what it means (so) and gives direct recommendations per department (rec: ops, et, am, wm, mm, mgmt). No buy/sell calls and no price forecasts. kind decides what the page computes from the day data: rights (eq: P market price fils, S subscription price fils, r new shares per existing share, rec record date, start/rtEnd/subEnd/last when known, exAlready true if P is already the ex-entitlement price, v 'exp' while dates are unconfirmed; the page computes TERP, right value, discount, loss if idle, cum = record − 3 Kuwait trading days, and draws the rights timeline), market (uses mk + tape), movers (grp: indexes into the kw g/l lists), mm (eq.series: recent closes per code), load (extra: computed deadlines [date,[ar,en]]; the page counts ev + ev2 + extra per day for 24 days), note (any other equation: keys [[label],[value],[up|down|'']] + f text). conf: high = official sources agree, med = one strong source or partly computed, low = thin evidence. chk = [review date, what will prove it right or wrong]. view.pts = 3–5 one-line headlines, each pointing to an item id. log = the conclusions log (kept in hub-assets/inf/log.json, see README): recent items with their review results (res ok/no/part, resN = what happened)."
  },
  "_studies_example": [
   {
@@ -556,5 +557,323 @@
     "<English>"
    ]
   }
- ]
+ ],
+ "inf": {
+  "view": {
+   "t": [
+    "<Arabic (formal)>",
+    "<English>"
+   ],
+   "pts": [
+    [
+     [
+      "<Arabic (formal)>",
+      "<English>"
+     ],
+     "<item id>"
+    ]
+   ]
+  },
+  "items": []
+ },
+ "_inf_example": {
+  "view": {
+   "t": [
+    "قراءة المكتب لليوم",
+    "The desk's read for today"
+   ],
+   "pts": [
+    [
+     [
+      "<Arabic (formal)>",
+      "<English>"
+     ],
+     "abk"
+    ]
+   ]
+  },
+  "items": [
+   {
+    "id": "abk",
+    "kind": "rights",
+    "conf": "high|med|low",
+    "tag": [
+     "زيادة رأس مال",
+     "Rights issue"
+    ],
+    "t": [
+     "<Arabic (formal)>",
+     "<English>"
+    ],
+    "so": [
+     "<Arabic (formal)>",
+     "<English>"
+    ],
+    "warn": [
+     "<Arabic (formal)>",
+     "<English>"
+    ],
+    "eq": {
+     "P": 297,
+     "S": 200,
+     "r": 0.27286,
+     "per": 1000,
+     "pd": [
+      "سعر 25 أكتوبر (المصدر)",
+      "Price on 25 Oct (source)"
+     ],
+     "rec": "YYYY-MM-DD",
+     "recNote": [
+      "<Arabic (formal)>",
+      "<English>"
+     ],
+     "start": "YYYY-MM-DD",
+     "rtEnd": "YYYY-MM-DD",
+     "subEnd": "YYYY-MM-DD",
+     "last": "YYYY-MM-DD",
+     "exAlready": false,
+     "v": "ok|exp",
+     "name": [
+      "<Arabic (formal)>",
+      "<English>"
+     ],
+     "ca": "<Arabic company name exactly as in ev2.a>"
+    },
+    "rec": [
+     [
+      "ops|et|am|wm|mm|mgmt",
+      [
+       "<Arabic (formal)>",
+       "<English>"
+      ]
+     ]
+    ],
+    "ev": [
+     [
+      "<source>",
+      "<url>"
+     ]
+    ],
+    "chk": [
+     "YYYY-MM-DD",
+     [
+      "<Arabic (formal)>",
+      "<English>"
+     ]
+    ]
+   },
+   {
+    "id": "mkt",
+    "kind": "market",
+    "conf": "med",
+    "tag": [
+     "قراءة السوق",
+     "Market read"
+    ],
+    "t": [
+     "<Arabic (formal)>",
+     "<English>"
+    ],
+    "so": [
+     "<Arabic (formal)>",
+     "<English>"
+    ],
+    "rec": [
+     [
+      "et",
+      [
+       "<Arabic (formal)>",
+       "<English>"
+      ]
+     ]
+    ],
+    "ev": [
+     [
+      "<source>",
+      "<url>"
+     ]
+    ],
+    "chk": [
+     "YYYY-MM-DD",
+     [
+      "<Arabic (formal)>",
+      "<English>"
+     ]
+    ]
+   },
+   {
+    "id": "rot",
+    "kind": "movers",
+    "grp": {
+     "g": [
+      1,
+      2
+     ],
+     "l": [
+      0
+     ],
+     "gl": [
+      "<Arabic (formal)>",
+      "<English>"
+     ],
+     "ll": [
+      "<Arabic (formal)>",
+      "<English>"
+     ]
+    },
+    "conf": "low",
+    "tag": [
+     "<Arabic (formal)>",
+     "<English>"
+    ],
+    "t": [
+     "<Arabic (formal)>",
+     "<English>"
+    ],
+    "so": [
+     "<Arabic (formal)>",
+     "<English>"
+    ],
+    "rec": [],
+    "ev": [],
+    "chk": [
+     "YYYY-MM-DD",
+     [
+      "<Arabic (formal)>",
+      "<English>"
+     ]
+    ]
+   },
+   {
+    "id": "mmv",
+    "kind": "mm",
+    "eq": {
+     "series": {
+      "MADAR": [
+       101.0,
+       91.6,
+       99.4
+      ]
+     }
+    },
+    "conf": "med",
+    "tag": [
+     "<Arabic (formal)>",
+     "<English>"
+    ],
+    "t": [
+     "<Arabic (formal)>",
+     "<English>"
+    ],
+    "so": [
+     "<Arabic (formal)>",
+     "<English>"
+    ],
+    "rec": [],
+    "ev": [],
+    "chk": [
+     "YYYY-MM-DD",
+     [
+      "<Arabic (formal)>",
+      "<English>"
+     ]
+    ]
+   },
+   {
+    "id": "load",
+    "kind": "load",
+    "extra": [
+     [
+      "YYYY-MM-DD",
+      [
+       "<Arabic (formal)>",
+       "<English>"
+      ]
+     ]
+    ],
+    "conf": "high",
+    "tag": [
+     "<Arabic (formal)>",
+     "<English>"
+    ],
+    "t": [
+     "<Arabic (formal)>",
+     "<English>"
+    ],
+    "so": [
+     "<Arabic (formal)>",
+     "<English>"
+    ],
+    "rec": [],
+    "ev": [],
+    "chk": [
+     "YYYY-MM-DD",
+     [
+      "<Arabic (formal)>",
+      "<English>"
+     ]
+    ]
+   },
+   {
+    "id": "clk",
+    "kind": "note",
+    "keys": [
+     [
+      [
+       "<Arabic (formal)>",
+       "<English>"
+      ],
+      "11:00",
+      ""
+     ]
+    ],
+    "f": "<one or two lines of the calculation, plain text>",
+    "conf": "high",
+    "tag": [
+     "<Arabic (formal)>",
+     "<English>"
+    ],
+    "t": [
+     "<Arabic (formal)>",
+     "<English>"
+    ],
+    "so": [
+     "<Arabic (formal)>",
+     "<English>"
+    ],
+    "rec": [],
+    "ev": [],
+    "chk": [
+     "YYYY-MM-DD",
+     [
+      "<Arabic (formal)>",
+      "<English>"
+     ]
+    ]
+   }
+  ],
+  "log": [
+   {
+    "id": "<item id>",
+    "d": "YYYY-MM-DD",
+    "t": [
+     "<Arabic (formal)>",
+     "<English>"
+    ],
+    "conf": "med",
+    "chk": [
+     "YYYY-MM-DD",
+     [
+      "<Arabic (formal)>",
+      "<English>"
+     ]
+    ],
+    "res": "ok|no|part|(empty while open)",
+    "resN": [
+     "<Arabic (formal)>",
+     "<English>"
+    ]
+   }
+  ]
+ }
 }

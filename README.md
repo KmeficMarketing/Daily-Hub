@@ -12,12 +12,24 @@ Morning market hub for KMEFIC Operations, Electronic Trading, Asset Management a
 - `key.json` holds the public key plus the private key sealed with the password (PBKDF2-SHA256 and AES-256-GCM). Each data file uses a fresh AES-256-GCM key wrapped with RSA-OAEP-3072.
 - `version.json` holds the page build id. Open pages reload themselves once when a newer build is published.
 
+## Page layout (since 25 Oct 2026)
+
+- `index.html` is a glass dashboard with one screen per view: Overview, Conclusions, Today, Corporate actions & Al-Mowazi, Market making, Markets, News, Management, Studies, Sources. A side rail (desktop) or bottom bar (phone) switches views; every card or row opens its details, sources, calendar buttons and circular downloads in a side panel. The department selector filters every view; search covers every item.
+- The previous design is kept in the branch `V1-backup`.
+
+## Conclusions (`inf`)
+
+- Each day file carries `inf` (see `_inf_example` and `_notes.inf` in `schema.json`): 4–8 conclusions that link the day's facts into an equation, say what it means, and give direct recommendations to each department. The hub is internal (department heads and staff), so recommendations are written plainly; no buy/sell calls and no price forecasts.
+- The page computes the maths itself from the same data (rights issues: TERP, right value, discount, loss if idle, cum date = record − 3 Kuwait trading days; market read; movers; market-making ranges; operations load).
+- Conclusions log: `hub-assets/inf/log.json` (private repo, plaintext) keeps every conclusion with its review date. The morning run marks due items `res` = ok / no / part with `resN`, adds today's items, and copies the last 14 days into today's `inf.log` so the page can show the record.
+- Days before 25 Oct 2026 have no `inf`; the page says so.
+
 ## Daily refresh (Sunday–Friday, 07:37 Kuwait)
 
 1. Build today's file from `schema.json`, which shows the structure without any content. Keep every key and the `[Arabic, English]` pair format. Earlier day files may be encrypted, so they are not used as templates.
 2. Set `today` and `stamp`.
 3. Research everything fresh from the web (do not use Awsat, which blocks cloud access):
-   - `signal`, `tape`, `pri`, `agenda`, `agendaSrc`, `mgmt`, `stk`, `otcSrc`, `caNotes`, `dept`, `sources`
+   - `signal`, `tape`, `pri`, `agenda`, `agendaSrc`, `mgmt`, `stk`, `otcSrc`, `caNotes`, `dept`, `sources`, and `inf` (conclusions, see above)
    - `mk`: the Kuwait entry (`id` `kw`) must include the top 5 gainers and losers as `g` and `l` with price (fils) and % change. Kamco Invest's "MENA Markets Daily Report" is the first source to try; if it isn't available, use Boursa Kuwait, Argaam or Kuwaiti newspapers. Never leave the tables empty without saying why in the note and the gaps line.
    - corporate actions: `ev` is Al‑Mowazi/OTC, `ev2` is main market. Cover upcoming and recent events.
    - `news`: Regional & Political News tab, 6–10 items ranked by impact. Each item gives the facts, the likely effect on the Kuwaiti market, the US market and KMEFIC's brokerage and asset-management activity, plus its sources. Wording is neutral, with no political opinion and no investment advice. Mark single-source reports with `"unv": true`.
@@ -30,7 +42,7 @@ Morning market hub for KMEFIC Operations, Electronic Trading, Asset Management a
 ## Intraday additions (hourly 09:05–17:05 Kuwait, Sunday–Friday)
 
 - Each run adds only what is new since the last publication: news, corporate actions, priority items, and closes (Kuwait/GCC close after 13:00, US moves later). It writes `data/updates/<date>/<HHMM>.json`, encrypted when `key.json` exists, and adds `HHMM` to `index.json` → `upd[<date>]`. If nothing is new, it writes nothing.
-- The page merges these into the day and tags them "New · HH:MM". Market entries in an update replace the entry with the same `id`.
+- The page merges these into the day and tags them "New · HH:MM". An update may also carry `inf` items (same shape as the morning `inf.items`; an item with an existing `id` replaces it), for example when a rights issue's dates are confirmed or the Kuwait close changes the market read. Market entries in an update replace the entry with the same `id`.
 - Duplicate check: `data/updates/<date>/seen.json` holds sha256 hashes of normalized titles/URLs already published that day. The morning run writes it too. Hashes reveal no content.
 
 ## Markets: top movers for every market
