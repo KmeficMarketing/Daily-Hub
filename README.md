@@ -35,6 +35,8 @@ Morning market hub for KMEFIC Operations, Electronic Trading, Asset Management a
 
 ## Markets: top movers for every market
 
+Last-close rule: each market shows its most recent completed session (indices, turnover and top 5 gainers/losers from that same session), with the session date in `d`. Kuwait, Saudi, Qatar, Oman, Bahrain and Egypt trade Sunday–Thursday; UAE, US, UK and Turkey trade Monday–Friday. So Friday's and Sunday's files show Thursday's Kuwait movers, and Monday's file shows Friday's UAE/US/UK/Turkey movers. Saturday has no file, so the page shows Friday's file. A market that did not trade since the previous file is never left empty for that reason.
+
 Sources in order: Kamco Invest "MENA Markets Daily Report" (all GCC + Egypt, top 5 each; MENAFN mirrors the PDF), then Investing.com "... at close of trade" reports (top 3 each; US Dow/S&P/Nasdaq, Saudi, UAE, Egypt, UK, Turkey), then official bulletins (Saudi Exchange daily report, DFM bulletin) and Business Recorder/Reuters and Arabic market wraps (e.g. Al-Shorouk). Never invent movers; say why when missing.
 
 ## Market making, studies by department, holidays
