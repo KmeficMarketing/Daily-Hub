@@ -614,7 +614,7 @@ derive();
 const fill=s=>String(s).replace(/\{(\w+)\}/g,(m,k)=>N[k]??m);
 
 const newTag=t=>`<span class="newtag">${L(["جديد","New"])} · ${esc(t)}</span>`;
-function item(p){return `<details class="it st-${p.st}"><summary><div class="chipst">${STL[p.st]}<span>${esc(L(p.when))}</span></div><div><div class="ttl">${esc(L(p.t))} ${p.k?stkBtn(p.k):""}${p.at?newTag(p.at):""}</div><div class="one">${esc(fill(L(p.o)))}</div><div class="who">${esc(L(p.w))}</div></div><div class="more">${L(UI.det)}</div></summary><div class="body">${fill(L(p.b))}${circBlock(p.circ)}${srcLinks(p.s)}</div></details>`}
+function item(p){return `<details class="it st-${p.st}"><summary><div class="chipst">${STL[p.st]}<span>${esc(L(p.when))}</span></div><div><div class="ttl">${esc(L(p.t))} ${p.k?stkBtn(p.k):""}${p.at?newTag(p.at):""}</div><div class="one">${esc(fill(L(p.o)))}</div><div class="who">${esc(L(p.w))}</div>${circBlock(p.circ)}</div><div class="more">${L(UI.det)}</div></summary><div class="body">${fill(L(p.b))}${srcLinks(p.s)}</div></details>`}
 
 function renderHead(){
  document.getElementById("stamp").innerHTML=L(D.stamp)+`<br><span class="warn" style="font-size:11px">${lang==="ar"?"نسخة تجريبية · التحديث اليومي 08:00":"Pilot · daily refresh 08:00"}</span>`;
@@ -762,7 +762,7 @@ function renderNews(){const el=document.getElementById("newsList");if(!el)return
 document.getElementById("nsw").addEventListener("click",e=>{const b=e.target.closest("[data-nreg]");if(b){nreg=b.dataset.nreg;renderNews()}});
 
 /* ===== DAILY DATA + ARCHIVE ===== */
-const BUILD="c8deb65776";
+const BUILD="49a4a6f19e";
 const ROOTS=["https://kmeficmarketing.github.io/Daily-Hub/","https://raw.githubusercontent.com/KmeficMarketing/Daily-Hub/main/"];
 let IXSD={},PREV=null,PC={},UPD={},LOADSIG="",CALM=null,SDATES=[],SCACHE={},DATES=[],LATEST=null,VIEW=D.today,NOTE=null,BUSY=false;
 const ls={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}},del(k){try{localStorage.removeItem(k)}catch(e){}}};
@@ -923,8 +923,8 @@ const saveDesk=()=>{try{localStorage.setItem("hubDesk",JSON.stringify({mode,desk
 const strip=s=>String(s||"").replace(/<[^>]+>/g," ").replace(/\s+/g," ").trim();
 const whenTxt=s=>{const n=diff(s);if(n===0)return L(["اليوم","Today"]);if(n===1)return L(["غدًا","Tomorrow"]);const t=dt(s);const x=`${t.getUTCDate()} ${MON[lang][t.getUTCMonth()]}`;return n<0?L(["منذ ","Since "])+x:x};
 const ST2={mgmt:"hot",rev:"due",mon:"ok",info:""};
-const priT=(p,i)=>({id:"p|"+(p.t||["",""])[1],cls:ST2[p.st]||"",t:L(p.t),o:fill(L(p.o)),w:L(p.when),more:strip(fill(L(p.b||["",""]))),s:p.s,at:p.at});
-const evT=e=>({id:"e|"+e.d+"|"+e.e+"|"+L(e.k),cls:diff(e.d)<=0?"hot":diff(e.d)<=1?"due":"",t:lang==="ar"?e.a:e.e,o:L(e.k)+(e.m==="otc"?" · OTC":"")+(e.x?" · "+L(e.x):""),w:whenTxt(e.d),d:e.d,s:e.src?[[L(["الإفصاح","Disclosure"]),e.src]]:null,at:e.at});
+const priT=(p,i)=>({id:"p|"+(p.t||["",""])[1],cls:ST2[p.st]||"",t:L(p.t),o:fill(L(p.o)),w:L(p.when),more:strip(fill(L(p.b||["",""]))),s:p.s,at:p.at,circ:p.circ});
+const evT=e=>({id:"e|"+e.d+"|"+e.e+"|"+L(e.k),cls:diff(e.d)<=0?"hot":diff(e.d)<=1?"due":"",t:lang==="ar"?e.a:e.e,o:L(e.k)+(e.m==="otc"?" · OTC":"")+(e.x?" · "+L(e.x):""),w:whenTxt(e.d),d:e.d,s:e.src?[[L(["الإفصاح","Disclosure"]),e.src]]:null,at:e.at,circ:e.circ});
 const soonEV=(a,b)=>EV.filter(e=>inN(e,a,b));
 const pick=arr=>(arr||[]).map(i=>D.pri[i]).filter(Boolean);
 const dept=k=>(D.dept&&D.dept[k])||{items:[],extra:[]};
@@ -978,7 +978,7 @@ function renderDesk(){
  document.getElementById("dkBody").innerHTML=`<section class="dk-hero"><div><h2>${L(["صباح الخير، ","Good morning, "])}${esc(L(Dk.n))}</h2><p>${tasks.length?(()=>{const n=tasks.length,ar=n===1?"بند واحد":n===2?"بندان":n<=10?n+" بنود":n+" بندًا",ia=imp===1?"منها بند مهم":imp===2?"منها بندان مهمان":"منها "+imp+" مهمة";return L([imp?`${ar}، ${ia}.`:`${ar}.`,imp?`${n} item${n>1?"s":""}, ${imp} important.`:`${n} item${n>1?"s":""}.`])})():L(["لا شيء خاص بهذه الإدارة في هذا اليوم.","Nothing specific for this desk on this day."])}</p>${Dk.client?`<button type="button" class="dk-cta" id="dkClient">${L(["تجهيز ملخص للعملاء","Prepare client summary"])}</button>`:""}${Dk.link?`<button type="button" class="dk-ghost" style="margin-top:12px" data-goall="${Dk.link}">${L(["تاب صانع السوق بالتفاصيل","Market-making tab with details"])}</button>`:""}</div>
 </section>
  <section class="dk-sec"><h3>${L(["يهمك اليوم","Worth knowing today"])}<span>${L(["الأهم أولًا","most important first"])}</span></h3>
- ${tasks.length?`<ul class="dk-tasks">${tasks.slice(0,dkAll?999:5).map((t,i)=>`<li class="dk-task tm-${tm(t)}"><span class="bar"></span><div><h4>${esc(t.t)}${t.cls==="hot"?`<span class="dk-imp">${L(["مهم","Important"])}</span>`:""}${t.at?newTag(t.at):""}</h4><p>${esc(t.o)}</p></div><div class="dk-side"><span class="dk-when">${esc(t.w||"")}</span><div class="dk-acts">${t.more||(t.s&&t.s.length)?`<button type="button" data-dkmore="${i}">${L(["التفاصيل","Details"])}</button>`:""}${t.d?calBtns(t.d,t.t+" · "+t.o,(t.s&&t.s[0]&&t.s[0][1])||""):""}</div></div><div class="dk-more" id="dkm${i}" hidden>${t.more?`<p>${esc(t.more)}</p>`:""}${srcLinks(t.s)}</div></li>`).join("")}</ul>${tasks.length>5?`<button type="button" class="dk-showall" id="dkAllBtn">${dkAll?L(["عرض أقل","Show less"]):L([`عرض كل البنود (${tasks.length})`,`Show all items (${tasks.length})`])}</button>`:""}`:`<p class="dk-empty">${L(["لا توجد بنود لهذه الإدارة في هذا اليوم.","No items for this desk on this day."])}</p>`}</section>
+ ${tasks.length?`<ul class="dk-tasks">${tasks.slice(0,dkAll?999:5).map((t,i)=>`<li class="dk-task tm-${tm(t)}"><span class="bar"></span><div><h4>${esc(t.t)}${t.cls==="hot"?`<span class="dk-imp">${L(["مهم","Important"])}</span>`:""}${t.at?newTag(t.at):""}</h4><p>${esc(t.o)}</p>${t.circ?circBlock(t.circ):""}</div><div class="dk-side"><span class="dk-when">${esc(t.w||"")}</span><div class="dk-acts">${t.more||(t.s&&t.s.length)?`<button type="button" data-dkmore="${i}">${L(["التفاصيل","Details"])}</button>`:""}${t.d?calBtns(t.d,t.t+" · "+t.o,(t.s&&t.s[0]&&t.s[0][1])||""):""}</div></div><div class="dk-more" id="dkm${i}" hidden>${t.more?`<p>${esc(t.more)}</p>`:""}${srcLinks(t.s)}</div></li>`).join("")}</ul>${tasks.length>5?`<button type="button" class="dk-showall" id="dkAllBtn">${dkAll?L(["عرض أقل","Show less"]):L([`عرض كل البنود (${tasks.length})`,`Show all items (${tasks.length})`])}</button>`:""}`:`<p class="dk-empty">${L(["لا توجد بنود لهذه الإدارة في هذا اليوم.","No items for this desk on this day."])}</p>`}</section>
  ${nums.length?`<section class="dk-sec"><h3>${L(["أرقام تهمك","Numbers worth watching"])}</h3><div class="dk-nums">${nums.slice(0,4).map((n,k)=>`<div class="dk-num"><small>${esc(n.l)}${n.i?` <button type="button" class="dk-i" data-tip="${k}" aria-label="${esc(L(["شرح","Explain"]))}: ${esc(n.l)}" aria-expanded="false">ⓘ</button>`:""}</small>${n.i?`<span class="dk-tip" role="tooltip">${esc(n.i)}</span>`:""}<b>${esc(n.v)}</b>${n.c?`<em class="${n.cls||""}">${esc(n.c)}</em>`:""}</div>`).join("")}</div></section>`:""}
  <section class="dk-sec"><h3>${L(["للاطلاع","For your information"])}</h3><div class="dk-info">${info.map(c=>`<article class="dk-card"><div class="k">${esc(c.k)}</div><h4>${esc(c.t)}${c.at?newTag(c.at):""}</h4><p>${esc(c.p)}</p>${c.imp?`<div class="imp">${esc(c.imp)}</div>`:""}</article>`).join("")||`<p class="dk-empty">${L(["لا شيء إضافي اليوم.","Nothing extra today."])}</p>`}</div></section>`;
  saveDesk()}
