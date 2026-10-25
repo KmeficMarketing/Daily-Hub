@@ -333,6 +333,7 @@ details[open]>summary .more::after{content:" ▴"}
 .tag.egm{border-color:var(--amber);color:var(--amber)}
 .tag.auc{border-color:var(--red);color:var(--red)}
 .vstate{font-size:11px;font-weight:600}
+.circ{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:8px}.circ .cbtn{font:inherit;font-size:12px;font-weight:600;padding:5px 10px;border-radius:8px;border:1px solid var(--gold);background:transparent;color:var(--gold2);cursor:pointer}.circ .cbtn:hover{background:var(--gold);color:#fff}.circ .cbtn[disabled]{opacity:.5;cursor:wait}.circ .cst{font-size:11px;font-weight:600}.circ .cst.draft{color:var(--amber)}.circ .cst.final{color:var(--green)}
 .vstate.ok{color:var(--green)}.vstate.pend{color:var(--amber)}.vstate.old,.vstate.unv{color:var(--muted)}
 .grp{padding:9px 12px;border-top:1px solid var(--line2)}
 .grp summary{cursor:pointer;font-size:12.5px;color:var(--muted);list-style:none}
@@ -613,7 +614,7 @@ derive();
 const fill=s=>String(s).replace(/\{(\w+)\}/g,(m,k)=>N[k]??m);
 
 const newTag=t=>`<span class="newtag">${L(["جديد","New"])} · ${esc(t)}</span>`;
-function item(p){return `<details class="it st-${p.st}"><summary><div class="chipst">${STL[p.st]}<span>${esc(L(p.when))}</span></div><div><div class="ttl">${esc(L(p.t))} ${p.k?stkBtn(p.k):""}${p.at?newTag(p.at):""}</div><div class="one">${esc(fill(L(p.o)))}</div><div class="who">${esc(L(p.w))}</div></div><div class="more">${L(UI.det)}</div></summary><div class="body">${fill(L(p.b))}${srcLinks(p.s)}</div></details>`}
+function item(p){return `<details class="it st-${p.st}"><summary><div class="chipst">${STL[p.st]}<span>${esc(L(p.when))}</span></div><div><div class="ttl">${esc(L(p.t))} ${p.k?stkBtn(p.k):""}${p.at?newTag(p.at):""}</div><div class="one">${esc(fill(L(p.o)))}</div><div class="who">${esc(L(p.w))}</div></div><div class="more">${L(UI.det)}</div></summary><div class="body">${fill(L(p.b))}${circBlock(p.circ)}${srcLinks(p.s)}</div></details>`}
 
 function renderHead(){
  document.getElementById("stamp").innerHTML=L(D.stamp)+`<br><span class="warn" style="font-size:11px">${lang==="ar"?"نسخة تجريبية · التحديث اليومي 08:00":"Pilot · daily refresh 08:00"}</span>`;
@@ -634,8 +635,17 @@ function pass(e){const n=diff(e.d);
  if(mkt==="listed"&&e.m!=="listed")return false;if(mkt==="otc"&&e.m!=="otc")return false;if(mkt==="egm"&&!e.egm)return false;if(mkt==="auc"&&!e.auc)return false;return true}
 const VT={ok:["مؤكد · إفصاح رسمي","Confirmed · official"],pend:["قيد التحقق · الموازي","Pending · Al-Mowazi"],old:["من نسخة سابقة","From earlier version"],unv:["غير متحقق · خبر الموازي","Unverified · Al-Mowazi news"]};
 function actFor(e){if(e.x)return L(e.x);if(e.auc)return L(["تحقق من قواعد المزاد والأهلية والتسوية قبل أي مشاركة.","Confirm auction rules, eligibility and settlement before participation."]);if(e.egm)return L(["اطلب جدول الأعمال وتحقق من أي تغيير في رأس المال.","Request the agenda and check for capital changes."]);return ""}
+const CST={draft:["مسودة للمراجعة · تحتاج تأكيد العمليات قبل الإرسال","Draft for review · needs Operations sign-off before sending"],final:["نسخة نهائية · جاهزة للمشاركة مع العملاء","Final · ready to share with clients"]};
+function circBlock(c){if(!c||!c.pdf)return"";const share=!!(navigator.share&&navigator.canShare);
+ return `<div class="circ"><span class="cst ${c.st}">${L(["تعميم العملاء","Client circular"])}: ${L(CST[c.st]||CST.draft)}</span><button class="cbtn" data-circ="${c.pdf}" data-cn="${c.name}.pdf" data-ct="application/pdf">PDF ⬇</button>${c.png?`<button class="cbtn" data-circ="${c.png}" data-cn="${c.name}.png" data-ct="image/png">PNG ⬇</button>`:""}${share&&c.png?`<button class="cbtn" data-circ="${c.png}" data-cn="${c.name}.png" data-ct="image/png" data-share="1">${L(["مشاركة","Share"])} ↗</button>`:""}</div>`}
+async function circGet(path,name,type){const j=await openData(await getJ(path));const b=unb64(j.b64);return new File([b],name,{type})}
+document.addEventListener("click",async e=>{const b=e.target.closest("[data-circ]");if(!b)return;e.preventDefault();e.stopPropagation();b.disabled=true;
+ try{const f=await circGet(b.dataset.circ,b.dataset.cn,b.dataset.ct);
+  if(b.dataset.share&&navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f],title:f.name})}
+  else{const u=URL.createObjectURL(f);const a=document.createElement("a");a.href=u;a.download=f.name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),4000)}}
+ catch(err){if(err&&err.name!=="AbortError")alert(L(["تعذر تحميل التعميم.","Could not load the circular."]))}finally{b.disabled=false}},true);
 function evRow(e){const src=e.src||(e.m==="otc"?D.otcSrc:"");const a=actFor(e);
- return `<div class="ev"><div><div class="co">${esc(lang==="ar"?e.a:e.e)} ${e.tk?stkBtn(e.tk):""}${e.at?newTag(e.at):""}</div><span class="tag ${e.m}">${e.m==="otc"?"OTC":L(["مدرج","Listed"])}</span>${e.egm?`<span class="tag egm">${L(["غير عادية","Extraordinary"])}</span>`:""}${e.auc?`<span class="tag auc">${L(["مزاد","Auction"])}</span>`:""}</div><div><div>${esc(L(e.k))}</div><span class="vstate ${e.v}">${L(VT[e.v])}</span></div><div>${src?`<a class="src" href="${src}" target="_blank" rel="noopener">${L(UI.src)}</a>`:""}</div>${calBtns(e.d,(lang==="ar"?e.a:e.e)+" · "+L(e.k),src)}${a?`<details><summary>${L(UI.det)} ▾</summary><p>${esc(a)}</p></details>`:""}</div>`}
+ return `<div class="ev"><div><div class="co">${esc(lang==="ar"?e.a:e.e)} ${e.tk?stkBtn(e.tk):""}${e.at?newTag(e.at):""}</div><span class="tag ${e.m}">${e.m==="otc"?"OTC":L(["مدرج","Listed"])}</span>${e.egm?`<span class="tag egm">${L(["غير عادية","Extraordinary"])}</span>`:""}${e.auc?`<span class="tag auc">${L(["مزاد","Auction"])}</span>`:""}</div><div><div>${esc(L(e.k))}</div><span class="vstate ${e.v}">${L(VT[e.v])}</span></div><div>${src?`<a class="src" href="${src}" target="_blank" rel="noopener">${L(UI.src)}</a>`:""}</div>${calBtns(e.d,(lang==="ar"?e.a:e.e)+" · "+L(e.k),src)}${a?`<details><summary>${L(UI.det)} ▾</summary><p>${esc(a)}</p></details>`:""}${circBlock(e.circ)}</div>`}
 function renderCA(){
  const list=EV.filter(pass).sort((a,b)=>period==="past"?b.d.localeCompare(a.d):a.d.localeCompare(b.d));
  const box=document.getElementById("caList");
@@ -752,7 +762,7 @@ function renderNews(){const el=document.getElementById("newsList");if(!el)return
 document.getElementById("nsw").addEventListener("click",e=>{const b=e.target.closest("[data-nreg]");if(b){nreg=b.dataset.nreg;renderNews()}});
 
 /* ===== DAILY DATA + ARCHIVE ===== */
-const BUILD="c6c3721237";
+const BUILD="c8deb65776";
 const ROOTS=["https://kmeficmarketing.github.io/Daily-Hub/","https://raw.githubusercontent.com/KmeficMarketing/Daily-Hub/main/"];
 let IXSD={},PREV=null,PC={},UPD={},LOADSIG="",CALM=null,SDATES=[],SCACHE={},DATES=[],LATEST=null,VIEW=D.today,NOTE=null,BUSY=false;
 const ls={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}},del(k){try{localStorage.removeItem(k)}catch(e){}}};

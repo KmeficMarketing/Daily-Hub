@@ -41,7 +41,7 @@ if (args[0] === "--all") {
   console.log(n, "file(s) encrypted");
 } else if (args.length === 2) {
   const [src, dst] = args;
-  if (!/data[\\/]((studies[\\/])?\d{4}-\d{2}-\d{2}|updates[\\/]\d{4}-\d{2}-\d{2}[\\/]\d{4})\.json$/.test(dst)) { console.error("output must be data/YYYY-MM-DD.json, data/studies/YYYY-MM-DD.json or data/updates/YYYY-MM-DD/HHMM.json"); process.exit(1); }
+  if (!/data[\\/]((studies[\\/])?\d{4}-\d{2}-\d{2}|updates[\\/]\d{4}-\d{2}-\d{2}[\\/]\d{4}|circulars[\\/][A-Za-z0-9_-]+\.(pdf|png))\.json$/.test(dst)) { console.error("output must be data/YYYY-MM-DD.json, data/studies/YYYY-MM-DD.json, data/updates/YYYY-MM-DD/HHMM.json or data/circulars/<name>.(pdf|png).json"); process.exit(1); }
   const obj = JSON.parse(fs.readFileSync(src, "utf8"));
   if (obj.enc) { console.error("input is already encrypted"); process.exit(1); }
   fs.writeFileSync(dst, JSON.stringify(await enc(obj)));

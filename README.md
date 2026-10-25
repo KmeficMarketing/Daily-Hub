@@ -44,3 +44,10 @@ Sources in order: Kamco Invest "MENA Markets Daily Report" (all GCC + Egypt, top
 - `mm`: the four companies KMEFIC makes a market in (FACIL, MADAR, THURAYA, TAM): last session close, % change, volume, value, trades and volume vs 20-day average, plus alerts (disclosures, assemblies, record dates, unusual-trading clarifications) and a short summary of market-maker obligations under Boursa Kuwait rules. The intraday run after the Kuwait close replaces `mm.co` with today's session.
 - Studies carry `dep` (ops, am, wm, mm) and an optional `a` ("Action for the department"). Sundays: all departments; Wednesdays: Operations only. Dates per department are in `index.json` → `studiesDep`.
 - `hol`: upcoming exchange holidays for the market-hours board (regular hours are built into the page).
+
+## Client circulars (capital increase / rights issue)
+
+- When a rights issue appears in corporate actions, the run builds the KMEFIC client circular (A4 portrait, PDF + PNG) with `tools/circular/build.py spec.json OUTDIR --fonts <fonts dir>`, then `tools/circular/pack.py OUTDIR BASE draft|final`, which encrypts both files into `data/circulars/` and prints the `circ` object. That object goes on the matching `ev2` item and `pri` item, and the page shows "Client circular" download buttons (PDF, PNG, and Share on phones).
+- Status: `draft` (watermarked "مسودة للمراجعة – DRAFT") until Operations confirms the details; then the spec's `status` is set to `final` and the next run rebuilds and republishes it without the watermark.
+- "Last day to receive the request at KMEFIC" defaults to 3 Kuwait business days (Sun–Thu, excluding holidays) before the subscription end.
+- The licensed fonts (Eurostile, GE SS, Calibri) are never committed here. They live in the private repo `KmeficMarketing/hub-assets` (`fonts/`), together with the circular specs (`circulars/<id>.json`). Without them `build.py` exits with code 3 and no circular is published.
