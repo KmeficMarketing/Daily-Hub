@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Pack a built circular (PDF + PNG) into encrypted hub files and print the "circ" object.
+"""Pack a built circular (PDF + PNG + editable PPTX) into encrypted hub files and print the "circ" object.
 
 Usage: python3 tools/circular/pack.py OUTDIR BASE STATUS
   OUTDIR  folder written by build.py; BASE  file base name printed by build.py; STATUS draft|final
@@ -14,7 +14,8 @@ outdir, base, status = sys.argv[1], sys.argv[2], sys.argv[3]
 dest = os.path.join(root, 'data', 'circulars'); os.makedirs(dest, exist_ok=True)
 circ = {'st': status, 'name': base}
 with tempfile.TemporaryDirectory() as td:
-    for ext, mime in (('pdf', 'application/pdf'), ('png', 'image/png')):
+    for ext, mime in (('pdf', 'application/pdf'), ('png', 'image/png'),
+                      ('pptx', 'application/vnd.openxmlformats-officedocument.presentationml.presentation')):
         src = os.path.join(outdir, f'{base}.{ext}')
         plain = os.path.join(td, f'{base}.{ext}.json')
         json.dump({'name': f'{base}.{ext}', 'type': mime, 'b64': base64.b64encode(open(src, 'rb').read()).decode()}, open(plain, 'w'))

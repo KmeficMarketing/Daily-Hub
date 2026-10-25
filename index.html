@@ -637,7 +637,7 @@ const VT={ok:["مؤكد · إفصاح رسمي","Confirmed · official"],pend:["
 function actFor(e){if(e.x)return L(e.x);if(e.auc)return L(["تحقق من قواعد المزاد والأهلية والتسوية قبل أي مشاركة.","Confirm auction rules, eligibility and settlement before participation."]);if(e.egm)return L(["اطلب جدول الأعمال وتحقق من أي تغيير في رأس المال.","Request the agenda and check for capital changes."]);return ""}
 const CST={draft:["مسودة للمراجعة · تحتاج تأكيد العمليات قبل الإرسال","Draft for review · needs Operations sign-off before sending"],final:["جاهز للتحميل وإرساله لإدارة التسويق لإصداره للعملاء","Ready to download and send to Marketing for client release"]};
 function circBlock(c){if(!c||!c.pdf)return"";const share=!!(navigator.share&&navigator.canShare);
- return `<div class="circ"><span class="cst ${c.st}">${L(["تعميم العملاء","Client circular"])}: ${L(CST[c.st]||CST.draft)}</span><button class="cbtn" data-circ="${c.pdf}" data-cn="${c.name}.pdf" data-ct="application/pdf">PDF ⬇</button>${c.png?`<button class="cbtn" data-circ="${c.png}" data-cn="${c.name}.png" data-ct="image/png">PNG ⬇</button>`:""}${share&&c.png?`<button class="cbtn" data-circ="${c.png}" data-cn="${c.name}.png" data-ct="image/png" data-share="1">${L(["مشاركة","Share"])} ↗</button>`:""}</div>`}
+ return `<div class="circ"><span class="cst ${c.st}">${L(["تعميم العملاء","Client circular"])}: ${L(CST[c.st]||CST.draft)}</span><button class="cbtn" data-circ="${c.pdf}" data-cn="${c.name}.pdf" data-ct="application/pdf">PDF ⬇</button>${c.png?`<button class="cbtn" data-circ="${c.png}" data-cn="${c.name}.png" data-ct="image/png">PNG ⬇</button>`:""}${c.pptx?`<button class="cbtn" data-circ="${c.pptx}" data-cn="${c.name}.pptx" data-ct="application/vnd.openxmlformats-officedocument.presentationml.presentation" title="${esc(L(["للتعديل في PowerPoint، ويحتاج خطوط Eurostile و GE SS على الجهاز","For edits in PowerPoint; needs the Eurostile and GE SS fonts on the computer"]))}">${L(["تعديل PowerPoint","Edit in PowerPoint"])} ✎</button>`:""}${share&&c.png?`<button class="cbtn" data-circ="${c.png}" data-cn="${c.name}.png" data-ct="image/png" data-share="1">${L(["مشاركة","Share"])} ↗</button>`:""}</div>`}
 async function circGet(path,name,type){const j=await openData(await getJ(path));const b=unb64(j.b64);return new File([b],name,{type})}
 document.addEventListener("click",async e=>{const b=e.target.closest("[data-circ]");if(!b)return;e.preventDefault();e.stopPropagation();b.disabled=true;
  try{const f=await circGet(b.dataset.circ,b.dataset.cn,b.dataset.ct);
@@ -762,7 +762,7 @@ function renderNews(){const el=document.getElementById("newsList");if(!el)return
 document.getElementById("nsw").addEventListener("click",e=>{const b=e.target.closest("[data-nreg]");if(b){nreg=b.dataset.nreg;renderNews()}});
 
 /* ===== DAILY DATA + ARCHIVE ===== */
-const BUILD="91d263bc34";
+const BUILD="911d449197";
 const ROOTS=["https://kmeficmarketing.github.io/Daily-Hub/","https://raw.githubusercontent.com/KmeficMarketing/Daily-Hub/main/"];
 let IXSD={},PREV=null,PC={},UPD={},LOADSIG="",CALM=null,SDATES=[],SCACHE={},DATES=[],LATEST=null,VIEW=D.today,NOTE=null,BUSY=false;
 const ls={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}},del(k){try{localStorage.removeItem(k)}catch(e){}}};
