@@ -48,6 +48,6 @@ Sources in order: Kamco Invest "MENA Markets Daily Report" (all GCC + Egypt, top
 ## Client circulars (capital increase / rights issue)
 
 - When a rights issue appears in corporate actions, the run builds the KMEFIC client circular (A4 portrait, PDF + PNG) with `tools/circular/build.py spec.json OUTDIR --fonts <fonts dir>`, then `tools/circular/pack.py OUTDIR BASE draft|final`, which encrypts both files into `data/circulars/` and prints the `circ` object. That object goes on the matching `ev2` item and `pri` item, and the page shows "Client circular" download buttons (PDF, PNG, and Share on phones).
-- Status: `draft` (watermarked "مسودة للمراجعة – DRAFT") until Operations confirms the details; then the spec's `status` is set to `final` and the next run rebuilds and republishes it without the watermark.
+- Files are clean and sendable (no watermark): staff download them from the hub and send them to Marketing, who release the circular to clients. A spec only gets a watermark if it carries `"watermark": true`. If a detail in a spec is corrected (edit `circulars/<id>.json` in hub-assets), the next run rebuilds and republishes the circular.
 - "Last day to receive the request at KMEFIC" defaults to 3 Kuwait business days (Sun–Thu, excluding holidays) before the subscription end.
 - The licensed fonts (Eurostile, GE SS, Calibri) are never committed here. They live in the private repo `KmeficMarketing/hub-assets` (`fonts/`), together with the circular specs (`circulars/<id>.json`). Without them `build.py` exits with code 3 and no circular is published.

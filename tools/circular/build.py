@@ -7,7 +7,8 @@ Usage:
 spec.json (one rights issue):
 {
   "id": "AQAR-2026-10",                 # stable id: <TICKER>-<YYYY>-<MM of record date>
-  "status": "draft" | "final",          # draft = watermarked "مسودة / DRAFT"
+  "status": "final",                    # kept for history; output is always a clean, sendable file
+  "watermark": false,                   # optional: true adds a "مسودة / DRAFT" watermark
   "date": "2026-10-25",                 # circular date
   "co_ar_full": "شركة عقار للاستثمارات العقارية ش.م.ك.ع",
   "co_en_full": "AQAR REAL ESTATE INVESTMENTS CO. K.S.C.P",
@@ -153,7 +154,8 @@ def main():
     spec = json.load(open(a.spec, encoding='utf8'))
     hol = set(json.load(open(a.hol))) if a.hol else set()
     os.makedirs(a.outdir, exist_ok=True)
-    base = f"KMEFIC_Circular_{spec['ticker']}_Rights_{spec['date']}" + ('_DRAFT' if spec['status'] != 'final' else '')
+    wm = bool(spec.get('watermark'))
+    base = f"KMEFIC_Circular_{spec['ticker']}_Rights_{spec['date']}" + ('_DRAFT' if wm else '')
     with tempfile.TemporaryDirectory() as td:
         filled = os.path.join(td, 'filled.pptx'); fill_tokens(spec, hol, TEMPLATE, filled)
         out = os.path.join(td, base + '.pptx')
@@ -164,7 +166,7 @@ def main():
         if bottom:   # place the gold bracket line just under the signature
             env['FB'] = str(bottom + 125000)
             subprocess.run([sys.executable, PORTRAIT, filled, out], check=True, env=env, capture_output=True)
-        if spec['status'] != 'final': add_watermark(out)
+        if wm: add_watermark(out)
         pdf = render(out, td)
         fonts = subprocess.run(['pdffonts', pdf], capture_output=True, text=True).stdout
         bad = [l.split()[0] for l in fonts.splitlines()[2:] if l and not re.search(r'Eurostile|GESS|Calibri', l)]
@@ -175,7 +177,7 @@ def main():
         shutil.copy(pdf, os.path.join(a.outdir, base + '.pdf'))
         shutil.copy(out, os.path.join(a.outdir, base + '.pptx'))
     json.dump(spec, open(os.path.join(a.outdir, base + '.spec.json'), 'w', encoding='utf8'), ensure_ascii=False, indent=1)
-    print(json.dumps({'base': base, 'last': spec['last'], 'status': spec['status']}, ensure_ascii=False))
+    print(json.dumps({'base': base, 'last': spec['last'], 'status': 'draft' if wm else 'final'}, ensure_ascii=False))
 
 
 if __name__ == '__main__':
