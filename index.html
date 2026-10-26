@@ -456,6 +456,32 @@ html[dir="rtl"] .kick,html[dir="rtl"] .eqb h4,html[dir="rtl"] .tbl tr.grp td,htm
 .corr{color:var(--amber);font-weight:600}
 .hero h1.long{font-size:clamp(24px,2.5vw,32px)}
 @media (max-width:680px){.hero h1.long{font-size:20px;line-height:1.35}}
+/* ---------- v2.2: guidance cards, cross-study, knowledge bank ---------- */
+.vp2{gap:8px}.vp2 .vpt{display:flex;align-items:center;gap:8px;justify-content:space-between}.vp2 .vpt em{font-style:normal;font-size:11px}
+.vp2 .vpx{font-size:14px;line-height:1.65;font-weight:500}
+.vp2 .vpr{display:block;font-size:13px;line-height:1.6;color:var(--soft);border-inline-start:2px solid color-mix(in srgb,var(--gold) 55%,transparent);padding-inline-start:10px}
+.vp2 .vpr small{display:block;font-size:11px;color:var(--gold);font-weight:600;margin-bottom:2px}
+.vp2 .vps2{font-size:11.5px;color:var(--mut)}
+.vp2 i{align-self:flex-end;font-size:15px}
+.x4b{display:grid;gap:8px}.x4h{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.x4g{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.x4c{border:1px solid var(--line);border-radius:14px;padding:10px 12px;background:var(--glass)}.x4c b{font-size:12px;color:var(--gold)}.x4c p{margin:4px 0 0;font-size:13px;line-height:1.6}
+.x4c.gap{border-style:dashed;opacity:.8}.x4c.gap p{color:var(--mut)}
+.x4c .srcs{margin-top:6px}
+.x4na{font-size:12.5px}
+.chn ol{margin:6px 0 0;padding-inline-start:20px;display:grid;gap:6px}.chn li{font-size:13px;line-height:1.7}.chn li i{font-style:normal;color:var(--gold);margin-inline:6px}
+.kbl{display:flex;flex-wrap:wrap;gap:6px;align-items:center}.kbl .lbl{width:100%}
+.kbu{margin:6px 0 0;padding-inline-start:20px;display:grid;gap:4px;font-size:13.5px;line-height:1.65}
+.kbcu{display:grid;gap:8px;margin-top:6px}.kbcu>div{border-inline-start:2px solid var(--line2);padding-inline-start:10px}.kbcu p{margin:0;font-size:13.5px;line-height:1.65}
+.kbp{display:grid;gap:8px;margin-top:6px}.kbpc{display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px;border:1px solid var(--line);border-radius:14px;padding:10px 12px}.kbpc>b{font-size:12px;color:var(--gold);white-space:nowrap}.kbpc p{margin:3px 0 0;font-size:13px;line-height:1.6}
+.kbq{border:1px solid var(--line);border-radius:12px;padding:8px 12px;margin-top:6px}.kbq summary{cursor:pointer;font-size:13.5px;font-weight:500}.kbq p{margin:6px 0 0;font-size:13px;color:var(--soft)}
+.isrc{display:inline-block;font-size:12px;color:var(--mut);padding-block:2px}
+#kbGrid .kbc{cursor:pointer}
+@media (max-width:680px){.x4g{grid-template-columns:minmax(0,1fr)}.kbpc{grid-template-columns:minmax(0,1fr)}}
+#kbGrid .kbc .foot>span:first-child{white-space:normal;overflow:visible;text-overflow:clip}
+.kbm{margin-top:14px;padding:12px 14px;border-radius:16px;border:1px solid color-mix(in srgb,var(--gold) 35%,transparent);background:var(--goldbg);display:grid;gap:6px}
+.kbm .kbu{margin:0}.kbmd,.kbmc{margin:0;font-size:13.5px;line-height:1.65}.kbmd small,.kbmc small{display:block;font-size:11px;color:var(--gold);font-weight:600}
+.kbm .mini{justify-self:start}
 
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.ruler .zone,.gbar,.load .c .s{transform:none!important}}
 @media print{
@@ -542,6 +568,11 @@ html[dir="rtl"] .kick,html[dir="rtl"] .eqb h4,html[dir="rtl"] .tbl tr.grp td,htm
    <div class="grid c2" id="ipoList" style="align-content:start"></div>
    <div class="grid" style="align-content:start"><div class="g pad"><div class="ct"><span>المواعيد القادمة</span></div><div class="rows" id="ipoNext"></div></div><div class="grid" id="ipoCtx"></div></div>
   </div>
+ </section>
+
+ <section class="view" id="v-kb" data-v="kb">
+  <div class="vh"><div><h2>بنك الخبرة</h2><p>المواقف التي تتكرر في السوق: ما يفيد دراسته، والمتعارف عليه، وحالات سابقة وما حدث بعدها، وزاوية كل قسم. كل معلومة بمصدرها، والقرار للموظف.</p></div><span class="chip" id="kbNote"></span></div>
+  <div class="grid c3" id="kbGrid"></div>
  </section>
  <section class="view" id="v-mm" data-v="mm">
   <div class="vh"><div><h2 data-t="mm"></h2><p id="mmD"></p></div></div>
@@ -790,8 +821,8 @@ const U6={
  news:['الأخبار','News'],newsP:['مرتبة حسب الأثر، ولكل خبر أثره على الكويت وأمريكا وKMEFIC.','Ranked by impact, each with its effect on Kuwait, the US and KMEFIC.'],
  mgmt:['الإدارة','Management'],mgmtP:['السياق الأوسع لهذا الأسبوع.','The wider context for this week.'],
  st:['الدراسات','Studies'],src:['المصادر والفجوات','Sources & gaps'],srcP:['كل رقم له مصدر، وما لم يتأكد مذكور هنا.','Every figure has a source; anything unconfirmed is listed here.']};
-const IC={ipo:'M12 2c3 3 4 7 4 11l-4 4-4-4c0-4 1-8 4-11zM9 17l-3 3M15 17l3 3M12 9h.01',ov:'M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z',inf:'M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.6.5 1 1.2 1.1 2.2h5c.1-1 .5-1.7 1.1-2.2A6 6 0 0 0 12 3z',today:'M4 6h16v14H4zM4 10h16M8 3v4M16 3v4',ca:'M3 7h18v12H3zM8 7V5h8v2M3 12h18',mm:'M7 4v16M7 4L4 7M7 4l3 3M17 20V4M17 20l-3-3M17 20l3-3',mk:'M4 19h16M6 16l4-5 3 3 5-7',news:'M5 4h11l3 3v13H5zM8 9h8M8 13h8M8 17h5',mgmt:'M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21a8 8 0 0 1 16 0',st:'M5 4h12a2 2 0 0 1 2 2v14H7a2 2 0 0 1-2-2zM5 18a2 2 0 0 1 2-2h12',src:'M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1'};
-const VIEWS=[['ov',['نظرة عامة','Overview']],['inf',['الاستنتاجات','Conclusions']],['today',['اليوم','Today']],['ca',['الإجراءات والموازي','Corp. actions']],['ipo',['رادار الاكتتابات','IPO radar']],['mm',['صانع السوق','Market making']],['mk',['الأسواق','Markets']],['news',['الأخبار','News']],['mgmt',['الإدارة','Management']],['st',['الدراسات','Studies']],['src',['المصادر','Sources']]];
+const IC={kb:'M4 5a2 2 0 0 1 2-2h12v16H6a2 2 0 0 0-2 2zM4 21V5M8 7h6M8 11h6',ipo:'M12 2c3 3 4 7 4 11l-4 4-4-4c0-4 1-8 4-11zM9 17l-3 3M15 17l3 3M12 9h.01',ov:'M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z',inf:'M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.6.5 1 1.2 1.1 2.2h5c.1-1 .5-1.7 1.1-2.2A6 6 0 0 0 12 3z',today:'M4 6h16v14H4zM4 10h16M8 3v4M16 3v4',ca:'M3 7h18v12H3zM8 7V5h8v2M3 12h18',mm:'M7 4v16M7 4L4 7M7 4l3 3M17 20V4M17 20l-3-3M17 20l3-3',mk:'M4 19h16M6 16l4-5 3 3 5-7',news:'M5 4h11l3 3v13H5zM8 9h8M8 13h8M8 17h5',mgmt:'M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21a8 8 0 0 1 16 0',st:'M5 4h12a2 2 0 0 1 2 2v14H7a2 2 0 0 1-2-2zM5 18a2 2 0 0 1 2-2h12',src:'M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1'};
+const VIEWS=[['ov',['نظرة عامة','Overview']],['inf',['الاستنتاجات','Conclusions']],['today',['اليوم','Today']],['ca',['الإجراءات والموازي','Corp. actions']],['ipo',['رادار الاكتتابات','IPO radar']],['mm',['صانع السوق','Market making']],['mk',['الأسواق','Markets']],['news',['الأخبار','News']],['mgmt',['الإدارة','Management']],['st',['الدراسات','Studies']],['src',['المصادر','Sources']],['kb',['بنك الخبرة','Knowledge bank']]];
 const RM=matchMedia('(prefers-reduced-motion:reduce)').matches;
 const conf=k=>{const c=CONF[k]||CONF.med;return `<span class="conf">${[1,2,3].map(i=>`<i class="${i<=c[0]?'on':''}"></i>`).join('')}<span style="margin-inline-start:4px">${esc(L(c[1]))}</span></span>`};
 const vt=(v)=>`<h2 class="vtitle" style="font-size:24px;margin:0 4px 12px">${esc(L((VIEWS.find(x=>x[0]===v)||VIEWS[0])[1]))}</h2>`;
@@ -999,7 +1030,7 @@ function showErr(){if(!ERR.length)return;let b=$('errBar');if(!b){b=document.cre
 addEventListener('error',e=>{ERR.push((e.message||'error')+' @'+(e.lineno||''));try{showErr()}catch(_){}});
 function renderAll(){document.documentElement.lang=lang;document.documentElement.dir=lang==='ar'?'rtl':'ltr';$('langBtn').textContent=lang==='ar'?'EN':'ع';
  document.querySelectorAll('.vtitle').forEach(x=>x.remove());
- buildCA();PRI=priItems();[renderShell,renderOv,renderInf,renderToday,renderCharts,renderCA,renderIpo,renderMM,renderHours,renderMk,renderNews,renderMgmt,renderStudies,renderSrc,applyDep,postFix].forEach(f=>{try{f()}catch(e){ERR.push((f.name||'step')+': '+e.message)}});showErr()}
+ buildCA();PRI=priItems();[renderShell,renderOv,renderInf,renderToday,renderCharts,renderCA,renderIpo,renderMM,renderHours,renderMk,renderNews,renderMgmt,renderStudies,renderSrc,applyDep,postFix,postFix2].forEach(f=>{try{f()}catch(e){ERR.push((f.name||'step')+': '+e.message)}});showErr()}
 
 /* ================= IPO & pre-IPO radar (regional + US) ================= */
 const STG={rumor:[['متداول إعلاميًا','Reported'],'pre'],banks:[['تعيين بنوك','Banks hired'],'pre'],confidential:[['ملف سري لدى الهيئة','Confidential filing'],'pre'],filed:[['ملف علني','Public filing'],'pre'],itf:[['إعلان نية الطرح','Intention to float'],'soon'],approved:[['موافقة الهيئة','Regulator approval'],'soon'],terms:[['تحديد النطاق السعري','Terms set'],'soon'],bookbuild:[['بناء سجل الأوامر','Book-building'],'soon'],sub:[['فترة الاكتتاب','Subscription'],'open'],priced:[['تم التسعير','Priced'],'done'],listed:[['مُدرج','Listed'],'done']};
@@ -1105,7 +1136,7 @@ function renderDesk(){const el=$('desk');if(!el)return;if(dep==='all'){el.hidden
  const box=(t,b,n)=>`<div class="g pad"><div class="ct"><span>${t}</span>${n!=null?`<span class="chip">${n}</span>`:''}</div>${b}</div>`;
  el.innerHTML=`<div class="g pad deskh"><div><div class="kick">${T('مساحة القسم','DEPARTMENT DESK')}</div><h2 style="font-size:24px;margin-top:6px">${esc(DEPN(dep))}</h2><p class="soft" style="margin:4px 0 0;font-size:13.5px">${esc(L(DESKD[dep]||['','']))}</p></div><button type="button" class="btn" data-depall="1">${T('عرض كل الأقسام ✕','Show all departments ✕')}</button></div>
  <div class="grid c3" style="margin-top:14px">
-  ${box(T('المطلوب من قسمك اليوم','What your department should do today'),recs.length?`<div class="recs">${recs.map(r=>`<div class="rec it" data-open="${esc(r.id)}" style="grid-template-columns:1fr;cursor:pointer"><span>${esc(r.t)}</span><small class="mut" style="font-size:11.5px">${esc(r.h)}</small></div>`).join('')}</div>`:`<p class="mut" style="font-size:13px">${INF.items.length?T('لا توجد توصية مباشرة لقسمك في استنتاجات اليوم.','No direct recommendation for your department today.'):T('لا توجد استنتاجات لهذا اليوم.','No conclusions for this day.')}</p>`,recs.length)}
+  ${box(T('للدراسة في قسمك اليوم','Worth studying in your department today'),recs.length?`<div class="recs">${recs.map(r=>`<div class="rec it" data-open="${esc(r.id)}" style="grid-template-columns:1fr;cursor:pointer"><span>${esc(r.t)}</span><small class="mut" style="font-size:11.5px">${esc(r.h)}</small></div>`).join('')}</div>`:`<p class="mut" style="font-size:13px">${INF.items.length?T('لا توجد نقاط خاصة بقسمك في استنتاجات اليوم.','Nothing specific to your department in today\'s conclusions.'):T('لا توجد استنتاجات لهذا اليوم.','No conclusions for this day.')}</p>`,recs.length)}
   ${box(T('مواعيد قسمك خلال 14 يومًا','Your dates in the next 14 days'),ds.length?ds.map(x=>`<div class="row${x.id?' it':''}"${x.id?` data-open="${esc(x.id)}"`:''} style="grid-template-columns:auto minmax(0,1fr) auto;margin-bottom:6px;padding:8px 10px"><b class="num dlink" style="color:var(--gold)"${CA.some(e=>e.d===x.d)?` data-cadaygo="${x.d}" role="button" tabindex="0" title="${T('كل بنود هذا اليوم','Everything on this day')}"`:''}>${fds(x.d)}</b><span style="font-size:13px">${esc(x.t)}</span><span class="chip">${esc(x.k)}</span></div>`).join(''):`<p class="mut" style="font-size:13px">${T('لا مواعيد قريبة.','No upcoming dates.')}</p>`,ds.length)}
   ${box(T('بنود اليوم لقسمك','Today\'s items for you'),pri.length?pri.slice(0,6).map(p=>`<div class="row it" data-open="pi-${p._k}" style="grid-template-columns:auto minmax(0,1fr);margin-bottom:6px;padding:8px 10px"><span class="dot" style="background:${stDot[p.st]||stDot.info};margin-top:7px"></span><span style="font-size:13.5px">${esc(L(p.t))}</span></div>`).join('')+(pri.length>6?`<button type="button" class="more" data-view="today">${T('الكل ←','All →')} ${pri.length}</button>`:''):`<p class="mut" style="font-size:13px">${T('لا بنود خاصة بقسمك اليوم.','No items for your department today.')}</p>`,pri.length)}
  </div>
@@ -1201,8 +1232,81 @@ function showQA(){const R=runQA();const c=k=>R.filter(r=>r.sev===k).length;
  openRaw(T('فحص الجودة على بيانات اليوم','Quality check on today\'s data'),T(`${R.length} ملاحظة`,`${R.length} findings`),`<div class="eqb"><div class="eqrows"><div><small>${T('مرتفعة','High')}</small><b class="down">${c('high')}</b></div><div><small>${T('متوسطة','Medium')}</small><b style="color:var(--amber)">${c('med')}</b></div><div><small>${T('منخفضة','Low')}</small><b>${c('low')}</b></div></div></div>`+(R.length?R.map(r=>`<div class="row${r.open?' it':''}"${r.open?` data-qaopen="${esc(r.open)}"`:''} style="grid-template-columns:auto auto minmax(0,1fr);padding:8px 10px;margin-bottom:6px"><span class="chip ${r.sev==='high'?'r':r.sev==='med'?'a':''}">${r.sev==='high'?T('مرتفعة','High'):r.sev==='med'?T('متوسطة','Medium'):T('منخفضة','Low')}</span><span class="chip">${esc(r.area)}</span><span style="font-size:13px">${esc(r.msg)}</span></div>`).join(''):`<p class="up">${T('لا توجد ملاحظات.','No findings.')}</p>`))}
 document.addEventListener('click',e=>{const q=e.target.closest('[data-qaopen]');if(q){e.stopPropagation();closeDet();setTimeout(()=>openDet(q.dataset.qaopen),320)}},true);
 
+/* ================= v2.2: knowledge bank, cross-study, guidance cards ================= */
+let KB={cards:[]};
+async function loadKB(){if(KB._ok)return;try{const k=await openData(await getJ('data/kb.json'));if(k&&k.cards){KB=k;KB._ok=1}}catch(e){}}
+const srcX=(s,lbl)=>{s=(s||[]).filter(x=>x&&x[0]);if(!s.length)return '';return `<div class="srcs" data-l="${esc(lbl||L(UI.src))}">${s.map(x=>/^https?:/.test(x[1]||'')?`<a href="${esc(x[1])}" target="_blank" rel="noopener">${esc(x[0])}</a>`:`<span class="isrc">${esc(x[0])}</span>`).join('')}</div>`};
+const KBC=id=>(KB.cards||[]).find(c=>c.id===id);
+const AX=[['news',['الأخبار','News']],['mkt',['حركة السوق','Market move']],['geo',['الجو الجيوسياسي','Geopolitics']],['str',['قوة الشركة أو الجهة','Strength of the company']]];
+const AGR={yes:['المحاور متفقة','Axes agree','u'],mixed:['المحاور متباينة','Axes mixed','a'],no:['المحاور متعارضة','Axes conflict','r']};
+function x4Html(it){
+ if(it.x4na)return `<div class="x4na mut">◦ ${esc(L(it.x4na))}</div>`;
+ if(!it.x4)return '';const a=AGR[it.agree]||null;
+ return `<div class="x4b"><div class="x4h"><span class="lbl">${T('الدراسة المتقاطعة','Cross-study')}</span>${a?`<span class="chip ${a[2]}">${T(a[0],a[1])}</span>`:''}</div>
+  <div class="x4g">${AX.map(([k,n])=>{const v=it.x4[k];if(!v)return `<div class="x4c gap"><b>${T(n[0],n[1])}</b><p>${T('لم يُدرس','Not studied')}</p></div>`;return `<div class="x4c${v.gap?' gap':''}"><b>${T(n[0],n[1])}</b><p>${esc(L(v.v))}</p>${srcX(v.s,T('المصدر:','Source:'))}</div>`}).join('')}</div></div>`}
+function chainHtml(ch,ttl){if(!(ch||[]).length)return '';return `<div class="chn"><span class="lbl">${esc(ttl||T('السيناريو المحتمل','Possible chain'))}</span><ol>${ch.map(c=>`<li>${esc(L(c)).split('←').map(x=>`<span>${x.trim()}</span>`).join('<i>←</i>')}</li>`).join('')}</ol></div>`}
+function kbLinks(ids){ids=(ids||[]).filter(KBC);if(!ids.length)return '';return `<div class="kbl"><span class="lbl">${T('من بنك الخبرة','From the knowledge bank')}</span>${ids.map(i=>`<button type="button" class="mini" data-kb="${esc(i)}">${esc(L(KBC(i).t))} ←</button>`).join('')}</div>`}
+// add the cross-study, chain and knowledge-bank links to each conclusion; guidance wording on labels
+function enrichInf(){INF.items.forEach(it=>{const el=$('inf-'+it.id);if(!el)return;const det=el.querySelector('.det');if(!det||det.dataset.kb2)return;det.dataset.kb2=1;
+  const recs=det.querySelector('.recs');const box=recs&&recs.parentElement;if(box){const l=box.querySelector('.lbl');if(l)l.textContent=T('للدراسة في كل قسم','Worth studying, by department')}
+  const html=x4Html(it)+chainHtml(it.chain);if(html&&box)box.insertAdjacentHTML('beforebegin',html);
+  det.insertAdjacentHTML('beforeend',kbLinks(it.kb));
+  const f=el.querySelector('.foot span:last-child');if(f)f.textContent='↖';
+  const fd0=el.querySelector('.foot span:first-child');if(fd0&&it.agree&&AGR[it.agree])fd0.innerHTML=`<span class="chip ${AGR[it.agree][2]}" style="font-size:11px">${T(AGR[it.agree][0],AGR[it.agree][1])}</span> ${fd0.innerHTML}`})}
+// overview: each point shows its content (statement, what is worth studying for your department, source); the whole card opens the details
+function renderVps2(){const box=$('vps');if(!box||!INF.view.pts.length)return;
+ box.innerHTML=INF.view.pts.map((p,i)=>{const it=INF.items.find(x=>x.id===p[1])||{};const recs=it.rec||[];const mine=dep!=='all'?recs.find(r=>r[0]===dep):null;const r=mine||recs[0];const ev=(it.ev||[])[0];const a=AGR[it.agree];
+  return `<button type="button" class="vp vp2" data-openinf="${esc(p[1])}"><span class="vpt"><b>0${i+1}</b>${a?`<em class="chip ${a[2]}">${T(a[0],a[1])}</em>`:''}</span><span class="vpx">${esc(L(p[0]))}</span>${r?`<span class="vpr"><small>${mine?T('لقسمك','For your department'):esc(DEPN(r[0]))}</small>${esc(L(r[1]))}</span>`:''}${ev?`<span class="vps2">${T('المصدر:','Source:')} ${esc(ev[0])}${(it.ev||[]).length>1?` +${it.ev.length-1}`:''}</span>`:''}<i aria-hidden="true">↖</i></button>`}).join('')}
+// knowledge-bank view and card drawer
+function renderKB(){const g=$('kbGrid');if(!g)return;const cs=KB.cards||[];
+ if(!cs.length){g.innerHTML=`<div class="g pad" style="grid-column:1/-1"><p class="mut">${T('بنك الخبرة لم يُحمّل بعد.','The knowledge bank is not loaded yet.')}</p></div>`;return}
+ const used=new Set(INF.items.flatMap(x=>x.kb||[]));
+ g.innerHTML=cs.map(c=>`<article class="g ic it kbc${used.has(c.id)?' hot':''}" data-kb="${esc(c.id)}" role="button" tabindex="0"><div style="display:flex;gap:6px;flex-wrap:wrap">${used.has(c.id)?`<span class="chip g2">${T('مرتبط باليوم','Live today')}</span>`:''}<span class="chip">${(c.past||[]).length} ${T('حالات سابقة','past cases')}</span></div><h3>${esc(L(c.t))}</h3><p class="so">${esc(L(c.when))}</p><div class="foot"><span>${Object.keys(c.dep||{}).map(d=>esc(DEPN(d))).join(' · ')}</span><span>↖</span></div></article>`).join('');
+ const n=$('kbNote');if(n)n.textContent=T(`${cs.length} مواقف · آخر تحديث ${fd(KB.v||TODAY)}`,`${cs.length} situations · updated ${fd(KB.v||TODAY)}`)}
+function openKB(id){const c=KBC(id);if(!c)return;closeDet&&$('drawer').classList.contains('on')&&closeDet();
+ const today=INF.items.filter(x=>(x.kb||[]).includes(id));
+ const deps=Object.entries(c.dep||{});
+ const html=`<p class="soft" style="font-size:13.5px;margin:0">${esc(L(c.when))}</p>
+ ${today.length?`<div class="kbl"><span class="lbl">${T('مرتبط بهذا اليوم','Linked to today')}</span>${today.map(x=>`<button type="button" class="mini" data-open="inf-${esc(x.id)}">${esc(L(x.t))} ←</button>`).join('')}</div>`:''}
+ <div><span class="lbl">${T('من المفيد دراسة','Worth studying')}</span><ul class="kbu">${(c.study||[]).map(s=>`<li>${esc(L(s))}</li>`).join('')}</ul></div>
+ <div><span class="lbl">${T('المتعارف عليه في هذا الظرف','What is customary in this situation')}</span><div class="kbcu">${(c.custom||[]).map(x=>`<div><p>${esc(L(x[0]))}</p>${srcX([x[1]],T('المصدر:','Source:'))}</div>`).join('')}</div></div>
+ ${chainHtml(c.chain,T('ما يحدث عادةً','What usually follows'))}
+ <div><span class="lbl">${T('حالات سابقة','Past cases')}</span><div class="kbp">${(c.past||[]).map(p=>`<div class="kbpc"><b class="num">${esc(p.d||'')}</b><div><b>${esc(L(p.case))}</b><p>${esc(L(p.what))}</p>${p.after?`<p class="soft"><small>${T('بعدها:','After:')}</small> ${esc(L(p.after))}</p>`:''}${srcX([p.src,p.src_after].filter(Boolean),T('المصدر:','Source:'))}</div></div>`).join('')}</div></div>
+ ${(c.qa||[]).length?`<div><span class="lbl">${T('أسئلة متوقعة من العملاء','Likely client questions')}</span>${c.qa.map(q=>`<details class="kbq"><summary>${esc(L(q[0]))}</summary><p>${esc(L(q[1]))}</p></details>`).join('')}</div>`:''}
+ ${deps.length?`<div><span class="lbl">${T('زاوية كل قسم','Each department’s angle')}</span><div class="recs">${deps.map(([d,v])=>`<div class="rec${dep!=='all'&&d===dep?' hit':''}${dep!=='all'&&d!==dep?' dim':''}" data-dep="${d}"><span class="chip">${esc(DEPN(d))}</span><span>${esc(L(v))}</span></div>`).join('')}</div></div>`:''}
+ ${(c.gaps||[]).length?`<div class="kbg"><span class="lbl">${T('ما لم نجد له مصدرًا','Not yet sourced')}</span><ul class="kbu mut">${c.gaps.map(g=>`<li>${esc(L(g))}</li>`).join('')}</ul></div>`:''}`;
+ setTimeout(()=>openRaw(T('بنك الخبرة','Knowledge bank'),L(c.t),html),$('drawer').classList.contains('on')?320:0)}
+document.addEventListener('click',e=>{const k=e.target.closest('[data-kb]');if(k){e.preventDefault();e.stopPropagation();openKB(k.dataset.kb)}},true);
+document.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.matches&&e.target.matches('.kbc[data-kb]')){e.preventDefault();openKB(e.target.dataset.kb)}});
+function postFix2(){try{renderVps2()}catch(e){}try{enrichInf()}catch(e){}try{renderKB()}catch(e){}}
+const _applyDep0=applyDep;applyDep=function(){_applyDep0.apply(this,arguments);try{renderVps2()}catch(e){}};
+/* knowledge-bank advice where the situation appears (no searching) */
+const GEO_RX=/(حوثي|إيران|عسكري|هجوم|صاروخ|مسيّر|ضربة|ضربات|توتر|Houthi|Iran|strike|military|attack|missile|drone|escalat)/i,FED_RX=/(الفيدرالي|الاحتياطي الفيدرالي|\bFed\b|FOMC)/i,DEL_RX=/(إلغاء الإدراج|غير المدرجة|delist|unlisted)/i;
+function kbSitFor(id){const out=new Set();const tx=o=>JSON.stringify(o||'');
+ if(id.startsWith('ca-')){const e=CA.find(x=>'ca-'+x.id===id);if(e){const t=tx([e.k,e.x]);if(e.rights)out.add('rights');if(e.div)out.add('div');if(/جمعية|assembly|AGM|EGM/i.test(t))out.add('agm');if(DEL_RX.test(t))out.add('unlisted')}}
+ else if(id.startsWith('ipo-')){const I=(typeof IPO==='function')?IPO():{post:[]};out.add((I.post||[]).some(p=>'ipo-'+p.id===id)?'postipo':'ipo')}
+ else if(id.startsWith('nw-')){const n=(D.news||[])[+id.slice(3)];const t=tx(n&&[n.t,n.o,n.what]);if(GEO_RX.test(t))out.add('geo');if(FED_RX.test(t))out.add('fed')}
+ else if(id.startsWith('mal'))out.add('mm');
+ else if(id.startsWith('pi-')){const p=PRI.find(x=>'pi-'+x._k===id);const t=tx(p&&[p.t,p.o,p.b]);if(/حقوق|زيادة رأس المال|rights issue/i.test(t))out.add('rights');if(/اكتتاب عام|طرح أولي|\bIPO\b/i.test(t))out.add('ipo');if(GEO_RX.test(t))out.add('geo');if(FED_RX.test(t))out.add('fed')}
+ return [...out].filter(KBC)}
+function kbMini(cid){const c=KBC(cid);if(!c)return '';const mine=dep!=='all'&&c.dep&&c.dep[dep];const st=(c.study||[]).slice(0,2);const cu=(c.custom||[])[0];const pa=(c.past||[])[0];
+ return `<div class="kbm"><div class="kbmh"><span class="lbl">${T('من بنك الخبرة','From the knowledge bank')} · ${esc(L(c.t))}</span></div>
+ ${mine?`<p class="kbmd"><small>${esc(DEPN(dep))}</small>${esc(L(mine))}</p>`:''}
+ ${st.length?`<ul class="kbu">${st.map(s=>`<li>${esc(L(s))}</li>`).join('')}</ul>`:''}
+ ${!mine&&cu?`<p class="kbmc"><small>${T('المتعارف عليه','Customary')}</small>${esc(L(cu[0]))}</p>${srcX([cu[1]],T('المصدر:','Source:'))}`:''}
+ ${pa?`<p class="kbmc"><small>${T('حالة سابقة','Past case')} ${esc(pa.d||'')}</small>${esc(L(pa.case))}: ${esc(L(pa.what))}${pa.after?' '+T('وبعدها: ','Afterwards: ')+esc(L(pa.after)):''}</p>`:''}
+ <button type="button" class="mini" data-kb="${esc(c.id)}">${T('البطاقة كاملة ←','Full card →')}</button></div>`}
+const _openDet1=openDet;openDet=function(id){_openDet1(id);try{if(id.startsWith('inf-'))return;const s=kbSitFor(id);if(s.length)$('drwB').insertAdjacentHTML('beforeend',s.map(kbMini).join(''))}catch(e){}};
+const _renderDesk1=renderDesk;renderDesk=function(){_renderDesk1();try{const el=$('desk');if(!el||el.hidden)return;const live=new Map();
+ INF.items.forEach(it=>(it.kb||[]).forEach(k=>live.has(k)||live.set(k,['inf-'+it.id,L(it.t)])));
+ CA.filter(e=>e.d>=RTD()&&e.d<=addD(RTD(),14)).forEach(e=>kbSitFor('ca-'+e.id).forEach(k=>live.has(k)||live.set(k,['ca-'+e.id,(lang==='ar'?e.na:e.ne)+' · '+L(e.k)])));
+ const I=(typeof IPO==='function')?IPO():{items:[],post:[]};if((I.items||[]).length&&!live.has('ipo'))live.set('ipo',['ipo-'+I.items[0].id,L(I.items[0].name)]);if((I.post||[]).length&&!live.has('postipo'))live.set('postipo',['ipo-'+I.post[0].id,L(I.post[0].name)]);
+ (D.news||[]).forEach((n,i)=>kbSitFor('nw-'+i).forEach(k=>live.has(k)||live.set(k,['nw-'+i,L(n.t)])));
+ const rows=[...live].map(([k,v])=>{const c=KBC(k);const a=c&&c.dep&&c.dep[dep];return a?`<div class="row it" data-kb="${esc(k)}" style="grid-template-columns:1fr;margin-bottom:6px;padding:9px 12px"><b style="font-size:12.5px;color:var(--gold)">${esc(L(c.t))}</b><span style="font-size:13.5px">${esc(L(a))}</span><small class="mut" style="font-size:11.5px">${T('بسبب:','Because of:')} ${esc(v[1])}</small></div>`:''}).filter(Boolean);
+ if(rows.length)el.insertAdjacentHTML('beforeend',`<div class="g pad" style="margin-top:14px"><div class="ct"><span>${T('من بنك الخبرة لقسمك اليوم','From the knowledge bank, for your department today')}</span><span class="chip">${rows.length}</span></div>${rows.join('')}</div>`)}catch(e){}};
+
 /* ================= live data layer (GitHub Pages, encrypted data) ================= */
-const BUILD="aa89d999e0";
+const BUILD="2461f31742";
 const GH="https://kmeficmarketing.github.io/Daily-Hub/",RAW="https://raw.githubusercontent.com/KmeficMarketing/Daily-Hub/main/";
 const ROOTS=/^https?:$/.test(location.protocol)?["./",GH,RAW]:[GH,RAW];
 let IXIPO=[],ICACHE={},IPODATE='',IXSD={},PREV=null,PC={},UPD={},LOADSIG="",SDATES=[],SCACHE={},DATES=[],LATEST=null,VIEWD=null,NOTE=null,BUSY=false,LAST_AT='',STDATE='',CALM=null;
@@ -1265,6 +1369,7 @@ async function goDay(d){if(!DATES.length)return;let req=null;
  try{const j=await openData(await getJ("data/"+d+".json"));
   if(!(j.studies&&j.studies.length))j.studies=await loadStudies(d);else STDATE=d;
   if(!j.ipo)j.ipo=await loadIpo(d);
+  try{await loadKB()}catch(e){}
   await mergeUpd(j,d);setDay(j,d);VIEWD=d;PREV=null;
   const pi=DATES.indexOf(d)-1;if(pi>=0){const p=DATES[pi];try{PREV=PC[p]||(PC[p]=await openData(await getJ("data/"+p+".json")));PREV._d=p}catch(e){PREV=null}}
   NOTE=req?{req}:null;

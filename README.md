@@ -81,3 +81,13 @@ Sources in order: Kamco Invest "MENA Markets Daily Report" (all GCC + Egypt, top
 - Files are clean and sendable (no watermark): staff download them from the hub and send them to Marketing, who release the circular to clients. A spec only gets a watermark if it carries `"watermark": true`. If a detail in a spec is corrected (edit `circulars/<id>.json` in hub-assets), the next run rebuilds and republishes the circular.
 - "Last day to receive the request at KMEFIC" defaults to 3 Kuwait business days (Sun–Thu, excluding holidays) before the subscription end.
 - The licensed fonts (Eurostile, GE SS, Calibri) are never committed here. They live in the private repo `KmeficMarketing/hub-assets` (`fonts/`), together with the circular specs (`circulars/<id>.json`). Without them `build.py` exits with code 3 and no circular is published.
+
+## Knowledge bank and cross-study (since 26 Oct 2026)
+- `data/kb.json` (encrypted) holds the knowledge bank: situation cards with ids `rights`, `ipo`, `postipo`, `agm`, `div`, `unlisted`, `mm`, `geo`, `fed`. Each card: t, when, study (what is worth studying), custom (what is customary, each with a source), chain (what usually follows), qa (client questions), past (real past cases with what happened after, each sourced), dep (each department's angle), gaps. The page shows a card's advice inside every item that matches it (rights / AGM / dividend / delisting rows, IPO cards, news on military escalation or the Fed, market-maker alerts) and in the department desk.
+- Every conclusion in `inf.items` of kind rights, market, movers, mm, note or ipo carries a **cross-study** before any conclusion or prediction:
+  - `x4`: {"news":{"v":[ar,en],"s":[[label,url]]},"mkt":{…},"geo":{…},"str":{…}} — the news; the market move; the geopolitical climate; the strength of the company / institution / person (financials, capital, track record). An axis with no sourced information is written {"v":["لا تتوفر معلومات موثقة","No sourced information"],"s":[],"gap":true}.
+  - `agree`: "yes" | "mixed" | "no" (do the axes point the same way; conflicting axes lower `conf`).
+  - `chain`: the prediction as a causal chain, each step a line "حدث كذا ← قد ينتج كذا ← وقد يؤدي إلى كذا", grounded in the axes, the knowledge bank or past cases.
+  - `kb`: list of knowledge-bank card ids that apply.
+  - Operational items (kind load, or timing notes) carry `x4na`: [ar,en] instead.
+- `rec` is guidance, never orders: every line starts with "من المفيد…", "المتعارف عليه…", "يُنصح عادةً…", "قد…", "في حال…" or "عند…". The page and `tools/qa_check.mjs` reject orders (اعمل، نفّذ، تواصل، جهّز، راجع، تأكد…).
