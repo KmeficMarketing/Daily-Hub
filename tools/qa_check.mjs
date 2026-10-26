@@ -49,6 +49,19 @@ if (D.signal) {
 ["pri", "news", "caNotes"].forEach(k => (D[k] || []).forEach((x, i) => { if (!(x.s || []).length) err(`${k}[${i}]`, "no source: " + A(x.t)); }));
 ((D.inf || {}).items || []).forEach(x => { if (!(x.ev || []).length) err(`inf.${x.id}`, "no evidence/sources"); if (!(x.rec || []).length) warn(`inf.${x.id}`, "no recommendations"); if (!x.chk) warn(`inf.${x.id}`, "no review date"); });
 
+// 3b. conclusions: guidance tone (no orders) and the four-axis cross-study
+const GUIDE = /^(من المفيد|المتعارف عليه|يُنصح|ينصح|يُستحسن|يستحسن|قد يكون|قد |في حال|عند |عادةً|يفيد|لا يُستحسن)/;
+((D.inf || {}).items || []).forEach(x => {
+  (x.rec || []).forEach(r => { const t = A(r[1]).trim(); if (t && !GUIDE.test(t)) err(`inf.${x.id}.rec.${r[0]}`, "written as an order; start with guidance (من المفيد… / المتعارف عليه… / يُنصح عادةً… / قد…): " + t.slice(0, 70)); });
+  const pred = ["rights", "market", "movers", "mm", "note", "ipo"].includes(x.kind) && !x.x4na;
+  if (pred) {
+    const ax = x.x4 || {};
+    const miss = ["news", "mkt", "geo", "str"].filter(k => !ax[k]);
+    if (miss.length) err(`inf.${x.id}`, "cross-study missing axes: " + miss.join(", ") + " (news, market, geopolitics, strength; write gap:true when no sourced info)");
+    ["news", "mkt", "geo", "str"].forEach(k => { const a = ax[k]; if (a && !a.gap && !(a.s || []).length) err(`inf.${x.id}.x4.${k}`, "axis has no source"); });
+    if (!(x.chain || []).length) warn(`inf.${x.id}`, "no causal chain");
+  }
+});
 // 4. counts tied to a day match the corporate-action rows
 const MON = ["يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو", "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"];
 const MEN = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
