@@ -17,6 +17,13 @@ Morning market hub for KMEFIC Operations, Electronic Trading, Asset Management a
 - `index.html` is a glass dashboard with one screen per view: Overview, Conclusions, Today, Corporate actions & Al-Mowazi, Market making, Markets, News, Management, Studies, Sources. A side rail (desktop) or bottom bar (phone) switches views; every card or row opens its details, sources, calendar buttons and circular downloads in a side panel. The department selector filters every view; search covers every item.
 - The previous design is kept in the branch `V1-backup`.
 
+
+### Linking and quality check
+- Any item that mentions a date or a company shows "Related to this item" in its drawer: the Corporate-actions rows of that day, the company's rows and IPO-radar entries, with a button that opens Corporate actions filtered to that day. For this to work, write company names exactly as in ev/ev2 "a" and dates as "1 نوفمبر" / "1 Nov" or YYYY-MM-DD.
+- A count such as "7 جمعيات يوم 1 نوفمبر" is checked against the table; a mismatch shows a warning in the drawer.
+- signal.s is one short line (≤ 120 characters); longer text goes in signal.p. No "not investment advice" disclaimer anywhere (the hub is internal).
+- Open the page with `?qa=1` to get a quality report on the day's real data after unlocking.
+
 ## Conclusions (`inf`)
 
 - Each day file carries `inf` (see `_inf_example` and `_notes.inf` in `schema.json`): 4–8 conclusions that link the day's facts into an equation, say what it means, and give direct recommendations to each department. The hub is internal (department heads and staff), so recommendations are written plainly; no buy/sell calls and no price forecasts.
