@@ -393,7 +393,7 @@ html:not(.app) .rail,html:not(.app) .dock,html:not(.app) .drawer,html:not(.app) 
 .gerr{color:var(--down)!important}
 @media (max-width:680px){.datec{order:2;flex:1;justify-content:center}.calpop{position:fixed;top:auto;bottom:12px;inset-inline:12px;width:auto}}
 
-.ipo{padding:18px 20px;display:flex;flex-direction:column;gap:10px;min-width:0}.ipo .chip{white-space:normal}#ipoFl .seg{flex:0 1 auto}.ipo h3{font-size:17px;line-height:1.4}.ipo .so{color:var(--soft);font-size:13.5px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;margin:0}.ipo .foot{display:flex;justify-content:space-between;font-size:12px;color:var(--mut);margin-top:auto}.ipo .keys b{font:600 13.5px/1.4 "IBM Plex Sans Arabic","IBM Plex Mono",sans-serif;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;word-break:break-word}.ipo .keys small{display:block}.ctxl{display:grid;gap:6px;font-size:13px}.ctxl div{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:10px;border-bottom:1px solid var(--line);padding-bottom:6px}.ctxl b{font-weight:600}
+.ipo{padding:18px 20px;display:flex;flex-direction:column;gap:10px;min-width:0}.ipo .chip{white-space:normal}#ipoFl .seg{flex:0 1 auto}.ipo h3{font-size:17px;line-height:1.4}.ipo .so{color:var(--soft);font-size:13.5px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;margin:0}.ipo .foot{display:flex;justify-content:space-between;font-size:12px;color:var(--mut);margin-top:auto}.ipo .keys b{font:600 13.5px/1.4 "IBM Plex Sans Arabic","IBM Plex Mono",sans-serif;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;word-break:break-word}.ipo .keys small{display:block}.ctxl{display:grid;gap:6px;font-size:13px}.ctxl div{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:10px;border-bottom:1px solid var(--line);padding-bottom:6px}.ctxl b{font-weight:600}.deskh{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;flex-wrap:wrap;border-color:color-mix(in srgb,var(--gold) 40%,transparent)}#desk .rec small{display:block}
 /* ---------- responsive ---------- */
 @media (max-width:1099px){.rail{display:none}}
 @media (min-width:1100px){.dock{display:none}}
@@ -438,10 +438,12 @@ html:not(.app) .rail,html:not(.app) .dock,html:not(.app) .drawer,html:not(.app) 
  </div>
 </header>
 <div class="note g" id="calNote" hidden></div>
+<div class="note g" id="depNote" hidden style="color:var(--gold)"></div>
 <nav class="rail g" id="rail" aria-label="views"></nav>
 
 <main>
  <section class="view" id="v-ov" data-v="ov">
+  <div id="desk" hidden style="margin-bottom:14px"></div>
   <div class="ovg">
    <div class="g hero"><div class="kick" id="kick"></div><h1 id="sigT"></h1><p class="sub" id="sigS"></p><p class="para" id="sigP"></p><div class="vps" id="vps"></div></div>
    <div class="grid" style="align-content:start">
@@ -905,8 +907,10 @@ document.addEventListener('click',e=>{const f=e.target.closest('[data-caf]');if(
 function applyDep(){document.querySelectorAll('[data-deps]').forEach(el=>{const ok=dep==='all'||el.dataset.deps.split(' ').includes(dep);el.classList.toggle('flt-hide',!ok)});
  $('depSel').value=dep;$('depSel').classList.toggle('depOn',dep!=='all');
  $('priCount').textContent=`${document.querySelectorAll('#priList .row:not(.flt-hide)').length} / ${PRI.length}`;
- try{localStorage.setItem('kmh-dep',dep)}catch(e){}}
-$('depSel').addEventListener('change',e=>{dep=e.target.value;applyDep();setView(VIEW,true)});
+ try{localStorage.setItem('kmh-dep',dep)}catch(e){}
+ const all=document.querySelectorAll('[data-deps]').length,hid=document.querySelectorAll('[data-deps].flt-hide').length;const nb=$('depNote');if(nb){nb.hidden=dep==='all';nb.innerHTML=dep==='all'?'':`${T('الصفحة مفلترة على قسم','Filtered to')} <b>${esc(DEPN(dep))}</b> · ${T(`مخفي ${hid} من ${all} بندًا لا تخص القسم`,`${hid} of ${all} items hidden`)} · <button type="button" class="mini" data-view="ov">${T('مساحة القسم','Department desk')}</button> <button type="button" class="mini" data-depall="1">${T('عرض الكل ✕','Show all ✕')}</button>`}
+ try{renderDesk()}catch(e){}}
+$('depSel').addEventListener('change',e=>{dep=e.target.value;applyDep();setView(dep==='all'?VIEW:'ov')});
 /* ---------- search (indexes every item on the page) ---------- */
 let IDX=[],psel=0;
 function index(){const I=[];document.querySelectorAll('[data-det-id]').forEach(el=>{const v=el.closest('.view');I.push({t:el.dataset.title,sub:(el.querySelector('.one,.q,.so,.soft')||{}).textContent||'',sec:L((VIEWS.find(x=>x[0]===(v&&v.dataset.v))||VIEWS[0])[1]),det:el.dataset.detId,h:norm(el.textContent+' '+el.dataset.title)})});
@@ -1030,8 +1034,35 @@ document.addEventListener('click',e=>{const g=e.target.closest('[data-ig]');if(g
  const m=e.target.closest('[data-imk]');if(m){ipoM=m.dataset.imk;renderIpo();applyDep();setView('ipo',true);return}
  const b=e.target.closest('[data-brief]');if(b){e.preventDefault();e.stopPropagation();const it=(IPO().items||[]).find(x=>x.id===b.dataset.brief);if(!it)return;closeDet();$('shrT').textContent=T('ملخص للإدارة','Management brief');$('shrP').textContent=T('نص جاهز للنسخ أو الطباعة أو الإرسال للإدارة. القرار للإدارة.','Ready to copy, print or send to management. Management decides.');$('shrX').value=ipoBrief(it);$('shrOk').textContent='';$('shrC').textContent=T('إغلاق','Close');$('shrCp').textContent=T('نسخ','Copy');try{$('shrD').showModal()}catch(_){$('shrD').setAttribute('open','')}}},true);
 
+/* ================= department desk: what the selected department sees first ================= */
+const DESKD={ops:['الإجراءات المؤسسية والموازي، ومواعيد الاستحقاق والطلبات، وضغط العمل.','Corporate actions and Al-Mowazi, record and request deadlines, workload.'],
+ et:['أسئلة العملاء المتوقعة، ومواعيد الأسواق، والحركة على الأسهم.','Expected client questions, market hours, moves on stocks.'],
+ am:['قراءة الأسواق، والانكشاف على الأحداث، والطروحات المهمة.','Market read, exposure to events, notable IPOs.'],
+ wm:['ما يحتاجه العملاء: الحقوق والتوزيعات والاكتتابات، ومتابعة ما بعد الإدراج.','What clients need: rights, dividends, IPOs, post-IPO tracking.'],
+ mm:['الشركات الأربع، والتنبيهات، والتزامات صانع السوق.','The four companies, alerts, market-maker obligations.'],
+ mgmt:['أهم البنود والقرارات المحتملة، وقراءة المكتب.','Top items, possible decisions, the desk\'s read.']};
+function deskDates(){const out=[];const end=addD(RTD(),14);const add=(d,t,id,k)=>{if(d&&d>=RTD()&&d<=end)out.push({d,t,id,k})};
+ if(['ops','wm','et','mgmt'].includes(dep))CA.forEach(e=>{if(dep==='ops'||e.rights||e.div||e.egm)add(e.d,(lang==='ar'?e.na:e.ne)+' · '+L(e.k),'ca-'+e.id,T('إجراء','Action'))});
+ INF.items.filter(i=>i.kind==='load'&&(dep==='ops'||dep==='wm')).forEach(i=>(i.extra||[]).forEach(x=>add(x[0],L(x[1]),'inf-'+i.id,T('موعد محسوب','Computed'))));
+ if(['wm','am','et','mgmt'].includes(dep)||dep==='ops'){const I=(typeof IPO==='function')?IPO():{items:[],post:[]};[...(I.items||[]),...(I.post||[])].forEach(it=>(it.dates||[]).forEach(x=>{if(dep==='ops'&&it.mkt==='us')return;add(x[0],L(it.name)+' · '+L(x[1]),'ipo-'+it.id,T('اكتتاب','IPO'))}))}
+ if(dep==='mm'&&D.mm)(D.mm.alerts||[]).forEach((a,i)=>add(a.d,a.k+' · '+L(a.t),'',T('صانع السوق','MM')));
+ return out.sort((a,b)=>a.d.localeCompare(b.d)).slice(0,8)}
+const RTD=()=>{try{const k=kwNowMin().ymd;return k>TODAY?k:TODAY}catch(e){return TODAY}};
+function renderDesk(){const el=$('desk');if(!el)return;if(dep==='all'){el.hidden=true;el.innerHTML='';return}el.hidden=false;
+ const recs=[];INF.items.forEach(it=>(it.rec||[]).forEach(r=>{if(r[0]===dep)recs.push({t:L(r[1]),id:'inf-'+it.id,h:L(it.t)})}));
+ const pri=PRI.filter(p=>p._d.has(dep));const st=(D.studies||[]).filter(s=>s.dep===dep);const ds=deskDates();const qa=dep==='et'?((D.dept.et||{}).qa||[]):[];
+ const box=(t,b,n)=>`<div class="g pad"><div class="ct"><span>${t}</span>${n!=null?`<span class="chip">${n}</span>`:''}</div>${b}</div>`;
+ el.innerHTML=`<div class="g pad deskh"><div><div class="kick">${T('مساحة القسم','DEPARTMENT DESK')}</div><h2 style="font-size:24px;margin-top:6px">${esc(DEPN(dep))}</h2><p class="soft" style="margin:4px 0 0;font-size:13.5px">${esc(L(DESKD[dep]||['','']))}</p></div><button type="button" class="btn" data-depall="1">${T('عرض كل الأقسام ✕','Show all departments ✕')}</button></div>
+ <div class="grid c3" style="margin-top:14px">
+  ${box(T('المطلوب من قسمك اليوم','What your department should do today'),recs.length?`<div class="recs">${recs.map(r=>`<div class="rec it" data-open="${esc(r.id)}" style="grid-template-columns:1fr;cursor:pointer"><span>${esc(r.t)}</span><small class="mut" style="font-size:11.5px">${esc(r.h)}</small></div>`).join('')}</div>`:`<p class="mut" style="font-size:13px">${INF.items.length?T('لا توجد توصية مباشرة لقسمك في استنتاجات اليوم.','No direct recommendation for your department today.'):T('لا توجد استنتاجات لهذا اليوم.','No conclusions for this day.')}</p>`,recs.length)}
+  ${box(T('مواعيد قسمك خلال 14 يومًا','Your dates in the next 14 days'),ds.length?ds.map(x=>`<div class="row${x.id?' it':''}"${x.id?` data-open="${esc(x.id)}"`:''} style="grid-template-columns:auto minmax(0,1fr) auto;margin-bottom:6px;padding:8px 10px"><b class="num" style="color:var(--gold)">${fds(x.d)}</b><span style="font-size:13px">${esc(x.t)}</span><span class="chip">${esc(x.k)}</span></div>`).join(''):`<p class="mut" style="font-size:13px">${T('لا مواعيد قريبة.','No upcoming dates.')}</p>`,ds.length)}
+  ${box(T('بنود اليوم لقسمك','Today\'s items for you'),pri.length?pri.slice(0,6).map(p=>`<div class="row it" data-open="pi-${p._k}" style="grid-template-columns:auto minmax(0,1fr);margin-bottom:6px;padding:8px 10px"><span class="dot" style="background:${stDot[p.st]||stDot.info};margin-top:7px"></span><span style="font-size:13.5px">${esc(L(p.t))}</span></div>`).join('')+(pri.length>6?`<button type="button" class="more" data-view="today">${T('الكل ←','All →')} ${pri.length}</button>`:''):`<p class="mut" style="font-size:13px">${T('لا بنود خاصة بقسمك اليوم.','No items for your department today.')}</p>`,pri.length)}
+ </div>
+ ${(qa.length||st.length)?`<div class="grid c2" style="margin-top:14px">${qa.length?box(T('أسئلة متوقعة من العملاء','Expected client questions'),qa.map((q,i)=>`<div class="row it" data-open="qa${i}" style="grid-template-columns:1fr;margin-bottom:6px;padding:8px 10px"><span style="font-size:13.5px">${esc(L(q[0]))}</span></div>`).join(''),qa.length):''}${st.length?box(T('دراسات قسمك','Your studies'),st.map(s=>`<div class="row it" data-open="st-${esc((s.k||'')+'-'+(s.dep||''))}" style="grid-template-columns:1fr;margin-bottom:6px;padding:8px 10px"><span style="font-size:13.5px">${esc(L(s.t))}</span></div>`).join(''),st.length):''}</div>`:''}`}
+document.addEventListener('click',e=>{if(e.target.closest('[data-depall]')){dep='all';applyDep();renderDesk();setView(VIEW,true)}});
+
 /* ================= live data layer (GitHub Pages, encrypted data) ================= */
-const BUILD="89bab233f3";
+const BUILD="dd029be744";
 const GH="https://kmeficmarketing.github.io/Daily-Hub/",RAW="https://raw.githubusercontent.com/KmeficMarketing/Daily-Hub/main/";
 const ROOTS=/^https?:$/.test(location.protocol)?["./",GH,RAW]:[GH,RAW];
 let IXIPO=[],ICACHE={},IPODATE='',IXSD={},PREV=null,PC={},UPD={},LOADSIG="",SDATES=[],SCACHE={},DATES=[],LATEST=null,VIEWD=null,NOTE=null,BUSY=false,LAST_AT='',STDATE='',CALM=null;
