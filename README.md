@@ -23,6 +23,10 @@ Morning market hub for KMEFIC Operations, Electronic Trading, Asset Management a
 - A count such as "7 جمعيات يوم 1 نوفمبر" is checked against the table; a mismatch shows a warning in the drawer.
 - signal.s is one short line (≤ 120 characters); longer text goes in signal.p. No "not investment advice" disclaimer anywhere (the hub is internal).
 - Open the page with `?qa=1` to get a quality report on the day's real data after unlocking.
+- **Claims rule:** a cause ("بسبب", "بفعل", "يضغط على", "مع تصاعد", "amid", "due to") may only be written when a cited source states it, and only for the market that source names. Never group several markets under one cause.
+- `signal.refs`: list of the items that back the headline, subtitle and paragraph, as "news:<index>", "pri:<index>", "inf:<id>" or "mk:<id>"; required whenever the summary states a cause. An intraday correction may carry `signal.src` ([[label, url]]) instead.
+- **Before encrypting**, run `node tools/qa_check.mjs <plain.json>` (add `--update` for an intraday file). It fails on: disclaimers, a headline over 80 or subtitle over 120 characters, exchange nicknames or index codes in the headline/subtitle (تداول, TASI, EGX30…), a cause in the summary without refs, items without sources, day counts that do not match ev/ev2, markets without indices or movers. Fix every error, then run it again; never publish with errors.
+- **Corrections:** an intraday update file may carry a complete `signal` {t,s,p,src} to replace a wrong morning summary; the page shows "عُدّل الملخص HH:MM".
 
 ## Conclusions (`inf`)
 

@@ -453,6 +453,9 @@ html[dir="rtl"] .kick,html[dir="rtl"] .eqb h4,html[dir="rtl"] .tbl tr.grp td,htm
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--newTxt:#1a1405;--gold2:#ebd08b;--mut:#9bb1b6;--gold:#d9b75e;--up:#45d095;--amber:#f1b75a;--down:#ff7b71}}
 :root[data-theme="dark"]{--newTxt:#1a1405;--gold2:#ebd08b;--mut:#9bb1b6;--gold:#d9b75e;--up:#45d095;--amber:#f1b75a;--down:#ff7b71}
 .chip.new{color:var(--newTxt)}
+.corr{color:var(--amber);font-weight:600}
+.hero h1.long{font-size:clamp(24px,2.5vw,32px)}
+@media (max-width:680px){.hero h1.long{font-size:20px;line-height:1.35}}
 
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.ruler .zone,.gbar,.load .c .s{transform:none!important}}
 @media print{
@@ -1159,7 +1162,10 @@ function postFix(){
  // hero: no disclaimer; a long subtitle becomes the paragraph
  let s=L(D.signal.s).replace(DISC,'').trim(),p=L(D.signal.p).replace(DISC,'').trim();
  if(s.length>140){p=s+(p?' '+p:'');s=''}
+ $('sigT').classList.toggle('long',L(D.signal.t).length>48);
  $('sigS').textContent=s;$('sigS').hidden=!s;$('sigP').textContent=p;$('sigP').hidden=!p;
+ // a corrected summary says so, with the time
+ {const k=$('kick');if(k&&D._sigAt&&!k.querySelector('.corr'))k.insertAdjacentHTML('beforeend',` <span class="corr">· ${T('عُدّل الملخص','Summary corrected')} ${esc(D._sigAt)}</span>`)}
  // dock: five main views + More
  const dk=$('dock');if(dk){dk.innerHTML=PRIMARY.map(k=>{const v=VIEWS.find(x=>x[0]===k);return v?`<button type="button" data-view="${k}" class="${VIEW===k?'on':''}" aria-label="${esc(L(v[1]))}">${dIc(k)}<span>${esc(L(SHORTV[k]||v[1]))}</span></button>`:''}).join('')+`<button type="button" id="moreBtn" class="${PRIMARY.includes(VIEW)?'':'on'}" aria-haspopup="true" aria-expanded="false">${dIc('more')}<span>${T('المزيد','More')}</span></button>`}
  const ms=$('moreSheet');if(ms)ms.innerHTML=VIEWS.filter(v=>!PRIMARY.includes(v[0])).map(v=>`<button type="button" data-view="${v[0]}" class="${VIEW===v[0]?'on':''}">${dIc(v[0])}<span>${esc(L(v[1]))}</span></button>`).join('');
@@ -1178,6 +1184,7 @@ let lastY=0;addEventListener('scroll',()=>{const t=$('top');if(!t||innerWidth>10
 /* ---- 3. QA mode (?qa=1): checks today's real data after unlock ---- */
 function runQA(){const R=[];const add=(sev,area,msg,open)=>R.push({sev,area,msg,open});const has=x=>x&&(Array.isArray(x)?L(x).trim():String(x).trim());
  if(!has(D.signal.t))add('high',T('الملخص','Summary'),T('عنوان الملخص فارغ.','Summary title is empty.'));
+ {const CZ=/(بسبب|بفعل|نتيجة|إثر|جراء|يضغط|تضغط|ضغط على|مع\s+(استمرار|تصاعد)|due to|amid|weighs)/i;if(['t','s','p'].some(k=>CZ.test(L(D.signal[k]||['',''])))&&!(D.signal.refs||[]).length&&!(D.signal.src||[]).length)add('high',T('الملخص','Summary'),T('في الملخص سبب ونتيجة من غير ربط بالبنود اللي مصادرها بتقول كده.','The summary states a cause without linking the items whose sources say so.'))}
  if(!D.inf||!INF.items.length)add('med',T('الاستنتاجات','Conclusions'),T('لا توجد استنتاجات في ملف اليوم.','No conclusions in today\'s file.'));
  INF.items.forEach(it=>{if(!(it.rec||[]).length)add('med',T('الاستنتاجات','Conclusions'),L(it.t)+T(': بلا توصيات.',': no recommendations.'),'inf-'+it.id);if(!it.chk)add('low',T('الاستنتاجات','Conclusions'),L(it.t)+T(': بلا موعد مراجعة.',': no review date.'),'inf-'+it.id);if(!(it.ev||[]).length)add('med',T('الاستنتاجات','Conclusions'),L(it.t)+T(': بلا دليل.',': no evidence.'),'inf-'+it.id)});
  PRI.forEach(p=>{if(!(p.s||[]).length)add('med',T('اليوم','Today'),L(p.t)+T(': بلا مصدر.',': no source.'),'pi-'+p._k);if(!has(p.b))add('low',T('اليوم','Today'),L(p.t)+T(': بلا تفاصيل.',': no details.'),'pi-'+p._k)});
@@ -1195,7 +1202,7 @@ function showQA(){const R=runQA();const c=k=>R.filter(r=>r.sev===k).length;
 document.addEventListener('click',e=>{const q=e.target.closest('[data-qaopen]');if(q){e.stopPropagation();closeDet();setTimeout(()=>openDet(q.dataset.qaopen),320)}},true);
 
 /* ================= live data layer (GitHub Pages, encrypted data) ================= */
-const BUILD="2d53dd1881";
+const BUILD="aa89d999e0";
 const GH="https://kmeficmarketing.github.io/Daily-Hub/",RAW="https://raw.githubusercontent.com/KmeficMarketing/Daily-Hub/main/";
 const ROOTS=/^https?:$/.test(location.protocol)?["./",GH,RAW]:[GH,RAW];
 let IXIPO=[],ICACHE={},IPODATE='',IXSD={},PREV=null,PC={},UPD={},LOADSIG="",SDATES=[],SCACHE={},DATES=[],LATEST=null,VIEWD=null,NOTE=null,BUSY=false,LAST_AT='',STDATE='',CALM=null;
@@ -1244,6 +1251,7 @@ async function mergeUpd(j,d){const list=(UPD[d]||[]).slice().sort();
  for(const t of list){let u;try{u=await openData(await getJ("data/updates/"+d+"/"+t+".json"))}catch(e){continue}if(!u)continue;const at=u.at||(t.slice(0,2)+":"+t.slice(2));
   ["news","pri","ev2"].forEach(k=>{if(Array.isArray(u[k])){j[k]=j[k]||[];u[k].forEach(x=>{x.at=at;j[k].unshift(x)})}});
   if(Array.isArray(u.ev)){j.ev=j.ev||[];u.ev.forEach(r=>{const c=r.slice();c[5]=at;j.ev.push(c)})}
+  if(u.signal&&u.signal.t){j.signal=u.signal;j._sigAt=at}
   if(u.stk)j.stk=Object.assign(j.stk||{},u.stk);
   if(Array.isArray(u.mk))u.mk.forEach(m=>{m.at=at;const i=(j.mk||[]).findIndex(x=>x.id===m.id);if(i>=0)j.mk[i]=m;else(j.mk=j.mk||[]).push(m)});
   if(Array.isArray(u.tape))j.tape=u.tape;
