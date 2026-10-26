@@ -24,6 +24,13 @@ Morning market hub for KMEFIC Operations, Electronic Trading, Asset Management a
 - Conclusions log: `hub-assets/inf/log.json` (private repo, plaintext) keeps every conclusion with its review date. The morning run marks due items `res` = ok / no / part with `resN`, adds today's items, and copies the last 14 days into today's `inf.log` so the page can show the record.
 - Days before 25 Oct 2026 have no `inf`; the page says so.
 
+## IPO radar
+
+- `data/ipo/YYYY-MM-DD.json` (encrypted; dates in `index.json` → `ipo`) holds regional (Kuwait incl. Al-Mowazi, Saudi, UAE, Qatar, Oman, Bahrain, Egypt) and US IPOs: open now, coming, recently priced and pre-IPO names (banks hired, confidential or public filing, intention to float), each with company size, deal terms, who can take part and how, dates, news with sources, outlook, risks and confidence. Shape: `_ipo_example` in `schema.json`.
+- `post` tracks IPOs KMEFIC clients took part in (currently SpaceX, SPCX): offer price vs latest close, lock-up and earnings dates.
+- The page builds, for each opportunity, numbered options with steps (the decision stays with staff and management), ready answers for client questions, and a one-page management brief to copy or print.
+- The morning run writes the radar daily; intraday updates may replace or add items by `id`.
+
 ## Daily refresh (Sunday–Friday, 07:37 Kuwait)
 
 1. Build today's file from `schema.json`, which shows the structure without any content. Keep every key and the `[Arabic, English]` pair format. Earlier day files may be encrypted, so they are not used as templates.
