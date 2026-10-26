@@ -482,6 +482,27 @@ html[dir="rtl"] .kick,html[dir="rtl"] .eqb h4,html[dir="rtl"] .tbl tr.grp td,htm
 .kbm{margin-top:14px;padding:12px 14px;border-radius:16px;border:1px solid color-mix(in srgb,var(--gold) 35%,transparent);background:var(--goldbg);display:grid;gap:6px}
 .kbm .kbu{margin:0}.kbmd,.kbmc{margin:0;font-size:13.5px;line-height:1.65}.kbmd small,.kbmc small{display:block;font-size:11px;color:var(--gold);font-weight:600}
 .kbm .mini{justify-self:start}
+.mmk{display:none}
+@media (max-width:680px){.mmk{display:inline-flex;margin-top:4px;font-size:11px}}
+
+/* ---------- v2.3: portfolio calculator ---------- */
+:root{--c-kw:#0f8f80;--c-gcc:#2a64a8;--c-eg:#b26b1f;--c-gl:#6b4fa3;--c-fi:#8a9aa0;--c-gold:#c9a227}
+#calcCtl{display:grid;gap:12px}.cin{display:grid;gap:6px}.cseg{flex-wrap:wrap;height:auto}.cseg button{white-space:normal;min-height:36px}
+.camt{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--soft);margin-top:6px}.camt input{font:inherit;width:160px;padding:8px 10px;border-radius:12px;border:1px solid var(--line2);background:var(--glass);color:var(--txt)}
+.cchk{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:13.5px}.cchk label{display:flex;gap:6px;align-items:center;min-height:32px}
+.cwarn{margin-bottom:12px;padding:10px 14px;border-radius:14px;background:var(--amberbg);color:var(--amber);font-size:12.5px;line-height:1.6}
+.ckp small{display:block;font-size:12px;color:var(--mut)}.ckp b{font:600 24px "IBM Plex Mono",monospace}
+.cbar{display:flex;height:14px;border-radius:8px;overflow:hidden;margin:6px 0}.cbar i{display:block}
+.cleg{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px;margin-bottom:10px}.cleg i,.cgl i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-inline-end:5px;vertical-align:middle}
+.cg{width:100%;height:auto}.cgl{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:12px;margin:4px 0 8px}
+.ctab td,.ctab th{font-size:13px}.ctl{border-top:1px solid var(--line);padding-top:10px;margin-top:10px}.ctl p{margin:4px 0;font-size:13px;line-height:1.6}.ctl small{color:var(--gold);font-weight:600}
+.cass summary{cursor:pointer;font-weight:600}.cass{margin-top:14px}
+.cseg{border-radius:20px!important;padding:5px;gap:4px}.cseg button{border-radius:14px!important;padding:8px 12px;line-height:1.35}
+#moreBtn span{max-width:100%;overflow-wrap:anywhere;text-align:center}
+@media (max-width:680px){.ckp{grid-template-columns:repeat(2,minmax(0,1fr))!important}.ckp b{font-size:19px}.ctab td,.ctab th{font-size:12.5px}}
+.mo2{display:none}
+@media (max-width:680px){.chold thead{display:none}.chold tr{display:grid;grid-template-columns:1fr 1fr;gap:4px 10px;padding:10px 0;border-bottom:1px solid var(--line)}.chold td{border:0!important;padding:2px 4px!important}.chold td:first-child,.chold td:last-child{grid-column:1/-1}.mo2{display:inline;color:var(--mut);font-size:11px}}
+.camtr{display:block;font-size:12px;color:var(--mut);margin-top:2px}.camtr.bad{color:var(--amber);font-weight:600}
 
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.ruler .zone,.gbar,.load .c .s{transform:none!important}}
 @media print{
@@ -573,6 +594,12 @@ html[dir="rtl"] .kick,html[dir="rtl"] .eqb h4,html[dir="rtl"] .tbl tr.grp td,htm
  <section class="view" id="v-kb" data-v="kb">
   <div class="vh"><div><h2>بنك الخبرة</h2><p>المواقف التي تتكرر في السوق: ما يفيد دراسته، والمتعارف عليه، وحالات سابقة وما حدث بعدها، وزاوية كل قسم. كل معلومة بمصدرها، والقرار للموظف.</p></div><span class="chip" id="kbNote"></span></div>
   <div class="grid c3" id="kbGrid"></div>
+ </section>
+
+ <section class="view" id="v-calc" data-v="calc">
+  <div class="vh"><div><h2>حاسبة المحفظة</h2><p>نموذج توضيحي يبني محفظة حسب درجة المخاطرة ونوع المستثمر وحجم الثروة، من أداء خمس سنوات وأخبار اليوم، مع كل المصادر. للدراسة الداخلية، والقرار للموظف والعميل.</p></div></div>
+  <div class="g pad" id="calcCtl"></div>
+  <div id="calcOut" style="margin-top:14px"></div>
  </section>
  <section class="view" id="v-mm" data-v="mm">
   <div class="vh"><div><h2 data-t="mm"></h2><p id="mmD"></p></div></div>
@@ -821,8 +848,8 @@ const U6={
  news:['الأخبار','News'],newsP:['مرتبة حسب الأثر، ولكل خبر أثره على الكويت وأمريكا وKMEFIC.','Ranked by impact, each with its effect on Kuwait, the US and KMEFIC.'],
  mgmt:['الإدارة','Management'],mgmtP:['السياق الأوسع لهذا الأسبوع.','The wider context for this week.'],
  st:['الدراسات','Studies'],src:['المصادر والفجوات','Sources & gaps'],srcP:['كل رقم له مصدر، وما لم يتأكد مذكور هنا.','Every figure has a source; anything unconfirmed is listed here.']};
-const IC={kb:'M4 5a2 2 0 0 1 2-2h12v16H6a2 2 0 0 0-2 2zM4 21V5M8 7h6M8 11h6',ipo:'M12 2c3 3 4 7 4 11l-4 4-4-4c0-4 1-8 4-11zM9 17l-3 3M15 17l3 3M12 9h.01',ov:'M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z',inf:'M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.6.5 1 1.2 1.1 2.2h5c.1-1 .5-1.7 1.1-2.2A6 6 0 0 0 12 3z',today:'M4 6h16v14H4zM4 10h16M8 3v4M16 3v4',ca:'M3 7h18v12H3zM8 7V5h8v2M3 12h18',mm:'M7 4v16M7 4L4 7M7 4l3 3M17 20V4M17 20l-3-3M17 20l3-3',mk:'M4 19h16M6 16l4-5 3 3 5-7',news:'M5 4h11l3 3v13H5zM8 9h8M8 13h8M8 17h5',mgmt:'M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21a8 8 0 0 1 16 0',st:'M5 4h12a2 2 0 0 1 2 2v14H7a2 2 0 0 1-2-2zM5 18a2 2 0 0 1 2-2h12',src:'M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1'};
-const VIEWS=[['ov',['نظرة عامة','Overview']],['inf',['الاستنتاجات','Conclusions']],['today',['اليوم','Today']],['ca',['الإجراءات والموازي','Corp. actions']],['ipo',['رادار الاكتتابات','IPO radar']],['mm',['صانع السوق','Market making']],['mk',['الأسواق','Markets']],['news',['الأخبار','News']],['mgmt',['الإدارة','Management']],['st',['الدراسات','Studies']],['src',['المصادر','Sources']],['kb',['بنك الخبرة','Knowledge bank']]];
+const IC={calc:'M5 3h14v18H5zM8 7h8M8 11h2M12 11h2M16 11h0M8 15h2M12 15h2M8 18h6',kb:'M4 5a2 2 0 0 1 2-2h12v16H6a2 2 0 0 0-2 2zM4 21V5M8 7h6M8 11h6',ipo:'M12 2c3 3 4 7 4 11l-4 4-4-4c0-4 1-8 4-11zM9 17l-3 3M15 17l3 3M12 9h.01',ov:'M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z',inf:'M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.6.5 1 1.2 1.1 2.2h5c.1-1 .5-1.7 1.1-2.2A6 6 0 0 0 12 3z',today:'M4 6h16v14H4zM4 10h16M8 3v4M16 3v4',ca:'M3 7h18v12H3zM8 7V5h8v2M3 12h18',mm:'M7 4v16M7 4L4 7M7 4l3 3M17 20V4M17 20l-3-3M17 20l3-3',mk:'M4 19h16M6 16l4-5 3 3 5-7',news:'M5 4h11l3 3v13H5zM8 9h8M8 13h8M8 17h5',mgmt:'M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21a8 8 0 0 1 16 0',st:'M5 4h12a2 2 0 0 1 2 2v14H7a2 2 0 0 1-2-2zM5 18a2 2 0 0 1 2-2h12',src:'M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1'};
+const VIEWS=[['ov',['نظرة عامة','Overview']],['inf',['الاستنتاجات','Conclusions']],['today',['اليوم','Today']],['ca',['الإجراءات والموازي','Corp. actions']],['ipo',['رادار الاكتتابات','IPO radar']],['mm',['صانع السوق','Market making']],['mk',['الأسواق','Markets']],['news',['الأخبار','News']],['mgmt',['الإدارة','Management']],['st',['الدراسات','Studies']],['src',['المصادر','Sources']],['kb',['بنك الخبرة','Knowledge bank']],['calc',['حاسبة المحفظة','Portfolio calculator']]];
 const RM=matchMedia('(prefers-reduced-motion:reduce)').matches;
 const conf=k=>{const c=CONF[k]||CONF.med;return `<span class="conf">${[1,2,3].map(i=>`<i class="${i<=c[0]?'on':''}"></i>`).join('')}<span style="margin-inline-start:4px">${esc(L(c[1]))}</span></span>`};
 const vt=(v)=>`<h2 class="vtitle" style="font-size:24px;margin:0 4px 12px">${esc(L((VIEWS.find(x=>x[0]===v)||VIEWS[0])[1]))}</h2>`;
@@ -901,7 +928,7 @@ function renderToday(){const ord={mgmt:0,rev:1,mon:2,info:3};
 function caRow(e){const d=pd(e.d);const nm=lang==='ar'?e.na:e.ne;const v=VB[e.v]||VB.pend;const x=L(e.x).replace(/\s*من جدول الجمعيات لدى الشركة الكويتية للمقاصة؛ السوق غير محدد في المصدر\.?|\s*From the Kuwait Clearing AGM schedule; market not marked in the source\.?/,'');
  return `<tr class="it${e.d===TODAY?' today':''}" id="ca-${e.id}" ${itAttrs('ca-'+e.id,nm+' · '+L(e.k),fd(e.d))}>
  <td style="white-space:nowrap"><b class="num">${fds(e.d)}</b><br><small class="mut">${lang==='ar'?WAR[d.getUTCDay()]:WEN[d.getUTCDay()]}</small></td>
- <td><b>${esc(nm)}</b> ${newChip(e.at)}${e.tk?stkBtn(e.tk):''}${e.auc?` <span class="chip a">${T('مزاد','Auction')}</span>`:''}<div class="soft" style="font-size:12.5px">${esc(L(e.k))}</div>${e.circ?`<span class="chip g2" style="margin-top:4px">${T('تعميم جاهز','Circular ready')}</span>`:''}
+ <td><b>${esc(nm)}</b> ${newChip(e.at)}${e.tk?stkBtn(e.tk):''}${e.auc?` <span class="chip a">${T('مزاد','Auction')}</span>`:''}<div class="soft" style="font-size:12.5px">${esc(L(e.k))}</div><span class="chip mmk ${e.m==='otc'?'b':''}">${e.m==='otc'?T('الموازي (OTC)','OTC'):T('مدرجة','Listed')}</span>${e.egm?` <span class="chip r mmk">${T('غير عادية','EGM')}</span>`:''}${e.circ?`<span class="chip g2" style="margin-top:4px">${T('تعميم جاهز','Circular ready')}</span>`:''}
   <div class="det"><p>${esc(x)}</p>${e.circ?circBtns(e.circ):''}<div style="display:flex;gap:6px;flex-wrap:wrap"><a class="mini" href="${esc(e.src)}" target="_blank" rel="noopener">${T('الإفصاح/المصدر','Disclosure/source')}</a>${e.src2?`<a class="mini" href="${esc(e.src2)}" target="_blank" rel="noopener">${T('جدول المقاصة','Clearing schedule')}</a>`:''}${e.d>=TODAY?calBtns(e.d,nm+' · '+L(e.k),e.src):''}</div></div></td>
  <td class="hm"><span class="chip ${e.m==='otc'?'b':''}">${e.m==='otc'?T('الموازي / المقاصة','OTC / Clearing'):T('مدرجة','Listed')}</span>${e.egm?` <span class="chip r">${T('غير عادية','EGM')}</span>`:''}</td>
  <td><span class="chip ${v[2]}">${esc(lang==='ar'?v[0]:v[1])}</span></td></tr>`}
@@ -1030,7 +1057,7 @@ function showErr(){if(!ERR.length)return;let b=$('errBar');if(!b){b=document.cre
 addEventListener('error',e=>{ERR.push((e.message||'error')+' @'+(e.lineno||''));try{showErr()}catch(_){}});
 function renderAll(){document.documentElement.lang=lang;document.documentElement.dir=lang==='ar'?'rtl':'ltr';$('langBtn').textContent=lang==='ar'?'EN':'ع';
  document.querySelectorAll('.vtitle').forEach(x=>x.remove());
- buildCA();PRI=priItems();[renderShell,renderOv,renderInf,renderToday,renderCharts,renderCA,renderIpo,renderMM,renderHours,renderMk,renderNews,renderMgmt,renderStudies,renderSrc,applyDep,postFix,postFix2].forEach(f=>{try{f()}catch(e){ERR.push((f.name||'step')+': '+e.message)}});showErr()}
+ buildCA();PRI=priItems();[renderShell,renderOv,renderInf,renderToday,renderCharts,renderCA,renderIpo,renderMM,renderHours,renderMk,renderNews,renderMgmt,renderStudies,renderSrc,applyDep,postFix,postFix2,postFix3].forEach(f=>{try{f()}catch(e){ERR.push((f.name||'step')+': '+e.message)}});showErr()}
 
 /* ================= IPO & pre-IPO radar (regional + US) ================= */
 const STG={rumor:[['متداول إعلاميًا','Reported'],'pre'],banks:[['تعيين بنوك','Banks hired'],'pre'],confidential:[['ملف سري لدى الهيئة','Confidential filing'],'pre'],filed:[['ملف علني','Public filing'],'pre'],itf:[['إعلان نية الطرح','Intention to float'],'soon'],approved:[['موافقة الهيئة','Regulator approval'],'soon'],terms:[['تحديد النطاق السعري','Terms set'],'soon'],bookbuild:[['بناء سجل الأوامر','Book-building'],'soon'],sub:[['فترة الاكتتاب','Subscription'],'open'],priced:[['تم التسعير','Priced'],'done'],listed:[['مُدرج','Listed'],'done']};
@@ -1184,7 +1211,7 @@ document.addEventListener('click',e=>{const b=e.target.closest('[data-cadaygo]')
 /* ---- 2. shell after each render: compact stamp, hero text, dock with "More" ---- */
 const DISC=/\s*(?:هذه\s+)?معلومات\s+(?:سوقية\s+)?عامة[^.]*?(?:توصية|نصيحة)\s+استثمارية\.?|\s*(?:This is\s+)?general\s+(?:market\s+)?information[^.]*?(?:advice|recommendation)\.?/gi;
 const PRIMARY=['ov','today','ca','ipo','mk'];
-const SHORTV={ov:['نظرة عامة','Overview'],today:['اليوم','Today'],ca:['الإجراءات','Actions'],ipo:['الرادار','Radar'],mk:['الأسواق','Markets']};
+const SHORTV={ov:['نظرة عامة','Overview'],today:['اليوم','Today'],ca:['الإجراءات','Actions'],ipo:['الرادار','Radar'],mk:['الأسواق','Markets'],kb:['بنك الخبرة','Knowledge'],calc:['الحاسبة','Calculator'],inf:['الاستنتاجات','Conclusions'],mm:['صانع السوق','Market making'],st:['الدراسات','Studies'],src:['المصادر','Sources'],news:['الأخبار','News'],mgmt:['الإدارة','Management']};
 const dIc=k=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${IC[k]||'M4 12h16M4 6h16M4 18h16'}"/></svg>`;
 function postFix(){
  // stamp: short, complete, tap for the full line
@@ -1305,8 +1332,112 @@ const _renderDesk1=renderDesk;renderDesk=function(){_renderDesk1();try{const el=
  const rows=[...live].map(([k,v])=>{const c=KBC(k);const a=c&&c.dep&&c.dep[dep];return a?`<div class="row it" data-kb="${esc(k)}" style="grid-template-columns:1fr;margin-bottom:6px;padding:9px 12px"><b style="font-size:12.5px;color:var(--gold)">${esc(L(c.t))}</b><span style="font-size:13.5px">${esc(L(a))}</span><small class="mut" style="font-size:11.5px">${T('بسبب:','Because of:')} ${esc(v[1])}</small></div>`:''}).filter(Boolean);
  if(rows.length)el.insertAdjacentHTML('beforeend',`<div class="g pad" style="margin-top:14px"><div class="ct"><span>${T('من بنك الخبرة لقسمك اليوم','From the knowledge bank, for your department today')}</span><span class="chip">${rows.length}</span></div>${rows.join('')}</div>`)}catch(e){}};
 
+/* ================= v2.3: model-portfolio calculator (illustrative, for staff study) ================= */
+let CD=null;const CS={risk:3,type:'disc',band:2,amt:75000,mk:{kw:1,gcc:1,eg:0,gl:1},sharia:0,news:1,tradePct:10};
+async function loadCalc(){if(CD)return;try{const c=await openData(await getJ('data/calc.json'));if(c&&c.assets)CD=c}catch(e){}}
+const YRS=['2021','2022','2023','2024','2025'];
+const bMin=i=>i===0?1000:BANDS[i][0],bMax=i=>BANDS[i][1];
+const BANDS=[[0,10000,['أقل من 10,000 د.ك','Under KWD 10,000'],4],[10000,50000,['10,000 – 50,000','10,000 – 50,000'],6],[50000,100000,['50,000 – 100,000','50,000 – 100,000'],8],[100000,250000,['100,000 – 250,000','100,000 – 250,000'],10],[250000,500000,['250,000 – 500,000','250,000 – 500,000'],12],[500000,1000000,['500,000 – 1,000,000','500,000 – 1,000,000'],14],[1000000,2000000,['1,000,000 – 2,000,000','1,000,000 – 2,000,000'],16]];
+const RISK=[[['متحفظ جدًا','Very conservative'],20,.5,1.0],[['متحفظ','Conservative'],40,.4,.75],[['متوازن','Balanced'],60,.3,.5],[['نمو','Growth'],80,.3,.3],[['محترف','Professional'],100,0,.15]]; // [name, equity %, cash share of fixed income, risk penalty λ]
+const TYPES=[['trade',['مستثمر تداول','Trader']],['disc',['محفظة إدارة عميل','Discretionary client portfolio']],['corp',['محفظة شركة','Corporate portfolio']],['cust',['حفظ','Custody']]];
+const REG={kw:['الكويت','Kuwait'],gcc:['الخليج','GCC'],eg:['مصر','Egypt'],gl:['عالمي وأمريكي','Global & US']};
+const HOME={kw:40,gcc:25,eg:5,gl:30};
+const MK2R0={kw:'kw',sa:'gcc',ae:'gcc',qa:'gcc',eg:'eg',us:'gl',gl:'gl'};const RID={KSA:'gcc',UAE:'gcc',QAT:'gcc'};const rOf=a=>RID[a.id]||MK2R0[a.mkt];const MK2R=new Proxy(MK2R0,{});
+const PROXY={kw:'BKPRM',sa:'TASI',ae:'DFMGI',qa:'QEI',eg:'EGX30'};
+const pct=(v,d=1)=>v==null||isNaN(v)?'—':(v>0?'+':'')+v.toFixed(d)+'%';
+const kwd0=n=>Math.round(n).toLocaleString('en-US');
+function fxY(y){const f=CD.fx;return y==='ytd'?(f.ytd&&f.ytd.v)||0:(f.ret[y]||0)}
+function egY(y){const e=CD.assets.find(a=>a.id==='EGPUSD');if(!e)return 0;return y==='ytd'?(e.ytd&&e.ytd.v)||0:(e.ret[y]||0)}
+function toKWD(a,y,r){if(r==null)return null;const R=r/100;if(a.cur==='KWD')return r;let usd=R;if(a.cur==='EGP')usd=(1+R)*(1+egY(y)/100)-1;return((1+usd)*(1+fxY(y)/100)-1)*100}
+function yr(a,y){const v=y==='ytd'?(a.ytd&&a.ytd.v):a.ret[y];return toKWD(a,y,v)}
+function stats(a){const rs=YRS.map(y=>yr(a,y)).filter(v=>v!=null);if(!rs.length)return null;const g=rs.reduce((p,v)=>p*(1+v/100),1);const cagr=(Math.pow(g,1/rs.length)-1)*100;const m=rs.reduce((p,v)=>p+v,0)/rs.length;const sd=Math.sqrt(rs.reduce((p,v)=>p+(v-m)*(v-m),0)/Math.max(1,rs.length-1));return{n:rs.length,cagr,sd,worst:Math.min(...rs),best:Math.max(...rs)}}
+function bandOf(x){return BANDS.findIndex(b=>x>=b[0]&&x<b[1])}
+function buildModel(){const R=RISK[CS.risk-1];const corp=CS.type==='corp';let eq=R[1];if(corp)eq=Math.max(0,eq-10);
+ const fi=100-eq;const goldW=CS.risk>=3&&CS.risk<=4?5:0;const eqW=eq-goldW*(eq>0?1:0);
+ // regions
+ const on=Object.keys(REG).filter(k=>CS.mk[k]&&!(k==='eg'&&CS.risk<4));let rw={};on.forEach(k=>rw[k]=HOME[k]);const tl=[];
+ if(CS.news&&CD.tilts)CD.tilts.forEach(t=>{const r=MK2R[t.mkt];if(rw[r]!=null){if(t.mkt==='sa'){tl.push(t)}else{rw[r]*=1+t.f;tl.push(t)}}});
+ const rs=Object.values(rw).reduce((p,v)=>p+v,0)||1;Object.keys(rw).forEach(k=>rw[k]=rw[k]/rs*eqW);
+ // holdings count
+ const N=BANDS[CS.band][3];const small=CS.band===0;const big=CS.band>=5;
+ const pool=CD.assets.filter(a=>['stock','etf'].includes(a.type)&&(!CS.sharia||a.sharia===true));
+ const elig=a=>{const s=stats(a);if(!s||s.n<3)return false;if(a.liq==='low'&&(big||corp||CS.risk<=3))return false;return true};
+ const lam=R[3];const score=a=>{const s=stats(a);return s.cagr-lam*s.sd+(CS.risk<=3?.3*(a.dy||0):0)};
+ const H=[];const why=a=>{const s=stats(a);return T(`عائد سنوي مركب ${pct(s.cagr)} خلال ${s.n} سنوات، تذبذب ${s.sd.toFixed(1)} نقطة، أسوأ سنة ${pct(s.worst)}${a.dy?`، توزيعات ${a.dy}%`:''} (بالدينار)`,`${pct(s.cagr)} compound a year over ${s.n} years, volatility ${s.sd.toFixed(1)} pts, worst year ${pct(s.worst)}${a.dy?`, yield ${a.dy}%`:''} (in KWD)`)};
+ const eqN=Math.max(1,N-(fi>0?(fi>=40?2:1):0)-(goldW?1:0));const tot=Object.values(rw).reduce((p,v)=>p+v,0)||1;
+ const cap=CS.risk<=3?10:12;Object.entries(rw).forEach(([r,w])=>{if(w<=0)return;let k=Math.max(1,Math.round(eqN*w/tot),Math.ceil(w/cap));
+  let cand=pool.filter(a=>rOf(a)===r&&elig(a));
+  if(r==='gcc'&&small)cand=cand.filter(a=>a.type==='etf');else if(r==='gcc')cand=cand.filter(a=>a.type==='stock');
+  if(r==='gl'&&CS.risk<=2)cand=cand.filter(a=>!['QQQ'].includes(a.id));
+  if(r==='gl')cand=cand.filter(a=>!['KSA','UAE','QAT'].includes(a.id));if(r==='gl'&&!CS.sharia)cand=cand.filter(a=>a.id!=='HLAL');
+  cand.sort((a,b)=>score(b)-score(a));const pick=cand.slice(0,k);if(!pick.length)return;
+  const saT=CS.news&&(CD.tilts||[]).find(t=>t.mkt==='sa');const iv=pick.map(a=>(CS.risk<=3?1/Math.max(4,stats(a).sd):1)*(saT&&a.mkt==='sa'?1+saT.f:1));const s=iv.reduce((p,v)=>p+v,0);
+  pick.forEach((a,i)=>H.push({a,r,w:w*iv[i]/s,why:why(a)}))});
+ // fixed income
+ if(fi>0){const cashW=fi*R[2];const bondW=fi-cashW;
+  const cash=CD.assets.find(a=>a.id==='WATANIMMF');if(cash&&!CS.sharia)H.push({a:cash,r:'fi',w:cashW,why:T('سيولة بالدينار: صندوق نقد كويتي (عائد سنوي بين 1% و4% في السنوات الخمس)','KWD liquidity: a Kuwaiti money-market fund (1–4% a year over five years)')});else{const b=CD.assets.find(a=>a.id==='BIL');if(b&&!CS.sharia)H.push({a:b,r:'fi',w:cashW,why:T('سيولة بالدولار: أذونات الخزانة الأمريكية','USD liquidity: US Treasury bills')});else{const sk=CD.assets.find(a=>a.id==='SPSK');if(sk)H.push({a:sk,r:'fi',w:cashW,why:T('بديل متوافق مع الشريعة للسيولة: صكوك','Sharia-compliant alternative: sukuk')})}}
+  const bonds=CS.sharia?['SPSK']:(CS.risk<=2?['SPSK','AGG']:['SPSK','EMB']);const bl=bonds.map(id=>CD.assets.find(a=>a.id===id)).filter(Boolean);
+  if(small&&bl.length>1)bl.length=1;bl.forEach(b=>H.push({a:b,r:'fi',w:bondW/bl.length,why:b.type==='sukuk'?T('صكوك عالمية متوافقة مع الشريعة','Global Sharia-compliant sukuk'):T('سندات (دخل ثابت) لتخفيف تذبذب المحفظة','Bonds (fixed income) to damp portfolio swings')}))}
+ if(goldW){const g=CD.assets.find(a=>a.id==='GLD');if(g&&!CS.sharia)H.push({a:g,r:'gold',w:goldW,why:T('ذهب لتنويع المخاطر','Gold for diversification')})}
+ const M={};H.forEach(h=>{if(M[h.a.id]){M[h.a.id].w+=h.w}else M[h.a.id]=h});H.length=0;Object.values(M).forEach(h=>H.push(h));const sw=H.reduce((p,h)=>p+h.w,0)||1;H.forEach(h=>h.w=h.w/sw*100);H.sort((a,b)=>b.w-a.w);
+ // backtest (rebalanced each year), proxies where a holding has no data that year
+ const prox=[];const bt=YRS.concat(['ytd']).map(y=>{let r=0;H.forEach(h=>{let v=yr(h.a,y);if(v==null){const p=CD.assets.find(a=>a.id===PROXY[h.a.mkt]);v=p?yr(p,y):0;prox.push(`${L(h.a.n)} ${y==='ytd'?'2026':y}`)}r+=h.w/100*v});return{y,r}});
+ const bm=CD.assets.find(a=>a.id==='BKPRM');const bmr=YRS.concat(['ytd']).map(y=>yr(bm,y));
+ return{H,bt,bmr,eq,fi,goldW,rw,tl,prox,N}}
+function svgGrowth(m){const amt=CS.amt;let v=amt,b=amt;const P=[amt],B=[amt];m.bt.slice(0,5).forEach((x,i)=>{v*=1+x.r/100;b*=1+(m.bmr[i]||0)/100;P.push(v);B.push(b)});
+ const W=560,Hh=190,pad=34,mx=Math.max(...P,...B)*1.05,mn=Math.min(...P,...B)*.95;const X=i=>pad+i*(W-pad*2)/5,Y=v=>Hh-24-(v-mn)/(mx-mn)*(Hh-44);
+ const line=(a,c,d)=>`<polyline fill="none" stroke="${c}" stroke-width="2.4" ${d?'stroke-dasharray="5 4"':''} points="${a.map((v,i)=>X(i)+','+Y(v)).join(' ')}"/>`;
+ return `<svg viewBox="0 0 ${W} ${Hh}" class="cg" role="img" aria-label="growth"><g font-size="11" fill="var(--mut)">${['2020','2021','2022','2023','2024','2025'].map((t,i)=>`<text x="${X(i)}" y="${Hh-6}" text-anchor="middle">${t}</text>`).join('')}</g>${line(B,'var(--mut)',1)}${line(P,'var(--gold)')}${P.map((v,i)=>`<circle cx="${X(i)}" cy="${Y(v)}" r="3" fill="var(--gold)"/>`).join('')}</svg>
+ <div class="cgl"><span><i style="background:var(--gold)"></i>${T('النموذج','Model')} ${kwd0(P[5])} ${T('د.ك','KWD')}</span><span><i style="background:var(--mut)"></i>${T('مؤشر السوق الأول (كويت)','Boursa Kuwait Premier index')} ${kwd0(B[5])}</span></div>`}
+function renderCalc(){const el=$('calcOut');if(!el)return;const ctl=$('calcCtl');
+ if(!CD){ctl.innerHTML='';el.innerHTML=`<div class="g pad"><p class="mut">${T('بيانات الحاسبة لم تُحمّل.','Calculator data not loaded.')}</p></div>`;return}
+ const seg=(k,opts)=>`<div class="seg cseg" role="group">${opts.map(([v,n])=>`<button type="button" data-cs="${k}" data-cv="${v}" class="${String(CS[k])===String(v)?'on':''}">${esc(L(n))}</button>`).join('')}</div>`;
+ ctl.innerHTML=`<div class="cin"><span class="lbl">${T('درجة المخاطرة','Risk level')}</span>${seg('risk',RISK.map((r,i)=>[i+1,r[0]]))}</div>
+ <div class="cin"><span class="lbl">${T('نوع المستثمر','Investor type')}</span>${seg('type',TYPES)}</div>
+ <div class="cin"><span class="lbl">${T('حجم الثروة للاستثمار','Amount to invest')}</span>${seg('band',BANDS.map((b,i)=>[i,b[2]]))}<label class="camt">${T('المبلغ بالدينار','Amount in KWD')} <input type="number" id="calcAmt" inputmode="numeric" min="${bMin(CS.band)}" max="${bMax(CS.band)}" step="1000" value="${CS.amt}"></label><small class="camtr ${CS.amtNote?'bad':''}">${CS.amtNote?esc(CS.amtNote)+' ':''}${T(`المسموح في هذه الشريحة: من ${kwd0(bMin(CS.band))} إلى ${kwd0(bMax(CS.band))} د.ك`,`Allowed in this band: KWD ${kwd0(bMin(CS.band))} to ${kwd0(bMax(CS.band))}`)}</small></div>
+ <div class="cin"><span class="lbl">${T('الأسواق','Markets')}</span><div class="cchk">${Object.entries(REG).map(([k,n])=>`<label><input type="checkbox" data-cm="${k}" ${CS.mk[k]?'checked':''}> ${esc(L(n))}</label>`).join('')}<label><input type="checkbox" data-cx="sharia" ${CS.sharia?'checked':''}> ${T('متوافق مع الشريعة فقط','Sharia-compliant only')}</label><label><input type="checkbox" data-cx="news" ${CS.news?'checked':''}> ${T('طبقة أخبار اليوم','Today\'s news layer')}</label></div></div>`;
+ const warn=`<div class="cwarn">${T('نموذج توضيحي للدراسة الداخلية، مبني على أداء سابق وأخبار اليوم. الأداء السابق لا يضمن نتائج مستقبلية. عرض أي محفظة على عميل يمر بتقييم الملاءمة وإجراءات الشركة وفق تعليمات هيئة أسواق المال، والقرار للموظف والعميل.','An illustrative model for internal study, built on past performance and today\'s news. Past performance does not guarantee future results. Showing any portfolio to a client goes through the suitability assessment and the firm\'s procedures under CMA rules; the decision rests with the employee and the client.')}</div>`;
+ if(CS.type==='cust'){el.innerHTML=warn+`<div class="g pad"><h3 style="margin:0 0 6px">${T('الحفظ: لا يُبنى نموذج','Custody: no model is built')}</h3><p class="soft" style="margin:0 0 10px">${T('في الحفظ يقرر العميل ما يملكه. المفيد هنا متابعة الإجراءات المؤسسية على أسهمه (الحقوق والتوزيعات والجمعيات) ومواعيدها.','In custody the client decides the holdings. What helps is following the corporate actions on those shares (rights, dividends, assemblies) and their dates.')}</p><div class="kbl">${['rights','div','agm','unlisted'].filter(KBC).map(i=>`<button type="button" class="mini" data-kb="${i}">${esc(L(KBC(i).t))} ←</button>`).join('')}<button type="button" class="mini" data-view="ca">${T('الإجراءات المؤسسية ←','Corporate actions →')}</button></div></div>`;return}
+ if(CS.type==='trade'){const on=Object.keys(REG).filter(k=>CS.mk[k]);const L1=CD.assets.filter(a=>a.type==='stock'&&on.includes(rOf(a))&&a.liq!=='low'&&stats(a)&&(!CS.sharia||a.sharia===true)).map(a=>({a,s:stats(a)})).sort((x,y)=>y.s.sd-x.s.sd).slice(0,14);const per=CS.amt*CS.tradePct/100;
+  el.innerHTML=warn+`<div class="g pad"><div class="ct"><span>${T('قائمة متابعة للتداول: الأسهم الأعلى تذبذبًا مع سيولة كافية','Trading watchlist: most volatile shares with enough liquidity')}</span></div>
+  <p class="soft" style="font-size:13px">${T(`حجم الصفقة الواحدة في هذا النموذج ${CS.tradePct}% من رأس المال = ${kwd0(per)} د.ك (افتراض قابل للتعديل).`,`One trade in this model is ${CS.tradePct}% of capital = KWD ${kwd0(per)} (an adjustable assumption).`)} <span class="seg cseg" style="display:inline-flex">${[5,10,20].map(p=>`<button type="button" data-cs="tradePct" data-cv="${p}" class="${CS.tradePct===p?'on':''}">${p}%</button>`).join('')}</span></p>
+  <div class="scroll"><table class="tbl ctab"><thead><tr><th>${T('السهم','Share')}</th><th class="hm">${T('السوق','Market')}</th><th>${T('التذبذب السنوي','Yearly volatility')}</th><th>${T('أسوأ سنة','Worst year')}</th><th>${T('منذ بداية 2026','2026 to date')}</th><th class="hm">${T('السيولة','Liquidity')}</th></tr></thead><tbody>${L1.map(({a,s})=>`<tr><td><b>${esc(L(a.n))}</b> <small class="mut">${esc(a.tk||'')}</small></td><td class="hm">${esc(L(REG[rOf(a)]))}</td><td class="num">${s.sd.toFixed(1)}</td><td class="num ${s.worst<0?'down':''}">${pct(s.worst)}</td><td class="num">${pct(yr(a,'ytd'))}<div class="mut" style="font-size:10.5px">${esc((a.ytd||{}).asof||'')}</div></td><td class="hm">${a.liq==='high'?T('عالية','High'):T('متوسطة','Medium')}</td></tr>`).join('')}</tbody></table></div>
+  <p class="mut" style="font-size:12px">${T('التذبذب والعوائد بالدينار، محسوبة من العوائد السنوية 2021–2025. الأسهم بعوائد سعرية دون التوزيعات.','Volatility and returns in KWD, from yearly returns 2021–2025. Shares are price returns without dividends.')}</p></div>${ipoBlock()}`;return}
+ const m=buildModel();const cagr=(Math.pow(m.bt.slice(0,5).reduce((p,x)=>p*(1+x.r/100),1),1/5)-1)*100;const worst=Math.min(...m.bt.slice(0,5).map(x=>x.r)),best=Math.max(...m.bt.slice(0,5).map(x=>x.r));
+ const regW={};m.H.forEach(h=>{regW[h.r]=(regW[h.r]||0)+h.w});const RN={...REG,fi:['دخل ثابت وسيولة','Fixed income & cash'],gold:['ذهب','Gold']};
+ const shN=CS.sharia?`<div class="cwarn" style="background:var(--bluebg);color:var(--blue)">${T('وضع التوافق مع الشريعة: البيانات الحالية فيها بنود قليلة مصنفة متوافقة بمصدر (بيت التمويل، بوبيان، وربة، صندوق HLAL، صكوك SPSK)، ولا يوجد صندوق نقد متوافق موثق، لذلك تتركز المحفظة فيها.','Sharia mode: the data has few holdings with a sourced Sharia classification (KFH, Boubyan, Warba, HLAL, SPSK sukuk) and no documented Sharia money-market fund, so the portfolio concentrates in them.')}</div>`:'';
+ el.innerHTML=warn+shN+`
+ <div class="grid c4 ckp"><div class="g pad"><small>${T('العائد السنوي المركب للنموذج 2021–2025','Model compound yearly return 2021–2025')}</small><b>${pct(cagr)}</b></div><div class="g pad"><small>${T('أسوأ سنة','Worst year')}</small><b class="${worst<0?'down':''}">${pct(worst)}</b></div><div class="g pad"><small>${T('أفضل سنة','Best year')}</small><b class="up">${pct(best)}</b></div><div class="g pad"><small>${T('2026 حتى الآن','2026 to date')}</small><b>${pct(m.bt[5].r)}</b></div></div>
+ <div class="grid split s16" style="margin-top:14px">
+  <div class="g pad"><div class="ct"><span>${T('المحفظة النموذجية','Model portfolio')} · ${kwd0(CS.amt)} ${T('د.ك','KWD')}</span><span class="chip">${m.H.length} ${T('بندًا','holdings')}</span></div>
+   <div class="cbar">${Object.entries(regW).map(([k,w])=>`<i style="flex:${w};background:var(--c-${k})" title="${esc(L(RN[k]))} ${w.toFixed(0)}%"></i>`).join('')}</div>
+   <div class="cleg">${Object.entries(regW).map(([k,w])=>`<span><i style="background:var(--c-${k})"></i>${esc(L(RN[k]))} ${w.toFixed(0)}%</span>`).join('')}</div>
+   <div class="scroll"><table class="tbl ctab chold"><thead><tr><th>${T('البند','Holding')}</th><th>${T('الوزن','Weight')}</th><th>${T('المبلغ (د.ك)','Amount (KWD)')}</th><th>${T('ليه في النموذج','Why it is in the model')}</th></tr></thead><tbody>${m.H.map(h=>`<tr><td><b>${esc(L(h.a.n))}</b><div class="mut" style="font-size:11.5px">${esc(L(RN[h.r]))} · ${esc(L(h.a.sec||['','']))}${h.a.sharia?' · '+T('متوافق مع الشريعة','Sharia'):''}</div></td><td class="num"><small class="mo2">${T('الوزن','Weight')} </small>${h.w.toFixed(1)}%</td><td class="num"><small class="mo2">${T('المبلغ','Amount')} </small>${kwd0(CS.amt*h.w/100)} <small class="mo2">${T('د.ك','KWD')}</small></td><td style="font-size:12.5px">${esc(h.why)}${srcX((h.a.src||[]).slice(0,1),T('المصدر:','Source:'))}</td></tr>`).join('')}</tbody></table></div></div>
+  <div class="grid" style="align-content:start">
+   <div class="g pad"><div class="ct"><span>${T('لو طُبّق النموذج من بداية 2021','If the model had run from early 2021')}</span></div>${svgGrowth(m)}
+    <div class="scroll"><table class="tbl ctab"><thead><tr><th>${T('السنة','Year')}</th><th>${T('النموذج','Model')}</th><th>${T('السوق الأول','Premier')}</th></tr></thead><tbody>${m.bt.map((x,i)=>`<tr><td class="num">${x.y==='ytd'?T('2026 حتى الآن','2026 YTD'):x.y}</td><td class="num ${x.r<0?'down':'up'}">${pct(x.r)}</td><td class="num">${pct(m.bmr[i])}</td></tr>`).join('')}</tbody></table></div>
+    <p class="mut" style="font-size:11.5px;margin:6px 0 0">${T('أداء افتراضي بإعادة توازن سنوية، بالدينار. الأسهم بعوائد سعرية دون التوزيعات (أي أن العائد الفعلي أعلى عادةً)، وصناديق المؤشرات بعائد كلي. أرقام 2026 حتى تواريخ مختلفة لكل بند.','Hypothetical, rebalanced yearly, in KWD. Shares are price returns without dividends (actual returns are usually higher); ETFs are total returns. 2026 figures run to different dates per holding.')}${m.prox.length?' '+T('سنوات قبل الإدراج محسوبة بمؤشر السوق: ','Years before listing use the market index: ')+esc([...new Set(m.prox)].join('، ')):''}</p></div>
+   ${m.tl.length?`<div class="g pad"><div class="ct"><span>${T('تعديلات من أخبار اليوم','Adjustments from today\'s news')}</span></div>${m.tl.map(t=>`<div class="ctl"><b>${esc(L(t.t))}</b><p>${esc(L(t.why))}</p>${chainHtml([t.chain],T('السيناريو','Chain'))}${srcX(t.src,T('المصدر:','Source:'))}</div>`).join('')}</div>`:''}
+  </div></div>
+ ${ipoBlock()}
+ <details class="g pad cass"><summary>${T('افتراضات النموذج وطريقة الحساب','Model assumptions and method')}</summary>
+  <ul class="kbu">
+   <li>${T('نسبة الأسهم حسب درجة المخاطرة (متحفظ جدًا 20%، متحفظ 40%، متوازن 60%، نمو 80%، محترف 100%) مأخوذة من مزيج فانغارد المقترح للأسهم والسندات.','Equity share by risk level (20 / 40 / 60 / 80 / 100%) follows Vanguard\'s suggested stock/bond mixes.')} ${srcX((CD.alloc&&CD.alloc.src)||[],T('المصدر:','Source:'))}</li>
+   <li>${T('توزيع الأسهم بين الأسواق افتراض داخلي قابل للتعديل: الكويت 40، الخليج 25، العالمي 30، مصر 5 (لدرجتي النمو والمحترف فقط).','Equity split across markets is an internal, adjustable assumption: Kuwait 40, GCC 25, global 30, Egypt 5 (growth and professional only).')}</li>
+   <li>${T('محفظة الشركة: 10 نقاط إضافية للسيولة والدخل الثابت، واستبعاد الأسهم منخفضة السيولة.','Corporate portfolio: 10 extra points to cash and fixed income, low-liquidity shares excluded.')}</li>
+   <li>${T('عدد البنود حسب حجم الثروة (4، 6، 8، 10، 12، 14، 16). أقل من 10,000 د.ك: صناديق مؤشرات للخليج بدل الأسهم.','Number of holdings by amount (4, 6, 8, 10, 12, 14, 16). Under KWD 10,000: GCC ETFs instead of single shares.')}</li>
+   <li>${T('اختيار البنود: العائد المركب ناقص عقوبة على التذبذب تزيد مع انخفاض درجة المخاطرة، مع مكافأة للتوزيعات في الدرجات المتحفظة. يُشترط 3 سنوات بيانات على الأقل.','Selection: compound return minus a volatility penalty that rises as risk falls, plus a dividend bonus at conservative levels. At least 3 years of data required.')}</li>
+   <li>${T('كل العوائد محوّلة إلى الدينار: الريال والدرهم مربوطان بالدولار، والجنيه المصري يُحوّل بتغيره السنوي أمام الدولار.','All returns converted to KWD: SAR and AED are pegged to the USD; EGP is converted with its yearly change against the USD.')}</li>
+  </ul>
+  ${(CD.gaps||[]).length?`<span class="lbl">${T('نواقص البيانات','Data gaps')}</span><ul class="kbu mut">${CD.gaps.slice(0,12).map(g=>`<li>${esc(L(g))}</li>`).join('')}</ul>`:''}
+ </details>`}
+function ipoBlock(){if(!CD.ipo||!CD.ipo.length||!CS.mk.eg)return '';return `<div class="g pad" style="margin-top:14px"><div class="ct"><span>${T('فرص اكتتاب مرتبطة (خارج النموذج)','Related IPOs (outside the model)')}</span>${KBC('ipo')?`<button type="button" class="mini" data-kb="ipo">${T('بنك الخبرة: الطرح الأولي ←','Knowledge bank: IPOs →')}</button>`:''}</div>${CD.ipo.map(p=>`<div class="ctl"><b>${esc(L(p.n))}</b> <span class="chip">${/^book|^sub|open/i.test(p.stage||'')?T('الاكتتاب مفتوح','Subscription open'):/^listed/i.test(p.stage||'')?T('أُدرج حديثًا','Recently listed'):esc(String(p.stage||'').split(';')[0])}</span><p>${esc(L(p.offer||['','']))}</p>${p.retail?`<p class="soft">${esc(L(p.retail))}</p>`:''}${p.demand?`<p class="soft"><small>${T('الطلب:','Demand:')}</small> ${esc(L(p.demand))}</p>`:''}${p.val?`<p class="soft"><small>${T('التقييم:','Valuation:')}</small> ${esc(L(p.val))}</p>`:''}${p.risks?`<p class="soft"><small>${T('المخاطر:','Risks:')}</small> ${esc(L(p.risks))}</p>`:''}${srcX(p.src,T('المصدر:','Source:'))}</div>`).join('')}</div>`}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-cs]');if(b){const k=b.dataset.cs;CS[k]=isNaN(+b.dataset.cv)?b.dataset.cv:+b.dataset.cv;if(k==='band'){CS.amtNote='';if(CS.amt<bMin(CS.band)||CS.amt>bMax(CS.band))CS.amt=Math.round((bMin(CS.band)+bMax(CS.band))/2/1000)*1000}renderCalc()}});
+document.addEventListener('change',e=>{const t=e.target;if(t.dataset&&t.dataset.cm){CS.mk[t.dataset.cm]=t.checked?1:0;renderCalc()}else if(t.dataset&&t.dataset.cx){CS[t.dataset.cx]=t.checked?1:0;renderCalc()}else if(t.id==='calcAmt'){const raw=Math.round(+t.value||0);const lo=bMin(CS.band),hi=bMax(CS.band);const v=Math.max(lo,Math.min(hi,raw));CS.amtNote=v!==raw?T(`المبلغ ${kwd0(raw)} خارج الشريحة المختارة، فعُدّل إلى ${kwd0(v)}. لاستخدام مبلغ آخر اختر الشريحة المناسبة أولًا.`,`KWD ${kwd0(raw)} is outside the selected band, so it was set to ${kwd0(v)}. To use another amount, pick its band first.`):'';CS.amt=v;renderCalc()}});
+function postFix3(){try{renderCalc()}catch(e){console.error(e)}}
+
 /* ================= live data layer (GitHub Pages, encrypted data) ================= */
-const BUILD="2461f31742";
+const BUILD="1ba436c1ec";
 const GH="https://kmeficmarketing.github.io/Daily-Hub/",RAW="https://raw.githubusercontent.com/KmeficMarketing/Daily-Hub/main/";
 const ROOTS=/^https?:$/.test(location.protocol)?["./",GH,RAW]:[GH,RAW];
 let IXIPO=[],ICACHE={},IPODATE='',IXSD={},PREV=null,PC={},UPD={},LOADSIG="",SDATES=[],SCACHE={},DATES=[],LATEST=null,VIEWD=null,NOTE=null,BUSY=false,LAST_AT='',STDATE='',CALM=null;
@@ -1370,6 +1501,7 @@ async function goDay(d){if(!DATES.length)return;let req=null;
   if(!(j.studies&&j.studies.length))j.studies=await loadStudies(d);else STDATE=d;
   if(!j.ipo)j.ipo=await loadIpo(d);
   try{await loadKB()}catch(e){}
+  try{await loadCalc()}catch(e){}
   await mergeUpd(j,d);setDay(j,d);VIEWD=d;PREV=null;
   const pi=DATES.indexOf(d)-1;if(pi>=0){const p=DATES[pi];try{PREV=PC[p]||(PC[p]=await openData(await getJ("data/"+p+".json")));PREV._d=p}catch(e){PREV=null}}
   NOTE=req?{req}:null;

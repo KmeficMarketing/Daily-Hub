@@ -91,3 +91,9 @@ Sources in order: Kamco Invest "MENA Markets Daily Report" (all GCC + Egypt, top
   - `kb`: list of knowledge-bank card ids that apply.
   - Operational items (kind load, or timing notes) carry `x4na`: [ar,en] instead.
 - `rec` is guidance, never orders: every line starts with "من المفيد…", "المتعارف عليه…", "يُنصح عادةً…", "قد…", "في حال…" or "عند…". The page and `tools/qa_check.mjs` reject orders (اعمل، نفّذ، تواصل، جهّز، راجع، تأكد…).
+
+## Portfolio calculator (since 26 Oct 2026)
+- View "حاسبة المحفظة" (under More). An illustrative model portfolio for internal study, by risk level (very conservative → professional), investor type (trader → watchlist; discretionary or corporate portfolio → model; custody → no model, links to corporate actions and the knowledge bank), amount band (under KWD 10k … 1–2m; the typed amount must stay inside the chosen band) and markets (Kuwait, GCC, Egypt for growth/professional, global & US; optional Sharia-only and today's-news layer).
+- Data: `data/calc.json` (encrypted): assets with calendar-year returns 2021–2025 and 2026 YTD, dividend yield, liquidity, Sharia flag (only where sourced) and sources; `fx` (KWD per USD), the EGPUSD row, `alloc` (Vanguard stock/bond mixes), `ipo` (related IPOs outside the model) and `tilts` (today's news adjustments, each with reason, chain and sources). Returns are converted to KWD; shares are price returns, ETFs total returns.
+- Method and assumptions are printed on the page. A banner states it is an illustrative model; showing a portfolio to a client follows the suitability assessment and the firm's procedures under CMA rules.
+- Do not edit `data/calc.json` from the daily routines; it is refreshed separately (plaintext source kept outside the repo).
