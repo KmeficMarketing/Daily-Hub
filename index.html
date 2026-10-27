@@ -1578,6 +1578,7 @@ const OPS_F=[['all',['الكل','All']],['up',['القادمة','Upcoming']],['u
 const opsD=s=>s?`${s.slice(8,10)}/${s.slice(5,7)}/${s.slice(0,4)}`:'';
 const opsP=r=>r.pct!=null?(+(r.pct*100).toFixed(4))+'%':(r.pctT||'');
 const opsKey=r=>r.dist||r.cum||r.sent||'';
+const opsNm=r=>(lang==='ar'?(r.nameAr||r.name):(r.name||r.nameAr))||r.tk||'—';
 const opsEvL=r=>r.evT||L(OPS_EV[r.ev]||OPS_EV.other);
 const opsSrcName=u=>{const h=(u.match(/^(?:https?:\/\/)?([^/]+)/)||[])[1]||u;
  if(/maqasa/.test(h))return T('المقاصة الكويتية','Kuwait Clearing');if(/ifsahdocs/.test(h))return T('إفصاح البورصة','Boursa disclosure');if(/boursakuwait/.test(h))return T('بورصة الكويت','Boursa Kuwait');
@@ -1587,9 +1588,9 @@ const opsLink=u=>{u=(u||'').trim();if(!u)return'';const href=/^https?:\/\//.test
  return href?`<a href="${esc(href)}" target="_blank" rel="noopener">${esc(opsSrcName(u))}</a>`:`<span class="mut">${esc(u)}</span>`};
 const opsIsUp=r=>{const t=TODAY||'';return [r.cum,r.dist].some(d=>d&&d>=t)};
 function opsRows(){if(!OPS)return[];const q=opsQ.trim().toLowerCase();
- return OPS.rows.filter(r=>(opsEv==='all'||r.ev===opsEv||(r.ev==='cashbonus'&&(opsEv==='cash'||opsEv==='bonus')))&&(opsF==='all'||(opsF==='unv'&&r.u.length)||(opsF==='add'&&!r.o)||(opsF==='up'&&opsIsUp(r)))&&(opsMo==='all'||opsKey(r).slice(5,7)===opsMo)&&(!q||(r.name+' '+r.tk+' '+r.code).toLowerCase().includes(q)))
+ return OPS.rows.filter(r=>(opsEv==='all'||r.ev===opsEv||(r.ev==='cashbonus'&&(opsEv==='cash'||opsEv==='bonus')))&&(opsF==='all'||(opsF==='unv'&&r.u.length)||(opsF==='add'&&!r.o)||(opsF==='up'&&opsIsUp(r)))&&(opsMo==='all'||opsKey(r).slice(5,7)===opsMo)&&(!q||(r.name+' '+(r.nameAr||'')+' '+r.tk+' '+r.code).toLowerCase().includes(q)))
   .sort((a,b)=>opsKey(b).localeCompare(opsKey(a)))}
-const opsQm=(r,f,v)=>r.u.includes(f)?`<span class="opsU" title="${esc(T('غير مؤكد','Unconfirmed'))}">${v}<i>؟</i></span>`:v;
+const opsQm=(r,f,v)=>r.u.includes(f)?`<span class="opsU" title="${esc(T('غير مؤكد','Unconfirmed'))}">${v}<i>${T('؟','?')}</i></span>`:v;
 function renderOps(box){if(!box)return;
  if(!OPS){box.innerHTML=`<div class="g pad mut">${_opsLoading?T('جارٍ تحميل السجل…','Loading the log…'):T('السجل غير متاح الآن.','The log is not available right now.')}</div>`;if(!_opsLoading)loadOps().then(()=>{if(caF==='ops')renderOps(box)});return}
  const all=OPS.rows,rows=opsRows();
@@ -1599,13 +1600,13 @@ function renderOps(box){if(!box)return;
  const head=`<div class="g pad opsHead"><div class="opsT"><div><b>${esc(L(OPS.title))}</b><p class="mut">${esc(L(OPS.about))}</p><small class="mut">${T('آخر تحديث','Last update')}: ${opsD(OPS.asof)} · ${all.length} ${T('إجراء','actions')}</small></div>
   <button type="button" class="mini opsX" id="opsExport"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M4 21h16"/></svg>${T('تصدير Excel','Export Excel')}</button></div>
   <div class="opsChips">${OPS_F.map(([k,v])=>`<button type="button" class="chip ${k==='unv'?'b':''} ${opsF===k?'on':''}" data-opsf="${k}">${esc(L(v))} <span class="num">${cnt(k)}</span></button>`).join('')}</div>
-  <div class="opsCtl"><input type="search" id="opsQ" value="${esc(opsQ)}" placeholder="${T('ابحث بالشركة أو الرمز أو الكود','Search company, ticker or code')}" autocomplete="off">
+  <div class="opsCtl"><input type="search" id="opsQ" value="${esc(opsQ)}" placeholder="${T('ابحث باسم الشركة (عربي أو إنجليزي) أو الرمز أو الكود','Search company (Arabic or English), ticker or code')}" autocomplete="off">
   ${sel('opsEv',opsEv,[['all',T('كل الإجراءات','All actions')]].concat(Object.entries(OPS_EV).filter(([k])=>all.some(r=>r.ev===k)).map(([k,v])=>[k,L(v)])))}
   ${sel('opsMo',opsMo,[['all',T('كل الشهور','All months')]].concat(MO.map(m=>[m,L([MAR,MEN])[+m-1]])))}</div></div>`;
  const tr=r=>{const open=opsOpen.has(r.id),up=opsIsUp(r);
   return `<tr class="opsR ${open?'open':''} ${up?'opsUp':''}" data-opsn="${esc(r.id)}" tabindex="0">
   <td data-l="${T('تاريخ الإرسال','Sent')}" class="num">${r.sent?opsD(r.sent):'—'}</td>
-  <td data-l="${T('الشركة','Company')}"><b>${esc(r.name||r.tk||'—')}</b> <small class="mut">${esc(r.tk)}${r.code?(r.tk?' · ':'')+esc(r.code):''}</small>${!r.o?` <span class="chip opsAdd">${T('إضافة الهَب','Hub addition')}</span>`:''}${up?` <span class="chip a">${T('قادم','Upcoming')}</span>`:''}</td>
+  <td data-l="${T('الشركة','Company')}"><b>${esc(opsNm(r))}</b> <small class="mut">${esc(r.tk)}${r.code?(r.tk?' · ':'')+esc(r.code):''}</small>${!r.o?` <span class="chip opsAdd">${T('إضافة الهَب','Hub addition')}</span>`:''}${up?` <span class="chip a">${T('قادم','Upcoming')}</span>`:''}</td>
   <td data-l="${T('السوق','Market')}" class="hm">${esc(L(OPS_MK[r.mk]||OPS_MK.na))}</td>
   <td data-l="${T('الإجراء','Action')}">${opsQm(r,'ev',esc(opsEvL(r)))}</td>
   <td data-l="${T('آخر يوم شراء','Last day to buy')}" class="num">${opsQm(r,'cum',r.cum?opsD(r.cum):'—')}</td>
@@ -1626,13 +1627,13 @@ function _zip(files){const enc=new TextEncoder(),parts=[],cd=[];let off=0;const 
  const cdl=cd.reduce((a,b)=>a+b.length,0);parts.push(...cd,new Uint8Array([0x50,0x4b,5,6,0,0,0,0,...u16(files.length),...u16(files.length),...u32(cdl),...u32(off),0,0]));return new Blob(parts,{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'})}
 function opsXlsx(rows){const x=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])).replace(/[\u0000-\u0008\u000b\u000c\u000e-\u001f]/g,'');
  const col=i=>{let s='';i++;while(i){const m=(i-1)%26;s=String.fromCharCode(65+m)+s;i=Math.floor((i-1)/26)}return s};
- const H=[T('تاريخ الإرسال','Sent'),T('السوق','Market'),T('الكود','Code'),T('الشركة','Company'),T('الرمز','Ticker'),T('نوع الإجراء','Action'),T('آخر يوم شراء','Last day to buy'),T('تاريخ الصرف','Payment date'),T('النسبة','Ratio'),T('تفاصيل','Details'),T('غير مؤكد','Unconfirmed'),T('ملاحظة','Note'),T('المصدر','Source'),T('المصدر 2','Source 2'),T('من سجل العمليات','From Ops log')];
- const W=[12,16,8,36,13,22,13,13,10,50,22,45,45,45,10];
+ const H=[T('تاريخ الإرسال','Sent'),T('السوق','Market'),T('الكود','Code'),T('الشركة (عربي)','Company (Arabic)'),T('الشركة (إنجليزي)','Company (English)'),T('الرمز','Ticker'),T('نوع الإجراء','Action'),T('آخر يوم شراء','Last day to buy'),T('تاريخ الصرف','Payment date'),T('النسبة','Ratio'),T('تفاصيل','Details'),T('غير مؤكد','Unconfirmed'),T('ملاحظة','Note'),T('المصدر','Source'),T('المصدر 2','Source 2'),T('من سجل العمليات','From Ops log')];
+ const W=[12,16,8,36,36,13,22,13,13,10,50,22,45,45,45,10];
  const FL={ev:T('نوع الإجراء','Action'),cum:T('آخر يوم شراء','Last day to buy'),dist:T('تاريخ الصرف','Payment'),pct:T('النسبة','Ratio'),per:T('التفاصيل','Details')};
  const cell=(r,c,v,s)=>{const ref=col(c)+r;if(v==null||v==='')return`<c r="${ref}"${s?` s="${s}"`:''}/>`;if(typeof v==='number')return`<c r="${ref}" s="${s||2}"><v>${v}</v></c>`;return`<c r="${ref}" t="inlineStr"${s?` s="${s}"`:''}><is><t xml:space="preserve">${x(v)}</t></is></c>`};
  let sd=`<row r="1">${H.map((h,i)=>cell(1,i,h,1)).join('')}</row>`;
- rows.forEach((r,j)=>{const R=j+2;const v=[opsD(r.sent),L(OPS_MK[r.mk]||OPS_MK.na),r.code,r.name,r.tk,opsEvL(r),opsD(r.cum),opsD(r.dist),r.pct!=null?r.pct:(r.pctT||''),r.per,r.u.map(f=>FL[f]||f).join('، '),r.uN,r.link,r.link2,r.o?T('نعم','Yes'):T('لا — إضافة الهَب','No — hub addition')];
-  sd+=`<row r="${R}">${v.map((c,i)=>cell(R,i,c,i===8&&typeof c==='number'?3:0)).join('')}</row>`});
+ rows.forEach((r,j)=>{const R=j+2;const v=[opsD(r.sent),L(OPS_MK[r.mk]||OPS_MK.na),r.code,r.nameAr||'',r.name,r.tk,opsEvL(r),opsD(r.cum),opsD(r.dist),r.pct!=null?r.pct:(r.pctT||''),r.per,r.u.map(f=>FL[f]||f).join('، '),r.uN,r.link,r.link2,r.o?T('نعم','Yes'):T('لا — إضافة الهَب','No — hub addition')];
+  sd+=`<row r="${R}">${v.map((c,i)=>cell(R,i,c,i===9&&typeof c==='number'?3:0)).join('')}</row>`});
  const last=col(H.length-1)+(rows.length+1);
  const sheet=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><sheetViews><sheetView workbookViewId="0" rightToLeft="${lang==='ar'?1:0}"><pane ySplit="1" topLeftCell="A2" activePane="bottomLeft" state="frozen"/></sheetView></sheetViews><cols>${W.map((w,i)=>`<col min="${i+1}" max="${i+1}" width="${w}" customWidth="1"/>`).join('')}</cols><sheetData>${sd}</sheetData><autoFilter ref="A1:${last}"/></worksheet>`;
  const styles=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><numFmts count="1"><numFmt numFmtId="164" formatCode="0.00##%"/></numFmts><fonts count="2"><font><sz val="10"/><name val="Arial"/></font><font><b/><sz val="10"/><color rgb="FFFFFFFF"/><name val="Arial"/></font></fonts><fills count="3"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="gray125"/></fill><fill><patternFill patternType="solid"><fgColor rgb="FF1F3A3D"/><bgColor indexed="64"/></patternFill></fill></fills><borders count="1"><border><left/><right/><top/><bottom/><diagonal/></border></borders><cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs><cellXfs count="5"><xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0" applyAlignment="1"><alignment vertical="top" wrapText="1"/></xf><xf numFmtId="0" fontId="1" fillId="2" borderId="0" xfId="0" applyFont="1" applyFill="1" applyAlignment="1"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/><xf numFmtId="164" fontId="0" fillId="0" borderId="0" xfId="0" applyNumberFormat="1" applyAlignment="1"><alignment horizontal="center" vertical="top"/></xf><xf numFmtId="1" fontId="0" fillId="0" borderId="0" xfId="0" applyNumberFormat="1" applyAlignment="1"><alignment horizontal="center" vertical="top"/></xf></cellXfs><cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles></styleSheet>`;
@@ -1660,7 +1661,7 @@ document.addEventListener('change',e=>{if(e.target.id==='opsEv'){opsEv=e.target.
 let _opsT;document.addEventListener('input',e=>{if(e.target.id==='opsQ'){opsQ=e.target.value;clearTimeout(_opsT);_opsT=setTimeout(()=>{const pos=e.target.selectionStart;renderOps($('opsBox'));const q=$('opsQ');if(q){q.focus();try{q.setSelectionRange(pos,pos)}catch(_){}}},180)}});
 
 /* ================= live data layer (GitHub Pages, encrypted data) ================= */
-const BUILD="299c4fc0fb";
+const BUILD="c710177501";
 const GH="https://kmeficmarketing.github.io/Daily-Hub/",RAW="https://raw.githubusercontent.com/KmeficMarketing/Daily-Hub/main/";
 const ROOTS=/^https?:$/.test(location.protocol)?["./",GH,RAW]:[GH,RAW];
 let IXIPO=[],ICACHE={},IPODATE='',IXSD={},PREV=null,PC={},UPD={},LOADSIG="",SDATES=[],SCACHE={},DATES=[],LATEST=null,VIEWD=null,NOTE=null,BUSY=false,LAST_AT='',STDATE='',CALM=null;
