@@ -534,6 +534,57 @@ html[dir="rtl"] .keys b.up,html[dir="rtl"] .keys b.down{text-align:right}
 .seg button .num{margin-inline-start:6px}
 .gtoday{bottom:13px}
 .gtr.glo .gtoday{bottom:29px}
+.ckp b{direction:ltr;unicode-bidi:isolate}
+html[dir="rtl"] .ckp b{text-align:right}
+/* operations log */
+#opsBox{display:flex;flex-direction:column;gap:14px}
+.opsHead{display:flex;flex-direction:column;gap:12px}
+.opsT{display:flex;justify-content:space-between;gap:14px;align-items:flex-start}
+.opsT b{font-size:15px}.opsT p{margin:4px 0 2px;font-size:12.5px;line-height:1.7;max-width:80ch}
+.opsX{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;font-size:12.5px;color:var(--txt);flex:none;cursor:pointer}
+.opsChips{display:flex;flex-wrap:wrap;gap:6px}.opsChips .chip{cursor:pointer;font:inherit;font-size:12px}
+.opsChips .chip.on{outline:2px solid currentColor;outline-offset:1px}
+.opsChips .chip:not(.u):not(.a):not(.r):not(.b).on{background:var(--pill);color:var(--pillTxt);outline:0}
+.opsCtl{display:flex;flex-wrap:wrap;gap:8px}
+.opsCtl input,.opsSel{font:inherit;font-size:13px;padding:8px 12px;border-radius:12px;border:1px solid var(--line2);background:var(--glass);color:var(--txt);min-width:0}
+.opsCtl input{flex:1 1 220px}
+.opsTbl td,.opsTbl th{vertical-align:middle}
+.opsTbl th{text-align:start}
+.opsTbl td.num,.opsTbl th:nth-child(1),.opsTbl th:nth-child(n+5):nth-child(-n+7){text-align:center}
+.opsR{cursor:pointer}.opsR:hover td{background:var(--glass2)}.opsR.open td{background:var(--glass2)}
+.opsR:focus-visible{outline:2px solid var(--gold);outline-offset:-2px}
+.opsDup td{opacity:.6}
+.opsD td{background:var(--glass2)}
+.opsDet{display:flex;flex-direction:column;gap:6px;font-size:12.5px;line-height:1.75}.opsDet p{margin:0}
+.opsChk{display:flex;flex-wrap:wrap;gap:6px 14px;color:var(--soft)}
+.opsSrc a{color:var(--blue)}
+.opsFoot{font-size:11.5px;margin:10px 2px 0}
+@media (max-width:680px){
+ .opsT{flex-direction:column}.opsX{align-self:stretch;justify-content:center}
+ .opsTbl thead{display:none}.opsTbl,.opsTbl tbody,.opsTbl tr,.opsTbl td{display:block;width:100%}
+ .opsTbl tr.opsR{display:grid;grid-template-columns:1fr 1fr;gap:4px 12px;padding:12px 4px;border-bottom:1px solid var(--line)}
+ .opsTbl tr.opsR td{padding:0;border:0;text-align:start!important;background:none!important}
+ .opsTbl tr.opsR td::before{content:attr(data-l);display:block;font-size:10.5px;color:var(--mut)}
+ .opsTbl tr.opsR td:nth-child(2){grid-column:1/-1;order:-1}.opsTbl tr.opsR td:nth-child(2)::before{display:none}
+ .opsTbl tr.opsR td.hm{display:none}
+ .opsTbl tr.opsD{display:block}.opsTbl tr.opsD[hidden]{display:none}.opsTbl tr.opsD td{padding:10px 8px}
+ .opsTbl td.num{direction:ltr}
+ html[dir="rtl"] .opsTbl tr.opsR td.num{text-align:right!important}
+}
+.opsU{display:inline-flex;align-items:center;gap:3px;color:var(--blue)}
+.opsU i{font-style:normal;font-weight:700;font-size:11px;background:var(--bluebg);border-radius:999px;padding:0 6px;line-height:1.5}
+.chip.opsAdd{font-size:10.5px;padding:1px 8px;color:var(--soft)}
+.opsTbl .chip{vertical-align:middle}
+.opsUn{display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}
+/* operations log: solid surfaces so rows don't show through */
+#opsBox .g{background:color-mix(in srgb,Canvas 74%,var(--bg0));-webkit-backdrop-filter:none;backdrop-filter:none}
+#opsBox .scroll{max-height:min(72vh,760px);overflow:auto;border-radius:12px}
+#opsBox .opsTbl th{background:color-mix(in srgb,Canvas 52%,var(--bg0));-webkit-backdrop-filter:none;backdrop-filter:none;color:var(--soft);font-weight:700;border-bottom:1px solid var(--line2);z-index:2}
+#opsBox .opsTbl td{border-bottom:1px solid var(--line)}
+#opsBox .opsR:hover td,#opsBox .opsR.open td{background:color-mix(in srgb,Canvas 60%,var(--bg0))}
+#opsBox .opsD td{background:color-mix(in srgb,Canvas 64%,var(--bg0))}
+@media (max-width:680px){#opsBox .scroll{max-height:none;overflow:visible}}
+#opsBox .opsTbl td.hm,#opsBox .opsTbl td.num{white-space:nowrap}
 
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.ruler .zone,.gbar,.load .c .s{transform:none!important}}
 @media print{
@@ -1409,8 +1460,8 @@ function buildModel(){const R=RISK[CS.risk-1];const corp=CS.type==='corp';let eq
  // fixed income
  const usOK=!!CS.mk.gl;const fiN=[];const CASH0={id:'CASH0',n:['سيولة نقدية دون عائد','Cash, no return'],tk:'',mkt:'kw',type:'cash',sec:['سيولة','Cash'],cur:'KWD',ret:{2021:0,2022:0,2023:0,2024:0,2025:0},rt:'total',ytd:{v:0,asof:''},src:[]};
  if(fi>0){const cashW=fi*R[2];let bondW=fi-cashW;const mmf=CD.assets.find(a=>a.id==='WATANIMMF');const put=(a,w,why)=>{const e=H.find(h=>h.a.id===a.id);if(e)e.w+=w;else H.push({a,r:'fi',w,why})};
-  const cashWhy=T('سيولة بالدينار: صندوق نقد كويتي (عائد سنوي بين 1% و4% في السنوات الخمس)','KWD liquidity: a Kuwaiti money-market fund (1–4% a year over five years)');
-  if(!CS.sharia&&mmf)put(mmf,cashW,cashWhy);
+  const cashWhy=T('سيولة بعملة العميل (الدينار)، لا ترتبط باختيار الأسواق: صندوق نقد كويتي (عائد سنوي بين 1% و4% في السنوات الخمس)','Liquidity in the client\'s currency (KWD), independent of the markets chosen: a Kuwaiti money-market fund (1–4% a year over five years)');
+  if(!CS.sharia&&mmf){put(mmf,cashW,cashWhy);if(!CS.mk.kw)fiN.push(T('الأسواق المختارة تحدد الأسهم والسندات فقط؛ السيولة تبقى بالدينار في كل المحافظ لأنها بعملة العميل. لمن يفضّل غير ذلك يمكن حذف صندوق النقد (✕) وتوزيع مبلغه على بند آخر.','The markets chosen decide shares and bonds only; liquidity stays in KWD in every portfolio because it is the client\'s currency. To do otherwise, remove the money-market fund (✕) and move its amount to another holding.'))}
   else if(CS.sharia&&usOK){const sk=CD.assets.find(a=>a.id==='SPSK');if(sk)put(sk,cashW,T('بديل متوافق مع الشريعة للسيولة: صكوك','Sharia-compliant alternative: sukuk'))}
   else{put(CASH0,cashW,T('لا يوجد في البيانات صندوق نقد محلي متوافق مع الشريعة بأداء خمس سنوات، فتُترك السيولة نقدًا دون عائد في الحساب.','No local Sharia-compliant money-market fund with five years of data, so cash is held with no return in the calculation.'));fiN.push(T('السيولة في وضع الشريعة بلا صندوق محلي موثق.','Cash in Sharia mode has no documented local fund.'))}
   if(usOK){const bonds=CS.sharia?['SPSK']:(CS.risk<=2?['SPSK','AGG']:['SPSK','EMB']);const bl=bonds.map(id=>CD.assets.find(a=>a.id===id)).filter(Boolean);if(small&&bl.length>1)bl.length=1;bl.forEach(b=>put(b,bondW/bl.length,b.type==='sukuk'?T('صكوك عالمية متوافقة مع الشريعة','Global Sharia-compliant sukuk'):T('سندات (دخل ثابت) لتخفيف تذبذب المحفظة','Bonds (fixed income) to damp portfolio swings')))}
@@ -1506,8 +1557,110 @@ setView=function(){const r=_sv9.apply(this,arguments);_later9();return r};
 openDet=function(){const r=_od9.apply(this,arguments);_later9();setTimeout(deGantt,450);return r};
 addEventListener('resize',_later9);
 
+/* ---------- Operations: corporate-actions log (tab inside Corporate actions, shown for the Operations department) ---------- */
+let OPS=null,opsQ='',opsEv='all',opsF='all',opsMo='all',opsOpen=new Set(),_opsLoading=false;
+/* base log + update files written by the routines (data/opsupd/<name>.json, listed in index.json "opsUpd").
+   An update row replaces the row with the same id, or the row with the same company code + action + payment (or last-day) date; otherwise it is added. "del" lists ids to hide. */
+const opsMK=r=>[String(r.code||'').trim(),r.ev,r.dist||r.cum||''].join('|');
+function opsMerge(base,u){if(!u)return;const ix=new Map(base.rows.map((r,i)=>[r.id,i])),mk=new Map(base.rows.map((r,i)=>[opsMK(r),i]));
+ (u.rows||[]).forEach(r0=>{const r=Object.assign({sent:'',mk:'kw',code:'',name:'',tk:'',ev:'other',evT:'',cum:'',dist:'',per:'',pct:null,pctT:'',u:[],uN:'',link:'',link2:'',o:0},r0);
+  let i=ix.has(r.id)?ix.get(r.id):(mk.has(opsMK(r))?mk.get(opsMK(r)):-1);
+  if(i<0){base.rows.push(r);i=base.rows.length-1}else{const old=base.rows[i];base.rows[i]=Object.assign({},old,Object.fromEntries(Object.entries(r0).filter(([k,v])=>k!=='id'&&k!=='o'&&v!==''&&v!=null&&!(Array.isArray(v)&&!v.length&&k!=='u'))))}
+  ix.set(base.rows[i].id,i);mk.set(opsMK(base.rows[i]),i)});
+ if(u.del&&u.del.length){const d=new Set(u.del);base.rows=base.rows.filter(r=>!d.has(r.id))}
+ if(u.asof&&u.asof>(base.asof||''))base.asof=u.asof}
+async function loadOps(){if(OPS||_opsLoading)return;_opsLoading=true;try{const o=await openData(await getJ('data/ops.json'));if(o&&o.rows){
+ try{const ix=await getJ('data/index.json');for(const n of (ix.opsUpd||[]).slice().sort()){try{opsMerge(o,await openData(await getJ(`data/opsupd/${n}.json`)))}catch(e){}}}catch(e){}
+ OPS=o}}catch(e){}_opsLoading=false}
+const OPS_EV={cash:['توزيع نقدي','Cash dividend'],bonus:['أسهم منحة','Bonus shares'],cashbonus:['نقدي ومنحة','Cash & bonus'],inc:['زيادة رأس مال','Capital increase'],dec:['تخفيض رأس مال','Capital decrease'],sub:['اكتتاب / طرح','Subscription / offer'],spin:['توزيع أسهم شركة تابعة','Spin-off shares'],merge:['اندماج','Merger'],other:['إجراء آخر','Other']};
+const OPS_MK={kw:['بورصة الكويت','Boursa Kuwait'],otc:['الموازي / غير مدرجة','OTC / unlisted'],ksa:['السوق السعودية','Saudi Exchange'],na:['غير محدد في المصدر','Not stated']};
+const OPS_F=[['all',['الكل','All']],['up',['القادمة','Upcoming']],['unv',['غير مؤكد','Unconfirmed']],['add',['مضاف من الهَب','Added by the hub']]];
+const opsD=s=>s?`${s.slice(8,10)}/${s.slice(5,7)}/${s.slice(0,4)}`:'';
+const opsP=r=>r.pct!=null?(+(r.pct*100).toFixed(4))+'%':(r.pctT||'');
+const opsKey=r=>r.dist||r.cum||r.sent||'';
+const opsEvL=r=>r.evT||L(OPS_EV[r.ev]||OPS_EV.other);
+const opsSrcName=u=>{const h=(u.match(/^(?:https?:\/\/)?([^/]+)/)||[])[1]||u;
+ if(/maqasa/.test(h))return T('المقاصة الكويتية','Kuwait Clearing');if(/ifsahdocs/.test(h))return T('إفصاح البورصة','Boursa disclosure');if(/boursakuwait/.test(h))return T('بورصة الكويت','Boursa Kuwait');
+ if(/argaam/.test(h))return T('أرقام','Argaam');if(/mubasher/.test(h))return T('مباشر','Mubasher');if(/almowazi/.test(h))return T('الموازي','Al-Mowazi');if(/saudiexchange/.test(h))return T('تداول السعودية','Saudi Exchange');
+ return h.replace(/^www\./,'')};
+const opsLink=u=>{u=(u||'').trim();if(!u)return'';const href=/^https?:\/\//.test(u)?u:(/^[a-z0-9.-]+\.[a-z]{2,}\//i.test(u)?'https://'+u:'');
+ return href?`<a href="${esc(href)}" target="_blank" rel="noopener">${esc(opsSrcName(u))}</a>`:`<span class="mut">${esc(u)}</span>`};
+const opsIsUp=r=>{const t=TODAY||'';return [r.cum,r.dist].some(d=>d&&d>=t)};
+function opsRows(){if(!OPS)return[];const q=opsQ.trim().toLowerCase();
+ return OPS.rows.filter(r=>(opsEv==='all'||r.ev===opsEv||(r.ev==='cashbonus'&&(opsEv==='cash'||opsEv==='bonus')))&&(opsF==='all'||(opsF==='unv'&&r.u.length)||(opsF==='add'&&!r.o)||(opsF==='up'&&opsIsUp(r)))&&(opsMo==='all'||opsKey(r).slice(5,7)===opsMo)&&(!q||(r.name+' '+r.tk+' '+r.code).toLowerCase().includes(q)))
+  .sort((a,b)=>opsKey(b).localeCompare(opsKey(a)))}
+const opsQm=(r,f,v)=>r.u.includes(f)?`<span class="opsU" title="${esc(T('غير مؤكد','Unconfirmed'))}">${v}<i>؟</i></span>`:v;
+function renderOps(box){if(!box)return;
+ if(!OPS){box.innerHTML=`<div class="g pad mut">${_opsLoading?T('جارٍ تحميل السجل…','Loading the log…'):T('السجل غير متاح الآن.','The log is not available right now.')}</div>`;if(!_opsLoading)loadOps().then(()=>{if(caF==='ops')renderOps(box)});return}
+ const all=OPS.rows,rows=opsRows();
+ const cnt=k=>all.filter(r=>k==='all'||(k==='unv'&&r.u.length)||(k==='add'&&!r.o)||(k==='up'&&opsIsUp(r))).length;
+ const MO=[...new Set(all.map(r=>opsKey(r).slice(5,7)).filter(Boolean))].sort();
+ const sel=(id,v,opts)=>`<select id="${id}" class="opsSel">${opts.map(o=>`<option value="${o[0]}"${o[0]===v?' selected':''}>${esc(o[1])}</option>`).join('')}</select>`;
+ const head=`<div class="g pad opsHead"><div class="opsT"><div><b>${esc(L(OPS.title))}</b><p class="mut">${esc(L(OPS.about))}</p><small class="mut">${T('آخر تحديث','Last update')}: ${opsD(OPS.asof)} · ${all.length} ${T('إجراء','actions')}</small></div>
+  <button type="button" class="mini opsX" id="opsExport"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M4 21h16"/></svg>${T('تصدير Excel','Export Excel')}</button></div>
+  <div class="opsChips">${OPS_F.map(([k,v])=>`<button type="button" class="chip ${k==='unv'?'b':''} ${opsF===k?'on':''}" data-opsf="${k}">${esc(L(v))} <span class="num">${cnt(k)}</span></button>`).join('')}</div>
+  <div class="opsCtl"><input type="search" id="opsQ" value="${esc(opsQ)}" placeholder="${T('ابحث بالشركة أو الرمز أو الكود','Search company, ticker or code')}" autocomplete="off">
+  ${sel('opsEv',opsEv,[['all',T('كل الإجراءات','All actions')]].concat(Object.entries(OPS_EV).filter(([k])=>all.some(r=>r.ev===k)).map(([k,v])=>[k,L(v)])))}
+  ${sel('opsMo',opsMo,[['all',T('كل الشهور','All months')]].concat(MO.map(m=>[m,L([MAR,MEN])[+m-1]])))}</div></div>`;
+ const tr=r=>{const open=opsOpen.has(r.id),up=opsIsUp(r);
+  return `<tr class="opsR ${open?'open':''} ${up?'opsUp':''}" data-opsn="${esc(r.id)}" tabindex="0">
+  <td data-l="${T('تاريخ الإرسال','Sent')}" class="num">${r.sent?opsD(r.sent):'—'}</td>
+  <td data-l="${T('الشركة','Company')}"><b>${esc(r.name||r.tk||'—')}</b> <small class="mut">${esc(r.tk)}${r.code?(r.tk?' · ':'')+esc(r.code):''}</small>${!r.o?` <span class="chip opsAdd">${T('إضافة الهَب','Hub addition')}</span>`:''}${up?` <span class="chip a">${T('قادم','Upcoming')}</span>`:''}</td>
+  <td data-l="${T('السوق','Market')}" class="hm">${esc(L(OPS_MK[r.mk]||OPS_MK.na))}</td>
+  <td data-l="${T('الإجراء','Action')}">${opsQm(r,'ev',esc(opsEvL(r)))}</td>
+  <td data-l="${T('آخر يوم شراء','Last day to buy')}" class="num">${opsQm(r,'cum',r.cum?opsD(r.cum):'—')}</td>
+  <td data-l="${T('تاريخ الصرف','Payment')}" class="num">${opsQm(r,'dist',r.dist?opsD(r.dist):'—')}</td>
+  <td data-l="${T('النسبة','Ratio')}" class="num">${opsQm(r,'pct',esc(opsP(r))||'—')}</td></tr>
+  <tr class="opsD" ${open?'':'hidden'}><td colspan="7"><div class="opsDet">${r.per?`<p>${esc(r.per)}</p>`:''}${r.u.length&&r.uN?`<p class="opsUn"><span class="chip b">${T('غير مؤكد','Unconfirmed')}</span> ${esc(r.uN)}</p>`:(r.uN?`<p class="mut">${esc(r.uN)}</p>`:'')}
+  <div class="opsSrc"><span class="mut">${T('المصدر','Source')}:</span> ${[r.link,r.link2].filter(Boolean).map(opsLink).join(' · ')||'—'}</div></div></td></tr>`};
+ box.innerHTML=head+`<div class="g pad"><div class="scroll"><table class="tbl opsTbl"><thead><tr><th>${T('تاريخ الإرسال','Sent')}</th><th>${T('الشركة','Company')}</th><th class="hm">${T('السوق','Market')}</th><th>${T('الإجراء','Action')}</th><th>${T('آخر يوم شراء','Last day to buy')}</th><th>${T('تاريخ الصرف','Payment')}</th><th>${T('النسبة','Ratio')}</th></tr></thead><tbody>${rows.map(tr).join('')||`<tr><td colspan="7" class="mut">${T('لا توجد إجراءات بهذا الفلتر.','No actions match this filter.')}</td></tr>`}</tbody></table></div>
+ <p class="mut opsFoot">${T('مرتبة من الأحدث. العلامة ؟ بجانب أي قيمة تعني أنها غير مؤكدة من مصدر بعد. اضغط أي سطر لعرض التفاصيل والمصدر.','Newest first. A ? next to a value means it is not yet confirmed by a source. Tap a row for details and the source.')} ${rows.length!==all.length?`· ${rows.length} / ${all.length}`:''}</p></div>`;
+}
+/* minimal XLSX writer (stored zip) */
+const _crcT=(()=>{const t=new Uint32Array(256);for(let n=0;n<256;n++){let c=n;for(let k=0;k<8;k++)c=c&1?0xEDB88320^(c>>>1):c>>>1;t[n]=c>>>0}return t})();
+const _crc=b=>{let c=0xFFFFFFFF;for(let i=0;i<b.length;i++)c=_crcT[(c^b[i])&255]^(c>>>8);return(c^0xFFFFFFFF)>>>0};
+function _zip(files){const enc=new TextEncoder(),parts=[],cd=[];let off=0;const u16=v=>[v&255,(v>>8)&255],u32=v=>[v&255,(v>>8)&255,(v>>16)&255,(v>>>24)&255];
+ files.forEach(([name,txt])=>{const nb=enc.encode(name),db=enc.encode(txt),crc=_crc(db);
+  const lh=new Uint8Array([0x50,0x4b,3,4,...u16(20),...u16(0x800),...u16(0),...u16(0),...u16(0x21),...u32(crc),...u32(db.length),...u32(db.length),...u16(nb.length),...u16(0)]);
+  parts.push(lh,nb,db);cd.push(new Uint8Array([0x50,0x4b,1,2,...u16(20),...u16(20),...u16(0x800),...u16(0),...u16(0),...u16(0x21),...u32(crc),...u32(db.length),...u32(db.length),...u16(nb.length),...u16(0),...u16(0),...u16(0),...u16(0),...u32(0),...u32(off)]),nb);off+=lh.length+nb.length+db.length});
+ const cdl=cd.reduce((a,b)=>a+b.length,0);parts.push(...cd,new Uint8Array([0x50,0x4b,5,6,0,0,0,0,...u16(files.length),...u16(files.length),...u32(cdl),...u32(off),0,0]));return new Blob(parts,{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'})}
+function opsXlsx(rows){const x=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])).replace(/[\u0000-\u0008\u000b\u000c\u000e-\u001f]/g,'');
+ const col=i=>{let s='';i++;while(i){const m=(i-1)%26;s=String.fromCharCode(65+m)+s;i=Math.floor((i-1)/26)}return s};
+ const H=[T('تاريخ الإرسال','Sent'),T('السوق','Market'),T('الكود','Code'),T('الشركة','Company'),T('الرمز','Ticker'),T('نوع الإجراء','Action'),T('آخر يوم شراء','Last day to buy'),T('تاريخ الصرف','Payment date'),T('النسبة','Ratio'),T('تفاصيل','Details'),T('غير مؤكد','Unconfirmed'),T('ملاحظة','Note'),T('المصدر','Source'),T('المصدر 2','Source 2'),T('من سجل العمليات','From Ops log')];
+ const W=[12,16,8,36,13,22,13,13,10,50,22,45,45,45,10];
+ const FL={ev:T('نوع الإجراء','Action'),cum:T('آخر يوم شراء','Last day to buy'),dist:T('تاريخ الصرف','Payment'),pct:T('النسبة','Ratio'),per:T('التفاصيل','Details')};
+ const cell=(r,c,v,s)=>{const ref=col(c)+r;if(v==null||v==='')return`<c r="${ref}"${s?` s="${s}"`:''}/>`;if(typeof v==='number')return`<c r="${ref}" s="${s||2}"><v>${v}</v></c>`;return`<c r="${ref}" t="inlineStr"${s?` s="${s}"`:''}><is><t xml:space="preserve">${x(v)}</t></is></c>`};
+ let sd=`<row r="1">${H.map((h,i)=>cell(1,i,h,1)).join('')}</row>`;
+ rows.forEach((r,j)=>{const R=j+2;const v=[opsD(r.sent),L(OPS_MK[r.mk]||OPS_MK.na),r.code,r.name,r.tk,opsEvL(r),opsD(r.cum),opsD(r.dist),r.pct!=null?r.pct:(r.pctT||''),r.per,r.u.map(f=>FL[f]||f).join('، '),r.uN,r.link,r.link2,r.o?T('نعم','Yes'):T('لا — إضافة الهَب','No — hub addition')];
+  sd+=`<row r="${R}">${v.map((c,i)=>cell(R,i,c,i===8&&typeof c==='number'?3:0)).join('')}</row>`});
+ const last=col(H.length-1)+(rows.length+1);
+ const sheet=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><sheetViews><sheetView workbookViewId="0" rightToLeft="${lang==='ar'?1:0}"><pane ySplit="1" topLeftCell="A2" activePane="bottomLeft" state="frozen"/></sheetView></sheetViews><cols>${W.map((w,i)=>`<col min="${i+1}" max="${i+1}" width="${w}" customWidth="1"/>`).join('')}</cols><sheetData>${sd}</sheetData><autoFilter ref="A1:${last}"/></worksheet>`;
+ const styles=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><numFmts count="1"><numFmt numFmtId="164" formatCode="0.00##%"/></numFmts><fonts count="2"><font><sz val="10"/><name val="Arial"/></font><font><b/><sz val="10"/><color rgb="FFFFFFFF"/><name val="Arial"/></font></fonts><fills count="3"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="gray125"/></fill><fill><patternFill patternType="solid"><fgColor rgb="FF1F3A3D"/><bgColor indexed="64"/></patternFill></fill></fills><borders count="1"><border><left/><right/><top/><bottom/><diagonal/></border></borders><cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs><cellXfs count="5"><xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0" applyAlignment="1"><alignment vertical="top" wrapText="1"/></xf><xf numFmtId="0" fontId="1" fillId="2" borderId="0" xfId="0" applyFont="1" applyFill="1" applyAlignment="1"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/><xf numFmtId="164" fontId="0" fillId="0" borderId="0" xfId="0" applyNumberFormat="1" applyAlignment="1"><alignment horizontal="center" vertical="top"/></xf><xf numFmtId="1" fontId="0" fillId="0" borderId="0" xfId="0" applyNumberFormat="1" applyAlignment="1"><alignment horizontal="center" vertical="top"/></xf></cellXfs><cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles></styleSheet>`;
+ const sn=x(T('سجل العمليات 2026','Ops log 2026'));
+ return _zip([['[Content_Types].xml','<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/><Override PartName="/xl/worksheets/sheet1.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/><Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/></Types>'],
+  ['_rels/.rels','<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/></Relationships>'],
+  ['xl/workbook.xml',`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><sheets><sheet name="${sn}" sheetId="1" r:id="rId1"/></sheets><definedNames><definedName name="_xlnm._FilterDatabase" localSheetId="0" hidden="1">'${sn}'!$A$1:$${last.replace(/(\d+)$/,'$$$1')}</definedName></definedNames></workbook>`],
+  ['xl/_rels/workbook.xml.rels','<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet1.xml"/><Relationship Id="rId2" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/></Relationships>'],
+  ['xl/styles.xml',styles],['xl/worksheets/sheet1.xml',sheet]])}
+function opsExport(){if(!OPS)return;const rows=opsRows();const b=opsXlsx(rows);const a=document.createElement('a');a.href=URL.createObjectURL(b);
+ a.download=`KMEFIC_Ops_CorporateActions_2026${rows.length!==OPS.rows.length?'_filtered':''}_${(TODAY||'').replace(/-/g,'')}.xlsx`;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1500)}
+/* hook into the corporate-actions view */
+const _renderCA9=renderCA;renderCA=function(){if(caF==='ops'&&dep!=='ops')caF='all';_renderCA9.apply(this,arguments);try{
+ const fl=$('caFl'),seg=fl&&fl.querySelector('.seg');let box=$('opsBox');
+ if(!box&&fl){box=document.createElement('div');box.id='opsBox';fl.after(box)}
+ if(dep==='ops'&&seg){const b=document.createElement('button');b.type='button';b.dataset.caf='ops';b.className='opsTab'+(caF==='ops'?' on':'');b.innerHTML=`${esc(T('سجل العمليات','Ops log'))}<span class="num">${OPS?OPS.rows.length:'…'}</span>`;if(caF==='ops')seg.querySelectorAll('button').forEach(x=>x.classList.remove('on'));seg.appendChild(b);if(!OPS)loadOps().then(()=>{const n=b.querySelector('.num');if(n&&OPS)n.textContent=OPS.rows.length})}
+ const on=caF==='ops'&&dep==='ops';const list=$('caList'),lw=list&&list.closest('.g');if(lw)lw.hidden=on;const nt=$('caNotes');if(nt)nt.hidden=on;
+ if(box){box.hidden=!on;if(on)renderOps(box);else box.innerHTML=''}}catch(e){console.error(e)}};
+const _applyDep9=applyDep;applyDep=function(){_applyDep9.apply(this,arguments);const want=dep==='ops',has=!!document.querySelector('#caFl [data-caf="ops"]');if(want!==has||(!want&&caF==='ops')){if(!want&&caF==='ops')caF='all';try{renderCA()}catch(e){}}};
+document.addEventListener('click',e=>{const s=e.target.closest('[data-opsf]');if(s){opsF=s.dataset.opsf;renderOps($('opsBox'));return}
+ if(e.target.closest('#opsExport')){opsExport();return}
+ const r=e.target.closest('.opsR');if(r&&!e.target.closest('a')){const n=r.dataset.opsn;opsOpen.has(n)?opsOpen.delete(n):opsOpen.add(n);r.classList.toggle('open');const d=r.nextElementSibling;if(d)d.hidden=!d.hidden}});
+document.addEventListener('keydown',e=>{const r=e.target.closest&&e.target.closest('.opsR');if(r&&(e.key==='Enter'||e.key===' ')){e.preventDefault();r.click()}});
+document.addEventListener('change',e=>{if(e.target.id==='opsEv'){opsEv=e.target.value;renderOps($('opsBox'))}else if(e.target.id==='opsMo'){opsMo=e.target.value;renderOps($('opsBox'))}});
+let _opsT;document.addEventListener('input',e=>{if(e.target.id==='opsQ'){opsQ=e.target.value;clearTimeout(_opsT);_opsT=setTimeout(()=>{const pos=e.target.selectionStart;renderOps($('opsBox'));const q=$('opsQ');if(q){q.focus();try{q.setSelectionRange(pos,pos)}catch(_){}}},180)}});
+
 /* ================= live data layer (GitHub Pages, encrypted data) ================= */
-const BUILD="e3e438ed59";
+const BUILD="299c4fc0fb";
 const GH="https://kmeficmarketing.github.io/Daily-Hub/",RAW="https://raw.githubusercontent.com/KmeficMarketing/Daily-Hub/main/";
 const ROOTS=/^https?:$/.test(location.protocol)?["./",GH,RAW]:[GH,RAW];
 let IXIPO=[],ICACHE={},IPODATE='',IXSD={},PREV=null,PC={},UPD={},LOADSIG="",SDATES=[],SCACHE={},DATES=[],LATEST=null,VIEWD=null,NOTE=null,BUSY=false,LAST_AT='',STDATE='',CALM=null;
