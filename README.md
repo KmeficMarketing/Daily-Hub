@@ -128,3 +128,15 @@ Both routines read this list. Use these first for disclosures, corporate actions
 ## IPO radar staleness check (since 1 Nov 2026)
 
 `node tools/qa_check.mjs /tmp/<today>.ipo.plain.json --ipo <today>` fails when a radar date has passed but is still marked "exp", or when a key date passed after an item's latest news line, so a priced, covered, listed or delayed deal can never sit unchanged on the radar. Update files with an "ipo" block are checked automatically by `--update`.
+
+## Calculator daily update (since 1 Nov 2026)
+`data/calc.json` stays as the fixed base. Each morning a small overlay file `data/calcupd/<date>.json` (encrypted like all data files) refreshes the numbers:
+```
+{"asof":"2026-11-01",
+ "ytd":{"NBK":{"v":7.5,"asof":"2026-10-31","src":"Boursa Kuwait"}, "<asset id>":{"v":3.1,"asof":"...","src":"..."}},
+ "tilts":[{"mkt":"kw","f":1.05,"t":["AR","EN"],"why":["AR","EN"],"chain":["AR","EN"],"src":"..."}]}
+```
+- `ytd` keys match an asset's `tk` (ticker, case-insensitive) or its `id`; only listed assets change.
+- `tilts`, when present, replaces the news adjustments for that day (same shape as in calc.json).
+- Add the date to `calcUpd` in `data/index.json`. The page uses the latest overlay on or before the day shown; with none, the news-adjustments box shows its real date.
+- The asset list (ids and tickers) can be downloaded from the calculator's "قائمة الأصول ⬇" button.

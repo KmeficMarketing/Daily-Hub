@@ -415,7 +415,8 @@
   "signal": "t: one idea, max 80 chars, plain words; s: one line, max 120; p: the explanation. Name markets ('بورصة الكويت', 'السوق السعودية', 'البورصة المصرية'), never nicknames or index codes in t/s. refs: items whose sources back every claim; a cause is written only if a source states it for that market. Check with tools/qa_check.mjs before encrypting.",
   "inf_x4": "Cross-study required before any conclusion: x4 (news, mkt, geo, str), agree, chain, kb; rec in guidance tone. See README 'Knowledge bank and cross-study'.",
   "inf_act": "Optional, for wm and am (and any department where it helps): act.<dep> = {who: which clients or portfolios this concerns, opts: the options open to the client or portfolio, each with its figure and date from today's data (information, never a recommendation to buy or sell), when: the deadline(s), tools: ready material on the hub from circ (client circular), calc (portfolio calculator), ipo (IPO radar file), kb (knowledge bank), ca (corporate-actions table)}. The page shows it as a structured card under the matching rec line; the rec line stays and still starts with the guidance wording.",
-  "news_o": "news.o (and pri.o, mgmt.o) is the one-line takeaway a reader sees first: what happened and the key figure. Never put the source name there (no 'Per Reuters' / 'CNBC / Finance Feeds'); sources go only in s."
+  "news_o": "news.o (and pri.o, mgmt.o) is the one-line takeaway a reader sees first: what happened and the key figure. Never put the source name there (no 'Per Reuters' / 'CNBC / Finance Feeds'); sources go only in s.",
+  "calc_upd": "data/calcupd/<date>.json: {asof, ytd:{TICKER_or_id:{v,asof,src}}, tilts?:[same shape as calc.json tilts]}; add the date to index.json calcUpd. Never edit calc.json."
  },
  "_studies_example": [
   {
