@@ -605,7 +605,7 @@ h1,h2,h3,h4,b,strong,th{font-weight:700}
 </style>
 <style id="v3css">
 /* ===== V3 theme preview: dark glass, lime accent, stretchy pill nav ===== */
-html:not([data-theme="light"]){
+html:root:not([data-theme="light"]){
  --bg0:#0b0d0e;--bg1:#151b1e;--o1:#3e5566;--o2:#5a3a2a;--o3:#2c3a33;--o4:#26313a;
  --glass:rgba(255,255,255,.05);--glass2:rgba(255,255,255,.09);--gline:rgba(255,255,255,.09);--gshadow:0 24px 70px -30px rgba(0,0,0,.8);
  --txt:#f1f3f2;--soft:#c6ccce;--mut:#8b9498;
@@ -613,9 +613,9 @@ html:not([data-theme="light"]){
  --up:#c8f04d;--upbg:rgba(200,240,77,.12);--down:#f2906f;--downbg:rgba(242,144,111,.14);
  --pill:rgba(255,255,255,.14);--pillTxt:#ffffff;--line:rgba(255,255,255,.08);--line2:rgba(255,255,255,.15);
  --phop:0;color-scheme:dark}
-html.kgold:not([data-theme="light"]){--gold:#d9b75e;--gold2:#ebd08b;--goldbg:rgba(217,183,94,.14);--up:#45d095;--upbg:rgba(69,208,149,.13)}
-html:not([data-theme="light"]) .bg{background:#0d0f10}
-html:not([data-theme="light"]) .bg i{filter:blur(100px);opacity:.7}
+html.kgold:root:not([data-theme="light"]){--gold:#d9b75e;--gold2:#ebd08b;--goldbg:rgba(217,183,94,.14);--up:#45d095;--upbg:rgba(69,208,149,.13)}
+html:root:not([data-theme="light"]) .bg{background:#0d0f10}
+html:root:not([data-theme="light"]) .bg i{filter:blur(100px);opacity:.7}
 .g{border-radius:24px;background:linear-gradient(180deg,rgba(255,255,255,.065),rgba(255,255,255,.025)),var(--glass)}
 html[data-theme="light"] .g{background:var(--glass)}
 .top{border-radius:26px}
@@ -1959,6 +1959,7 @@ document.documentElement.classList.add('app');gateText();
 </script>
 <script id="v3js">
 (function(){
+ document.documentElement.dataset.theme='dark';
  const NAV=['ov','today','ca','ipo','mk','news','inf','calc'];
  const top=document.getElementById('top');if(!top)return;
  const w=document.createElement('div');w.className='pnavw';w.innerHTML='<nav class="pnav g" id="pnav" aria-label="views"><span class="pill" id="pnPill"></span></nav>';top.after(w);
