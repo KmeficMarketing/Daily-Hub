@@ -622,19 +622,16 @@ html.kgold:root:not([data-theme="light"]){--gold:#d9b75e;--gold2:#ebd08b;--goldb
 html:root:not([data-theme="light"]) .bg{background:#0d0f10}
 html:root:not([data-theme="light"]) .bg i{filter:blur(100px);opacity:.7}
 .g{border-radius:24px;background:linear-gradient(180deg,rgba(255,255,255,.065),rgba(255,255,255,.025)),var(--glass)}
-html[data-theme="light"] .g{background:var(--glass)}
 .top{border-radius:26px}
 .rail{border-radius:999px;background:rgba(0,0,0,.28)}
 .rail button.on{box-shadow:inset 0 1px 0 rgba(255,255,255,.14)}
 .btn.pr2,.mini.pr,.chip.on{background:var(--gold);color:#1b2306}
 /* top pill nav */
 .pnav{position:relative;display:flex;gap:2px;padding:5px;border-radius:999px;background:rgba(0,0,0,.28);border:1px solid var(--gline);overflow-x:auto;scrollbar-width:none;max-width:100%;order:2;margin-inline:auto}
-html[data-theme="light"] .pnav{background:rgba(255,255,255,.45)}
 .pnav::-webkit-scrollbar{display:none}
 .pnav button{position:relative;z-index:1;border:0;background:none;color:var(--soft);font:600 13.5px Cairo,sans-serif;padding:7px 15px;border-radius:999px;white-space:nowrap;transition:color .3s}
 .pnav button.on{color:var(--pillTxt);background:none!important;box-shadow:none!important}
 .pnav .pill{position:absolute;top:5px;bottom:5px;border-radius:999px;background:var(--pill);box-shadow:inset 0 1px 0 rgba(255,255,255,.14);pointer-events:none}
-html[data-theme="light"] .pnav .pill{background:#16252a}
 .pnavw{max-width:1320px;width:calc(100% - 24px);margin:12px auto 0;display:flex;justify-content:center;position:sticky;top:84px;z-index:39}
 @media (max-width:1099px){.pnavw{display:none}}
 @media (min-width:1100px){.rail{display:none!important}main{padding-inline:16px!important}}
@@ -654,6 +651,30 @@ html[data-theme="light"] .pnmenu{background:rgba(255,255,255,.95)}
 .v3badge button.on{background:#c8f04d;color:#1b2306}
 @media (max-width:1099px){.v3badge{bottom:84px}}
 @media (prefers-reduced-motion:reduce){.view.v3out{animation:none!important}}
+
+/* ===== V3 light: ivory on beige ===== */
+html:root[data-theme="light"]{
+ --bg0:#f3ece0;--bg1:#fbf8f2;--o1:#fffdf8;--o2:#e9dcc5;--o3:#e4cfae;--o4:#f1e7d8;
+ --glass:rgba(255,253,248,.62);--glass2:rgba(255,253,248,.86);--gline:rgba(120,96,60,.14);--gshadow:0 22px 60px -32px rgba(90,70,40,.35);
+ --txt:#22201b;--soft:#4c463c;--mut:#857b6c;
+ --gold:#8a6420;--gold2:#a77a2b;--goldbg:rgba(176,132,58,.12);
+ --up:#2f7a52;--upbg:rgba(47,122,82,.10);--down:#b44a3c;--downbg:rgba(180,74,60,.10);
+ --pill:#22201b;--pillTxt:#fbf8f2;--line:rgba(60,48,30,.09);--line2:rgba(60,48,30,.16);
+ --phop:0;--spot1:#2b2620;--spot2:#4a3d2c;color-scheme:light}
+html:root[data-theme="light"] .bg{background:radial-gradient(130% 100% at 85% -10%,#fffdf9 0%,#f7f1e6 45%,#ece2d0 100%)}
+html:root[data-theme="light"] .bg i{filter:blur(110px);opacity:.55}
+html:root[data-theme="light"] .bg .o2{background:#e3d2b6;opacity:.45}
+html:root[data-theme="light"] .bg .o3{background:#f0dcc0;opacity:.35}
+html:root[data-theme="light"] .g{background:linear-gradient(180deg,rgba(255,255,255,.82),rgba(255,252,246,.6));box-shadow:var(--gshadow),inset 0 1px 0 rgba(255,255,255,.9)}
+html:root[data-theme="light"] .spot{box-shadow:0 24px 50px -26px rgba(40,30,15,.55)}
+html:root[data-theme="light"] .spot b,html:root[data-theme="light"] .spot{color:#fbf8f2}
+html:root[data-theme="light"] .pnav{background:rgba(255,253,248,.7)}
+html:root[data-theme="light"] .pnav .pill{background:#22201b}
+html:root[data-theme="light"] .pnav button.on{color:#fbf8f2}
+html:root[data-theme="light"] .rail{background:rgba(255,253,248,.7)}
+html:root[data-theme="light"] .pnmenu{background:rgba(255,253,248,.97)}
+.bg .ph,.bg .tw{display:none!important}
+html:not([data-theme="light"]) .spot{--spot1:#2d3a1a;--spot2:#1d2412}
 </style>
 </head>
 <body>
@@ -1969,7 +1990,6 @@ document.documentElement.classList.add('app');gateText();
 </script>
 <script id="v3js">
 (function(){
- document.documentElement.dataset.theme='dark';
  const NAV=['ov','today','ca','ipo','mk','news','inf','calc'];
  const top=document.getElementById('top');if(!top)return;
  const w=document.createElement('div');w.className='pnavw';w.innerHTML='<nav class="pnav g" id="pnav" aria-label="views"><span class="pill" id="pnPill"></span></nav>';top.after(w);
