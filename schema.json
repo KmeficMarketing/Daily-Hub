@@ -413,7 +413,8 @@
   "inf": "Conclusions layer (internal, for KMEFIC department heads and staff; never shown to clients). 4–8 items; each links today's facts into an equation, says what it means (so) and gives direct recommendations per department (rec: ops, et, am, wm, mm, mgmt). No buy/sell calls and no price forecasts. kind decides what the page computes from the day data: rights (eq: P market price fils, S subscription price fils, r new shares per existing share, rec record date, start/rtEnd/subEnd/last when known, exAlready true if P is already the ex-entitlement price, v 'exp' while dates are unconfirmed; the page computes TERP, right value, discount, loss if idle, cum = record − 3 Kuwait trading days, and draws the rights timeline), market (uses mk + tape), movers (grp: indexes into the kw g/l lists), mm (eq.series: recent closes per code), load (extra: computed deadlines [date,[ar,en]]; the page counts ev + ev2 + extra per day for 24 days), note (any other equation: keys [[label],[value],[up|down|'']] + f text). conf: high = official sources agree, med = one strong source or partly computed, low = thin evidence. chk = [review date, what will prove it right or wrong]. view.pts = 3–5 one-line headlines, each pointing to an item id. log = the conclusions log (kept in hub-assets/inf/log.json, see README): recent items with their review results (res ok/no/part, resN = what happened).",
   "ipo": "IPO radar, in its own file data/ipo/YYYY-MM-DD.json (encrypted), listed in index.json 'ipo'. The page shows the latest radar file on the latest day, and the last file on or before the day for archive days. Facts only; the page builds the options, the client Q&A and the management brief from the fields. post = IPOs KMEFIC clients took part in (post-IPO tracking for Wealth Management). Intraday updates may carry ipo.items / ipo.post (same id replaces).",
   "signal": "t: one idea, max 80 chars, plain words; s: one line, max 120; p: the explanation. Name markets ('بورصة الكويت', 'السوق السعودية', 'البورصة المصرية'), never nicknames or index codes in t/s. refs: items whose sources back every claim; a cause is written only if a source states it for that market. Check with tools/qa_check.mjs before encrypting.",
-  "inf_x4": "Cross-study required before any conclusion: x4 (news, mkt, geo, str), agree, chain, kb; rec in guidance tone. See README 'Knowledge bank and cross-study'."
+  "inf_x4": "Cross-study required before any conclusion: x4 (news, mkt, geo, str), agree, chain, kb; rec in guidance tone. See README 'Knowledge bank and cross-study'.",
+  "inf_act": "Optional, for wm and am (and any department where it helps): act.<dep> = {who: which clients or portfolios this concerns, opts: the options open to the client or portfolio, each with its figure and date from today's data (information, never a recommendation to buy or sell), when: the deadline(s), tools: ready material on the hub from circ (client circular), calc (portfolio calculator), ipo (IPO radar file), kb (knowledge bank), ca (corporate-actions table)}. The page shows it as a structured card under the matching rec line; the rec line stays and still starts with the guidance wording."
  },
  "_studies_example": [
   {
@@ -727,7 +728,55 @@
     ],
     "kb": [
      "rights"
-    ]
+    ],
+    "act": {
+     "wm": {
+      "who": [
+       "<Arabic (formal): which clients this concerns>",
+       "<English>"
+      ],
+      "opts": [
+       [
+        "<Arabic: option 1 with its figure and date>",
+        "<English>"
+       ],
+       [
+        "<Arabic: option 2>",
+        "<English>"
+       ]
+      ],
+      "when": [
+       "<Arabic: the deadline(s)>",
+       "<English>"
+      ],
+      "tools": [
+       "circ",
+       "calc",
+       "ipo",
+       "kb",
+       "ca"
+      ]
+     },
+     "am": {
+      "who": [
+       "<Arabic>",
+       "<English>"
+      ],
+      "opts": [
+       [
+        "<Arabic>",
+        "<English>"
+       ]
+      ],
+      "when": [
+       "<Arabic>",
+       "<English>"
+      ],
+      "tools": [
+       "calc"
+      ]
+     }
+    }
    },
    {
     "id": "mkt",
