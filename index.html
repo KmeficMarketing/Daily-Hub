@@ -503,6 +503,8 @@ html[dir="rtl"] .kick,html[dir="rtl"] .eqb h4,html[dir="rtl"] .tbl tr.grp td,htm
 .mo2{display:none}
 .cdvn{font-size:12.5px;color:var(--soft);margin:10px 2px 0;padding:8px 12px;border-radius:12px;background:var(--glass2);border:1px solid var(--line)}
 .cexp{font-size:12px;line-height:1.6;color:var(--soft);min-width:220px}
+.cstack{grid-template-columns:minmax(0,1fr)!important}
+@media (min-width:681px){.chold td:first-child,.chold th:first-child{min-width:210px}.chold td:nth-child(4){min-width:190px}}
 @media (max-width:680px){.chold td:nth-child(4),.chold td:nth-child(5){grid-column:1/-1}.cexp{min-width:0}}
 @media (max-width:680px){.chold thead{display:none}.chold tr{display:grid;grid-template-columns:1fr 1fr;gap:4px 10px;padding:10px 0;border-bottom:1px solid var(--line)}.chold td{border:0!important;padding:2px 4px!important}.chold td:first-child,.chold td:last-child{grid-column:1/-1}.mo2{display:inline;color:var(--mut);font-size:11px}}
 .camtr{display:block;font-size:12px;color:var(--mut);margin-top:2px}.camtr.bad{color:var(--amber);font-weight:700}
@@ -1542,7 +1544,7 @@ function renderCalc(){const el=$('calcOut');if(!el)return;const ctl=$('calcCtl')
  const fiNote=(m0.fiN||[]).length?`<div class="cwarn" style="background:var(--bluebg);color:var(--blue)">${m0.fiN.map(esc).join(' ')}</div>`:'';
  el.innerHTML=warn+shN+fiNote+edBox+`
  <div class="grid c4 ckp"><div class="g pad"><small>${perLbl()}</small><b>${pct(cagr)}</b></div><div class="g pad"><small>${T('أسوأ سنة','Worst year')}</small><b class="${worst<0?'down':''}">${pct(worst)}</b></div><div class="g pad"><small>${T('أفضل سنة','Best year')}</small><b class="up">${pct(best)}</b></div><div class="g pad"><small>${T('2026 حتى الآن','2026 to date')}</small><b>${pct(m.bt[5].r)}</b></div></div><p class="cdvn">${divNote()}</p>
- <div class="grid split s16" style="margin-top:14px">
+ <div class="grid cstack" style="margin-top:14px">
   <div class="g pad"><div class="ct"><span>${ed?T('المحفظة بعد التعديل','Edited portfolio'):T('المحفظة النموذجية','Model portfolio')} · ${kwd0(CS.amt)} ${T('د.ك','KWD')}</span><span style="display:flex;gap:6px;align-items:center"><button type="button" class="mini" id="calcPrint">${T('اطبع التقرير ⎙','Print report ⎙')}</button><span class="chip">${m.H.length} ${T('بندًا','holdings')}</span></span></div>
    <div class="cbar">${Object.entries(regW).filter(([k,w])=>w>=0.5).map(([k,w])=>`<i style="flex:${w};background:var(--c-${k})" title="${esc(L(RN[k]))} ${w.toFixed(0)}%"></i>`).join('')}</div>
    <div class="cleg">${Object.entries(regW).filter(([k,w])=>w>=0.5).map(([k,w])=>`<span><i style="background:var(--c-${k})"></i>${esc(L(RN[k]))} ${w.toFixed(0)}%</span>`).join('')}</div>
@@ -1759,7 +1761,7 @@ document.addEventListener('change',e=>{if(e.target.id==='opsEv'){opsEv=e.target.
 let _opsT;document.addEventListener('input',e=>{if(e.target.id==='opsQ'){opsQ=e.target.value;clearTimeout(_opsT);_opsT=setTimeout(()=>{const pos=e.target.selectionStart;renderOps($('opsBox'));const q=$('opsQ');if(q){q.focus();try{q.setSelectionRange(pos,pos)}catch(_){}}},180)}});
 
 /* ================= live data layer (GitHub Pages, encrypted data) ================= */
-const BUILD="cfab213eb0";
+const BUILD="d1a4c7e2b0";
 const GH="https://kmeficmarketing.github.io/Daily-Hub/",RAW="https://raw.githubusercontent.com/KmeficMarketing/Daily-Hub/main/";
 const ROOTS=/^https?:$/.test(location.protocol)?["./",GH,RAW]:[GH,RAW];
 let IXIPO=[],ICACHE={},IPODATE='',IXSD={},PREV=null,PC={},UPD={},LOADSIG="",SDATES=[],SCACHE={},DATES=[],LATEST=null,VIEWD=null,NOTE=null,BUSY=false,LAST_AT='',STDATE='',CALM=null;
