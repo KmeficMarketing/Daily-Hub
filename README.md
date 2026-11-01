@@ -120,3 +120,7 @@ Both routines read this list. Use these first for disclosures, corporate actions
 | Dubai (DFM) | Closes, bulletins and announcements | https://www.dfm.ae/ar |
 | Muscat (MSX) | Company news by month: set `month` and `year` to the current month | https://www.msx.om/newsbytype.aspx?type=1&month=<M>&year=<YYYY> |
 | Bahrain Bourse | Company announcements | https://bahrainbourse.com/ar/News%20and%20Events/CompanyAnnouncements |
+
+## Theme preview (since 1 Nov 2026)
+
+`preview-v3.html` is a full copy of the hub with the proposed new design (dark glass and ivory-on-beige light themes, one top menu with a More dropdown, side card in fixed sections, management board, structured department action cards). It reads the same data and key as `index.html` and changes nothing there. The live page stays `index.html` until the preview is approved.
