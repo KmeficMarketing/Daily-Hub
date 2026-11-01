@@ -616,23 +616,22 @@ details.dsec>summary{cursor:pointer;list-style:none;display:flex;justify-content
 @media (max-width:680px){.mgmm{grid-template-columns:repeat(2,minmax(0,1fr))}.acr{grid-template-columns:minmax(0,1fr)}.mgl div{grid-template-columns:90px minmax(0,1fr)}.mgl em{grid-column:1/-1}}
 </style>
 <style id="v3css">
-/* ===== V3 theme preview: dark glass, lime accent, stretchy pill nav ===== */
+/* ===== V3 theme: KMEFIC teal glass (dark), ivory (light), stretchy pill nav ===== */
 html:root:not([data-theme="light"]){
- --bg0:#0b0d0e;--bg1:#151b1e;--o1:#3e5566;--o2:#5a3a2a;--o3:#2c3a33;--o4:#26313a;
- --glass:rgba(255,255,255,.05);--glass2:rgba(255,255,255,.09);--gline:rgba(255,255,255,.09);--gshadow:0 24px 70px -30px rgba(0,0,0,.8);
- --txt:#f1f3f2;--soft:#c6ccce;--mut:#8b9498;
- --gold:#c8f04d;--gold2:#dcf78a;--goldbg:rgba(200,240,77,.13);
- --up:#c8f04d;--upbg:rgba(200,240,77,.12);--down:#f2906f;--downbg:rgba(242,144,111,.14);
+ --bg0:#021419;--bg1:#05303a;--o1:#0b4f5c;--o2:#00788b;--o3:#0a3f4a;--o4:#0a2a46;
+ --glass:rgba(255,255,255,.05);--glass2:rgba(255,255,255,.09);--gline:rgba(255,255,255,.10);--gshadow:0 24px 70px -30px rgba(0,0,0,.8);
+ --txt:#eef5f5;--soft:#c3d3d6;--mut:#8aa3a8;
+ --gold:#d9b75e;--gold2:#ebd08b;--goldbg:rgba(217,183,94,.13);
+ --up:#45d095;--upbg:rgba(69,208,149,.12);--down:#ff8a7a;--downbg:rgba(255,138,122,.13);
  --pill:rgba(255,255,255,.14);--pillTxt:#ffffff;--line:rgba(255,255,255,.08);--line2:rgba(255,255,255,.15);
  --phop:0;color-scheme:dark}
-html.kgold:root:not([data-theme="light"]){--gold:#d9b75e;--gold2:#ebd08b;--goldbg:rgba(217,183,94,.14);--up:#45d095;--upbg:rgba(69,208,149,.13)}
-html:root:not([data-theme="light"]) .bg{background:#0d0f10}
-html:root:not([data-theme="light"]) .bg i{filter:blur(100px);opacity:.7}
+html:root:not([data-theme="light"]) .bg{background:radial-gradient(120% 95% at 85% -5%,#0a4450 0%,#05303a 38%,#031d24 70%,#021419 100%)}
+html:root:not([data-theme="light"]) .bg i{filter:blur(110px);opacity:.55}
 .g{border-radius:24px;background:linear-gradient(180deg,rgba(255,255,255,.065),rgba(255,255,255,.025)),var(--glass)}
 .top{border-radius:26px}
 .rail{border-radius:999px;background:rgba(0,0,0,.28)}
 .rail button.on{box-shadow:inset 0 1px 0 rgba(255,255,255,.14)}
-.btn.pr2,.mini.pr,.chip.on{background:var(--gold);color:#1b2306}
+.btn.pr2,.mini.pr,.chip.on{background:var(--gold);color:#1f1806}
 /* top pill nav */
 .pnav{position:relative;display:flex;gap:2px;padding:5px;border-radius:999px;background:rgba(0,0,0,.28);border:1px solid var(--gline);overflow-x:auto;scrollbar-width:none;max-width:100%;order:2;margin-inline:auto}
 .pnav::-webkit-scrollbar{display:none}
@@ -652,36 +651,36 @@ html[data-theme="light"] .pnmenu{background:rgba(255,255,255,.95)}
 @keyframes v3out{to{opacity:0;filter:blur(14px);transform:scale(.985)}}
 .st,.g.pad{transition:transform .35s cubic-bezier(.2,.8,.2,1),background .3s}
 .st:hover{transform:translateY(-3px)}
-.v3badge{position:fixed;bottom:14px;inset-inline-end:14px;z-index:60;display:flex;gap:6px;align-items:center;font:600 12px Cairo;padding:5px;border-radius:999px;background:rgba(15,18,20,.85);border:1px solid var(--gline);color:#fff;backdrop-filter:blur(10px)}
-.v3badge span{padding:0 8px}
-.v3badge button{border:0;border-radius:999px;padding:5px 11px;font:600 12px Cairo;background:rgba(255,255,255,.1);color:#fff}
-.v3badge button.on{background:#c8f04d;color:#1b2306}
-@media (max-width:1099px){.v3badge{bottom:84px}}
+
+
+
+
+
 @media (prefers-reduced-motion:reduce){.view.v3out{animation:none!important}}
 
-/* ===== V3 light: ivory on beige ===== */
+/* ===== V3 light: ivory white, KMEFIC teal and gold ===== */
 html:root[data-theme="light"]{
- --bg0:#f3ece0;--bg1:#fbf8f2;--o1:#fffdf8;--o2:#e9dcc5;--o3:#e4cfae;--o4:#f1e7d8;
+ --bg0:#f8f4ec;--bg1:#fffefb;--o1:#fffdf8;--o2:#e9dcc5;--o3:#e4cfae;--o4:#f1e7d8;
  --glass:rgba(255,253,248,.62);--glass2:rgba(255,253,248,.86);--gline:rgba(120,96,60,.14);--gshadow:0 22px 60px -32px rgba(90,70,40,.35);
  --txt:#22201b;--soft:#4c463c;--mut:#857b6c;
  --gold:#8a6420;--gold2:#a77a2b;--goldbg:rgba(176,132,58,.12);
  --up:#2f7a52;--upbg:rgba(47,122,82,.10);--down:#b44a3c;--downbg:rgba(180,74,60,.10);
- --pill:#22201b;--pillTxt:#fbf8f2;--line:rgba(60,48,30,.09);--line2:rgba(60,48,30,.16);
- --phop:0;--spot1:#2b2620;--spot2:#4a3d2c;color-scheme:light}
-html:root[data-theme="light"] .bg{background:radial-gradient(130% 100% at 85% -10%,#fffdf9 0%,#f7f1e6 45%,#ece2d0 100%)}
+ --pill:#0b4f5c;--pillTxt:#fbf8f2;--line:rgba(60,48,30,.09);--line2:rgba(60,48,30,.16);
+ --phop:0;--spot1:#0f7f75;--spot2:#0a4d50;color-scheme:light}
+html:root[data-theme="light"] .bg{background:radial-gradient(130% 100% at 85% -10%,#ffffff 0%,#fdfbf6 40%,#f6f0e4 100%)}
 html:root[data-theme="light"] .bg i{filter:blur(110px);opacity:.55}
-html:root[data-theme="light"] .bg .o2{background:#e3d2b6;opacity:.45}
-html:root[data-theme="light"] .bg .o3{background:#f0dcc0;opacity:.35}
+html:root[data-theme="light"] .bg .o2{background:#efe4d0;opacity:.35}
+html:root[data-theme="light"] .bg .o3{background:#f5ead8;opacity:.25}
 html:root[data-theme="light"] .g{background:linear-gradient(180deg,rgba(255,255,255,.82),rgba(255,252,246,.6));box-shadow:var(--gshadow),inset 0 1px 0 rgba(255,255,255,.9)}
-html:root[data-theme="light"] .spot{box-shadow:0 24px 50px -26px rgba(40,30,15,.55)}
+html:root[data-theme="light"] .spot{box-shadow:0 24px 50px -26px rgba(5,70,70,.5)}
 html:root[data-theme="light"] .spot b,html:root[data-theme="light"] .spot{color:#fbf8f2}
 html:root[data-theme="light"] .pnav{background:rgba(255,253,248,.7)}
-html:root[data-theme="light"] .pnav .pill{background:#22201b}
+html:root[data-theme="light"] .pnav .pill{background:#0b4f5c}
 html:root[data-theme="light"] .pnav button.on{color:#fbf8f2}
 html:root[data-theme="light"] .rail{background:rgba(255,253,248,.7)}
 html:root[data-theme="light"] .pnmenu{background:rgba(255,253,248,.97)}
 .bg .ph,.bg .tw{display:none!important}
-html:not([data-theme="light"]) .spot{--spot1:#2d3a1a;--spot2:#1d2412}
+html:not([data-theme="light"]) .spot{--spot1:#0f8f80;--spot2:#0a5d55}
 </style>
 </head>
 <body>
@@ -2078,11 +2077,6 @@ document.documentElement.classList.add('app');gateText();
   busy=true;now.classList.add('v3out');
   setTimeout(()=>{now.classList.remove('v3out');orig(v,quiet);render();place(true);busy=false},220)};
  render();setTimeout(()=>place(false),60);addEventListener('resize',()=>place(false));
- // accent switch (preview only)
- const bd=document.createElement('div');bd.className='v3badge';bd.innerHTML='<span>معاينة الثيم</span><button type="button" id="v3L" class="on">أخضر</button><button type="button" id="v3G">ذهبي كميفك</button>';document.body.appendChild(bd);
- const setA=g=>{document.documentElement.classList.toggle('kgold',g);bd.querySelector('#v3L').classList.toggle('on',!g);bd.querySelector('#v3G').classList.toggle('on',g);try{localStorage.setItem('kmh-v3acc',g?'g':'l')}catch(e){}};
- bd.querySelector('#v3L').onclick=()=>setA(false);bd.querySelector('#v3G').onclick=()=>setA(true);
- try{if(localStorage.getItem('kmh-v3acc')==='g')setA(true)}catch(e){}
 })();
 </script>
 </body>
