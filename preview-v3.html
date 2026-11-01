@@ -632,6 +632,12 @@ html[data-theme="light"] .pnav{background:rgba(255,255,255,.45)}
 html[data-theme="light"] .pnav .pill{background:#16252a}
 .pnavw{max-width:1320px;width:calc(100% - 24px);margin:12px auto 0;display:flex;justify-content:center;position:sticky;top:84px;z-index:39}
 @media (max-width:1099px){.pnavw{display:none}}
+@media (min-width:1100px){.rail{display:none!important}main{padding-inline:16px!important}}
+.pnmenu{position:absolute;z-index:41;display:flex;flex-direction:column;gap:2px;padding:6px;min-width:190px;border-radius:18px;background:rgba(18,22,24,.92)}
+html[data-theme="light"] .pnmenu{background:rgba(255,255,255,.95)}
+.pnmenu[hidden]{display:none}
+.pnmenu button{border:0;background:none;color:var(--soft);font:600 13.5px Cairo;padding:9px 14px;border-radius:12px;text-align:start}
+.pnmenu button:hover,.pnmenu button.on{background:var(--pill);color:var(--pillTxt)}
 /* view transitions */
 .view.v3out{animation:v3out .22s ease forwards}
 @keyframes v3out{to{opacity:0;filter:blur(14px);transform:scale(.985)}}
@@ -1957,7 +1963,12 @@ document.documentElement.classList.add('app');gateText();
  const top=document.getElementById('top');if(!top)return;
  const w=document.createElement('div');w.className='pnavw';w.innerHTML='<nav class="pnav g" id="pnav" aria-label="views"><span class="pill" id="pnPill"></span></nav>';top.after(w);
  const nav=w.querySelector('#pnav'),pill=w.querySelector('#pnPill');let cur=null;
- function render(){nav.querySelectorAll('button').forEach(b=>b.remove());NAV.forEach(k=>{const v=VIEWS.find(x=>x[0]===k);if(!v)return;const b=document.createElement('button');b.type='button';b.dataset.view=k;b.textContent=L(v[1]);if(VIEW===k)b.classList.add('on');nav.appendChild(b)})}
+ function render(){nav.querySelectorAll('button').forEach(b=>b.remove());NAV.forEach(k=>{const v=VIEWS.find(x=>x[0]===k);if(!v)return;const b=document.createElement('button');b.type='button';b.dataset.view=k;b.textContent=L(v[1]);if(VIEW===k)b.classList.add('on');nav.appendChild(b)});
+  const rest=VIEWS.filter(v=>!NAV.includes(v[0]));const inRest=rest.some(v=>v[0]===VIEW);
+  const m=document.createElement('button');m.type='button';m.id='pnMore';m.className=inRest?'on':'';m.textContent=(inRest?L(rest.find(v=>v[0]===VIEW)[1]):T('المزيد','More'))+' ▾';nav.appendChild(m);
+  mm.innerHTML=rest.map(v=>`<button type="button" data-view="${v[0]}" class="${VIEW===v[0]?'on':''}">${L(v[1])}</button>`).join('')}
+ const mm=document.createElement('div');mm.className='pnmenu g';mm.hidden=true;w.appendChild(mm);
+ document.addEventListener('click',e=>{if(e.target.closest('#pnMore')){e.stopPropagation();const r=e.target.getBoundingClientRect(),wr=w.getBoundingClientRect();mm.style.top=(r.bottom-wr.top+8)+'px';mm.style.left=(r.left-wr.left)+'px';mm.hidden=!mm.hidden;return}if(!e.target.closest('.pnmenu'))mm.hidden=true;else if(e.target.closest('[data-view]'))mm.hidden=true},true);
  function edges(b){const nr=nav.getBoundingClientRect(),r=b.getBoundingClientRect();return{l:r.left-nr.left+nav.scrollLeft,r:nr.right-r.right-nav.scrollLeft}}
  function place(anim){const b=nav.querySelector('button.on');if(!b){pill.style.opacity=0;return}pill.style.opacity=1;const e=edges(b);
   if(!anim||!cur){pill.style.transition='none';pill.style.left=e.l+'px';pill.style.right=e.r+'px';cur=e;return}
