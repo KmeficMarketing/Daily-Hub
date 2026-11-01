@@ -1,5 +1,5 @@
 // Content quality check on a PLAINTEXT day file or update file, run before encrypting.
-// Usage: node tools/qa_check.mjs <plain.json> [--update]
+// Usage: node tools/qa_check.mjs <plain.json> [--update]   |   IPO radar: node tools/qa_check.mjs <ipo.plain.json> --ipo <YYYY-MM-DD>
 // Exit code 0 = no errors (warnings may be printed), 1 = errors that must be fixed before publishing.
 import fs from "node:fs";
 
@@ -18,6 +18,22 @@ const both = x => A(x) + " | " + B(x);
 const DISC = /(معلومات\s+(سوقية\s+)?عامة[^"]{0,40}(توصية|نصيحة)\s+استثمارية|ليست\s+(توصية|نصيحة)\s+استثمارية|not\s+(an?\s+)?investment\s+(advice|recommendation)|general\s+(market\s+)?information,?\s+not)/i;
 const walk = (o, p) => { if (typeof o === "string") { if (DISC.test(o)) err(p, "disclaimer text: " + o.slice(0, 80)); } else if (o && typeof o === "object") for (const k of Object.keys(o)) walk(o[k], p + "." + k); };
 walk(D, "file");
+
+// 1b. IPO radar file (data/ipo/<day>.json plaintext, or the "ipo" block of an update): no stale items.
+// Pass --ipo <YYYY-MM-DD> to check a radar file; an update file with an "ipo" block is checked automatically.
+const ipoDay = (() => { const i = process.argv.indexOf("--ipo"); return i > 0 ? process.argv[i + 1] : (D.today || null); })();
+const IPOB = process.argv.includes("--ipo") ? D : (D.ipo && typeof D.ipo === "object" && !Array.isArray(D.ipo) ? D.ipo : null);
+if (IPOB && ipoDay) {
+  [...(IPOB.items || []), ...(IPOB.post || [])].forEach(it => {
+    const id = "ipo." + (it.id || "?");
+    (it.dates || []).forEach(d => { if (d[0] && d[0] < ipoDay && d[2] === "exp") err(id, `date ${d[0]} (${A(d[1])}) has passed but is still marked "exp": write what actually happened (price, coverage, listing, delay) with a source and mark it "ok", or move it`); });
+    const lastNews = (it.news || []).map(n => n[0]).sort().pop() || "";
+    const passed = (it.dates || []).filter(d => d[0] && d[0] < ipoDay).map(d => d[0]).sort().pop() || "";
+    if (passed && lastNews < passed) err(id, `a key date (${passed}) passed after its latest news item (${lastNews || "none"}): add the outcome to news with a source`);
+    if (["sub", "bookbuild", "terms"].includes(it.stage) && !(it.dates || []).some(d => d[0] >= ipoDay)) warn(id, `stage "${it.stage}" but no upcoming date: check whether it priced, listed or was delayed`);
+  });
+  if (process.argv.includes("--ipo") && (IPOB.items || []).length < 6) warn("ipo.items", `only ${(IPOB.items || []).length} items (README asks for 6–12)`);
+}
 
 // 2. headline and summary: short, plain, every causal claim backed by referenced items
 const CAUSE = /(بسبب|بفعل|نتيجة|إثر|جراء|يضغط|تضغط|ضغط على|يدفع|تدفع|مع\s+(استمرار|تصاعد|تراجع|ارتفاع)|\bdue to\b|\bamid\b|\bweighs?\b|\bdriven by\b|\bon (fears|worries|hopes)\b|\bas\s+\w+\s+(rise|fall|rages|continue)s?)/i;

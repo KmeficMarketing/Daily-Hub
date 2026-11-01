@@ -124,3 +124,7 @@ Both routines read this list. Use these first for disclosures, corporate actions
 ## Theme preview (since 1 Nov 2026)
 
 `preview-v3.html` is a full copy of the hub with the proposed new design (dark glass and ivory-on-beige light themes, one top menu with a More dropdown, side card in fixed sections, management board, structured department action cards). It reads the same data and key as `index.html` and changes nothing there. The live page stays `index.html` until the preview is approved.
+
+## IPO radar staleness check (since 1 Nov 2026)
+
+`node tools/qa_check.mjs /tmp/<today>.ipo.plain.json --ipo <today>` fails when a radar date has passed but is still marked "exp", or when a key date passed after an item's latest news line, so a priced, covered, listed or delayed deal can never sit unchanged on the radar. Update files with an "ipo" block are checked automatically by `--update`.
