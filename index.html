@@ -180,7 +180,7 @@ html[dir="ltr"] .kp b,html[dir="ltr"] .kp em{text-align:left}
 .eqrows div small{display:block;color:var(--mut);font-size:11.5px;line-height:1.4}
 .eqrows div b{font:700 16px Cairo,monospace}
 .eqrows div b.down{color:var(--down)}.eqrows div b.up{color:var(--up)}.eqrows div b.na{font:400 13px Cairo,sans-serif;color:var(--mut)}
-.formula{font:400 12px/1.7 Cairo,monospace;color:var(--soft);direction:ltr;text-align:left;margin-top:10px;border-top:1px dashed var(--line2);padding-top:8px;white-space:pre-wrap}
+.formula{font:400 12px/1.7 Cairo,monospace;color:var(--soft);direction:ltr;text-align:left;unicode-bidi:plaintext;margin-top:10px;border-top:1px dashed var(--line2);padding-top:8px;white-space:pre-wrap}
 .ruler{position:relative;height:66px;margin:6px 6px 0;direction:ltr}
 .ruler .ax{position:absolute;left:0;right:0;top:32px;height:3px;background:var(--line2);border-radius:2px}
 .ruler .zone{position:absolute;top:30px;height:7px;border-radius:4px;transform:scaleX(0);transform-origin:left;transition:transform .9s var(--ease) .2s}
@@ -602,6 +602,86 @@ html[dir="rtl"] .ckp b{text-align:right}
 }
 
 h1,h2,h3,h4,b,strong,th{font-weight:700}
+.keys b,.keys b *{word-break:normal!important;overflow-wrap:normal;hyphens:none}.keys b bdi{white-space:nowrap}
+.dsum{padding:12px 14px;border-radius:16px;background:var(--goldbg);border:1px solid var(--line)}.dsum small{display:block;font-size:11.5px;color:var(--gold);font-weight:700;margin-bottom:2px}.dsum p{margin:0;font-size:14px;line-height:1.7}
+.dsec{margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}.dsec>h5,.dsec>summary{font:700 13px Cairo,sans-serif;color:var(--mut);margin:0 0 8px;letter-spacing:.02em}
+details.dsec>summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center}details.dsec>summary::-webkit-details-marker{display:none}details.dsec>summary::after{content:'▾';transition:transform .2s}details.dsec:not([open])>summary::after{transform:rotate(90deg)}
+.rgrp{margin-bottom:10px}.rdays>summary{cursor:pointer;font:600 12px Cairo,sans-serif;color:var(--gold);margin:6px 0}.rgrp h6{margin:6px 0 6px;font:600 12px Cairo,sans-serif;color:var(--gold)}
+.mgk .mgt small{display:block;font-size:12px;color:var(--mut)}.mgk .mgt b{display:block;font:700 30px/1.15 Cairo,monospace;margin:6px 0 2px}.mgk .mgt span{font-size:12px}
+.mgmm{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.mgmm div{padding:10px;border-radius:14px;background:var(--glass2)}.mgmm small{display:block;font-size:11px;color:var(--mut)}.mgmm b{display:block;font-size:18px}.mgmm em{font-style:normal;font-size:12px;display:block;text-align:end}
+.flash{animation:flash 1.5s ease}@keyframes flash{0%,60%{box-shadow:0 0 0 3px var(--gold)}100%{box-shadow:none}}
+.mgl div.it,.mgmm div.it,.mgt.it{cursor:pointer;transition:background .2s,transform .2s}.mgl div.it:hover{background:var(--glass2);border-radius:10px}.mgmm div.it:hover,.mgt.it:hover{transform:translateY(-2px)}
+.mgl div{display:grid;grid-template-columns:110px minmax(0,1fr) auto;gap:10px;align-items:center;font-size:13px;margin-bottom:8px}.mgl i{height:8px;border-radius:99px;background:var(--glass2);overflow:hidden}.mgl i b{display:block;height:100%;background:var(--gold);border-radius:99px}.mgl em{font-style:normal;font-size:12px;color:var(--mut)}
+.rec.act{display:block;padding:12px;border-radius:14px;background:var(--glass2)}.rec.act .ach{display:flex;gap:8px;align-items:baseline;margin-bottom:6px}.acr{display:grid;grid-template-columns:120px minmax(0,1fr);gap:10px;padding:6px 0;border-top:1px dashed var(--line);font-size:13px}.acr small{color:var(--gold);font-weight:700;font-size:11.5px}.acr ol{margin:0;padding-inline-start:18px}
+@media (max-width:680px){.mgk{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px}.mgk .mgt b{font-size:24px}.mgmm{grid-template-columns:repeat(2,minmax(0,1fr))}.acr{grid-template-columns:minmax(0,1fr)}.mgl div{grid-template-columns:90px minmax(0,1fr)}.mgl em{grid-column:1/-1}}
+</style>
+<style id="v3css">
+/* v3 design layer (approved 1 Nov 2026) */
+/* ===== V3 theme: KMEFIC teal glass (dark), ivory (light), stretchy pill nav ===== */
+html:root:not([data-theme="light"]){
+ --bg0:#021419;--bg1:#05303a;--o1:#0b4f5c;--o2:#00788b;--o3:#0a3f4a;--o4:#0a2a46;
+ --glass:rgba(255,255,255,.05);--glass2:rgba(255,255,255,.09);--gline:rgba(255,255,255,.10);--gshadow:0 24px 70px -30px rgba(0,0,0,.8);
+ --txt:#eef5f5;--soft:#c3d3d6;--mut:#8aa3a8;
+ --gold:#d9b75e;--gold2:#ebd08b;--goldbg:rgba(217,183,94,.13);
+ --up:#45d095;--upbg:rgba(69,208,149,.12);--down:#ff8a7a;--downbg:rgba(255,138,122,.13);
+ --pill:rgba(255,255,255,.14);--pillTxt:#ffffff;--line:rgba(255,255,255,.08);--line2:rgba(255,255,255,.15);
+ --phop:0;color-scheme:dark}
+html:root:not([data-theme="light"]) .bg{background:radial-gradient(120% 95% at 85% -5%,#0a4450 0%,#05303a 38%,#031d24 70%,#021419 100%)}
+html:root:not([data-theme="light"]) .bg i{filter:blur(110px);opacity:.55}
+.g{border-radius:24px;background:linear-gradient(180deg,rgba(255,255,255,.065),rgba(255,255,255,.025)),var(--glass)}
+.top{border-radius:26px}
+.rail{border-radius:999px;background:rgba(0,0,0,.28)}
+.rail button.on{box-shadow:inset 0 1px 0 rgba(255,255,255,.14)}
+.btn.pr2,.mini.pr,.chip.on{background:var(--gold);color:#1f1806}
+/* top pill nav */
+.pnav{position:relative;display:flex;gap:2px;padding:5px;border-radius:999px;background:rgba(0,0,0,.28);border:1px solid var(--gline);overflow-x:auto;scrollbar-width:none;max-width:100%;order:2;margin-inline:auto}
+.pnav::-webkit-scrollbar{display:none}
+.pnav button{position:relative;z-index:1;border:0;background:none;color:var(--soft);font:600 13.5px Cairo,sans-serif;padding:7px 15px;border-radius:999px;white-space:nowrap;transition:color .3s}
+.pnav button.on{color:var(--pillTxt);background:none!important;box-shadow:none!important}
+.pnav .pill{position:absolute;top:5px;bottom:5px;border-radius:999px;background:var(--pill);box-shadow:inset 0 1px 0 rgba(255,255,255,.14);pointer-events:none}
+.pnavw{max-width:1320px;width:calc(100% - 24px);margin:12px auto 0;display:flex;justify-content:center;position:sticky;top:84px;z-index:39}
+@media (max-width:1099px){.pnavw{display:none}}
+@media (min-width:1100px){.rail{display:none!important}main{padding-inline:16px!important}}
+.pnmenu{position:absolute;z-index:41;display:flex;flex-direction:column;gap:2px;padding:6px;min-width:190px;border-radius:18px;background:rgba(18,22,24,.92)}
+html[data-theme="light"] .pnmenu{background:rgba(255,255,255,.95)}
+.pnmenu[hidden]{display:none}
+.pnmenu button{border:0;background:none;color:var(--soft);font:600 13.5px Cairo;padding:9px 14px;border-radius:12px;text-align:start}
+.pnmenu button:hover,.pnmenu button.on{background:var(--pill);color:var(--pillTxt)}
+/* view transitions */
+.view.v3out{animation:v3out .22s ease forwards}
+@keyframes v3out{to{opacity:0;filter:blur(14px);transform:scale(.985)}}
+.st,.g.pad{transition:transform .35s cubic-bezier(.2,.8,.2,1),background .3s}
+.st:hover{transform:translateY(-3px)}
+
+
+
+
+
+@media (prefers-reduced-motion:reduce){.view.v3out{animation:none!important}}
+
+/* ===== V3 light: ivory white, KMEFIC teal and gold ===== */
+html:root[data-theme="light"]{
+ --bg0:#f8f4ec;--bg1:#fffefb;--o1:#fffdf8;--o2:#e9dcc5;--o3:#e4cfae;--o4:#f1e7d8;
+ --glass:rgba(255,253,248,.62);--glass2:rgba(255,253,248,.86);--gline:rgba(120,96,60,.14);--gshadow:0 22px 60px -32px rgba(90,70,40,.35);
+ --txt:#22201b;--soft:#4c463c;--mut:#857b6c;
+ --gold:#8a6420;--gold2:#a77a2b;--goldbg:rgba(176,132,58,.12);
+ --up:#2f7a52;--upbg:rgba(47,122,82,.10);--down:#b44a3c;--downbg:rgba(180,74,60,.10);
+ --pill:#0b4f5c;--pillTxt:#fbf8f2;--line:rgba(60,48,30,.09);--line2:rgba(60,48,30,.16);
+ --phop:0;--spot1:#0f7f75;--spot2:#0a4d50;color-scheme:light}
+html:root[data-theme="light"] .bg{background:radial-gradient(130% 100% at 85% -10%,#ffffff 0%,#fdfbf6 40%,#f6f0e4 100%)}
+html:root[data-theme="light"] .bg i{filter:blur(110px);opacity:.55}
+html:root[data-theme="light"] .bg .o2{background:#efe4d0;opacity:.35}
+html:root[data-theme="light"] .bg .o3{background:#f5ead8;opacity:.25}
+html:root[data-theme="light"] .g{background:linear-gradient(180deg,rgba(255,255,255,.82),rgba(255,252,246,.6));box-shadow:var(--gshadow),inset 0 1px 0 rgba(255,255,255,.9)}
+html:root[data-theme="light"] .spot{box-shadow:0 24px 50px -26px rgba(5,70,70,.5)}
+html:root[data-theme="light"] .spot b,html:root[data-theme="light"] .spot{color:#fbf8f2}
+html:root[data-theme="light"] .pnav{background:rgba(255,253,248,.7)}
+html:root[data-theme="light"] .pnav .pill{background:#0b4f5c}
+html:root[data-theme="light"] .pnav button.on{color:#fbf8f2}
+html:root[data-theme="light"] .rail{background:rgba(255,253,248,.7)}
+html:root[data-theme="light"] .pnmenu{background:rgba(255,253,248,.97)}
+.bg .ph,.bg .tw{display:none!important}
+html:not([data-theme="light"]) .spot{--spot1:#0f8f80;--spot2:#0a5d55}
 </style>
 </head>
 <body>
@@ -716,6 +796,7 @@ h1,h2,h3,h4,b,strong,th{font-weight:700}
 
  <section class="view" id="v-mgmt" data-v="mgmt">
   <div class="vh"><div><h2 data-t="mgmt"></h2><p data-t="mgmtP"></p></div></div>
+  <div id="mgDash"></div>
   <div class="grid c2" id="mgList"></div>
  </section>
 
@@ -863,17 +944,17 @@ function eqRights(it){const q=it.eq,c=rightsCalc(q);const rows=[];
  return `<div class="eqb"><h4>${T('المعادلة','EQUATION')} · <span style="font-family:inherit">${esc(L(q.pd))}</span></h4>${ruler(marks)}<div class="eqrows" style="margin-top:22px">${rows.map(r=>`<div><small>${esc(r[0])}</small><b class="${r[2]}">${isoN(r[1])}</b></div>`).join('')}</div><div class="formula">${esc(f)}</div></div>`}
 function eqMarket(){if(!(D.mk||[]).length)return '';const g=D.mk.filter(m=>['kw','sa','dfm','adx','qa','om','bh'].includes(m.id)).map(m=>[L(m.n),sgn(m.idx[0][2])]);const avg=g.reduce((a,b)=>a+b[1],0)/g.length;
  const mk=id=>{const m=D.mk.find(m=>m.id===id);return m&&m.idx&&m.idx[0]?sgn(m.idx[0][2]):0};const kw=mk('kw'),sa=mk('sa');const tz=[['',''],'—','—'];const br=D.tape.find(t=>/Brent/.test(t[0][1]))||tz,au=D.tape.find(t=>/Gold/.test(t[0][1]))||tz,y10=D.tape.find(t=>/yield/i.test(t[0][1]))||tz;
- const rows=[[T('متوسط الخليج (7 أسواق)','Gulf average (7 markets)'),avg.toFixed(2)+'%','down'],[T('الكويت مقابل المتوسط','Kuwait vs average'),(kw-avg>0?'+':'')+(kw-avg).toFixed(2)+T(' نقطة',' pt'),kw>avg?'up':'down'],[T('الكويت مقابل السعودية','Kuwait vs Saudi'),(kw-sa>0?'+':'')+(kw-sa).toFixed(2)+T(' نقطة',' pt'),kw>sa?'up':'down'],[T('أسواق صاعدة','Markets up'),g.filter(x=>x[1]>0).length+T(' من ',' of ')+g.length,''],[L(br[0]),br[2],cls(br[2])],[L(au[0]),au[2],cls(au[2])],[L(y10[0]),y10[1],'']];
- return `<div class="eqb"><h4>${T('المعادلة','EQUATION')}</h4><div class="eqrows">${rows.map(r=>`<div><small>${esc(r[0])}</small><b class="${r[2]}">${isoN(r[1])}</b></div>`).join('')}</div><div class="formula">${esc(`oil ↑ ${br[2]}  &  GCC ↓ ${g.filter(x=>x[1]<0).length}/${g.length}  ⇒  supply-risk driven, not demand\ngold ↓ ${au[2]}  &  US10Y ${y10[1]}  ⇒  rates weigh alongside geopolitics`)}</div></div>`}
+ const rows=[[T('متوسط الخليج (7 أسواق)','Gulf average (7 markets)'),avg.toFixed(2)+'%','down'],[T('الكويت مقابل المتوسط','Kuwait vs average'),`${(kw>0?'+':'')+kw.toFixed(2)}% ${T('مقابل','vs')} ${(avg>0?'+':'')+avg.toFixed(2)}%`,kw>avg?'up':'down'],[T('الكويت مقابل السعودية','Kuwait vs Saudi'),`${(kw>0?'+':'')+kw.toFixed(2)}% ${T('مقابل','vs')} ${(sa>0?'+':'')+sa.toFixed(2)}%`,kw>sa?'up':'down'],[T('أسواق صاعدة','Markets up'),g.filter(x=>x[1]>0).length+T(' من ',' of ')+g.length,''],[L(br[0]),br[2],cls(br[2])],[L(au[0]),au[2]||au[1]||'—',cls(au[2])],[L(y10[0]),y10[1],'']];
+ return `<div class="eqb"><h4>${T('المعادلة','EQUATION')}</h4><div class="eqrows">${rows.map(r=>`<div><small>${esc(r[0])}</small><b class="${r[2]}">${isoN(r[1])}</b></div>`).join('')}</div><div class="formula">${esc(T(`متوسط الخليج = مجموع تغيّر ${g.length} أسواق ÷ ${g.length} = ${avg.toFixed(2)}%\nأسواق صاعدة ${g.filter(x=>x[1]>0).length} · هابطة ${g.filter(x=>x[1]<0).length}\nسبب حركة كل سوق في ملاحظته ومصادره، لا في هذه المعادلة.`,`Gulf average = sum of ${g.length} market changes ÷ ${g.length} = ${avg.toFixed(2)}%\nUp ${g.filter(x=>x[1]>0).length} · down ${g.filter(x=>x[1]<0).length}\nEach market's cause is in its own note and sources, not in this equation.`))}</div></div>`}
 function eqMovers(it){const kw=D.mk.find(m=>m.id==='kw');if(!kw||!(kw.g||[]).length)return '';const G=it.grp;const row=(x,hit)=>`<tr${hit?' style="background:var(--goldbg)"':''}><td>${esc(L(x[0]))}</td><td class="n ${cls(x[2])}">${esc(x[2])}</td></tr>`;
- return `<div class="eqb"><h4>${T('المعادلة','EQUATION')} · ${T('أكبر 5 في الاتجاهين','Top 5 each way')}</h4><div class="grid2" style="gap:10px"><table class="mvt"><tr><th>${T('الرابحون','Gainers')}</th><th></th></tr>${kw.g.map((x,i)=>row(x,G.g.includes(i))).join('')}</table><table class="mvt"><tr><th>${T('الخاسرون','Losers')}</th><th></th></tr>${kw.l.map((x,i)=>row(x,G.l.includes(i))).join('')}</table></div><div class="formula">${esc(`${G.g.length}/5 gainers = ${L(G.gl)}   ·   ${G.l.length}/5 losers = ${L(G.ll)}`)}</div></div>`}
+ return `<div class="eqb"><h4>${T('المعادلة','EQUATION')} · ${T('أكبر 5 في الاتجاهين','Top 5 each way')}</h4><div class="grid2" style="gap:10px"><table class="mvt"><tr><th>${T('الرابحون','Gainers')}</th><th></th></tr>${kw.g.map((x,i)=>row(x,G.g.includes(i))).join('')}</table><table class="mvt"><tr><th>${T('الخاسرون','Losers')}</th><th></th></tr>${kw.l.map((x,i)=>row(x,G.l.includes(i))).join('')}</table></div><div class="formula">${esc(T(`${G.g.length} من 5 رابحين = ${L(G.gl)}   ·   ${G.l.length} من 5 خاسرين = ${L(G.ll)}`,`${G.g.length}/5 gainers = ${L(G.gl)}   ·   ${G.l.length}/5 losers = ${L(G.ll)}`))}</div></div>`}
 function eqMM(it){const S=(it.eq&&(it.eq.series||(it.eq.madar?{MADAR:it.eq.madar}:null)))||{};const co=(D.mm&&D.mm.co)||[];const rows=co.map(c=>[c.code,c.chg||'—',cls(c.chg)]);
  const rg=Object.entries(S).map(([k,m])=>{const r=(Math.max(...m)-Math.min(...m))/Math.min(...m)*100;const st=m.map((v,i)=>i?`${v} (${((v/m[i-1]-1)*100>0?'+':'')}${((v/m[i-1]-1)*100).toFixed(2)}%)`:String(v)).join(' → ');return {k,r,st}});
- return `<div class="eqb"><h4>${T('المعادلة','EQUATION')}</h4><div class="eqrows">${rows.map(r=>`<div><small>${esc(r[0])}</small><b class="${r[2]}">${isoN(r[1])}</b></div>`).join('')}${rg.map(g=>`<div><small>${T('نطاق ','Range ')}${esc(g.k)}</small><b>${g.r.toFixed(1)}%</b></div>`).join('')}</div>${rg.length?`<div class="formula">${esc(rg.map(g=>`${g.k} ${g.st}\nrange = (max − min) / min = ${g.r.toFixed(1)}%`).join('\n')+'\nmax spread LB1–LB5 = 2–6%')}</div>`:''}</div>`}
+ return `<div class="eqb"><h4>${T('المعادلة','EQUATION')}</h4><div class="eqrows">${rows.map(r=>`<div><small>${esc(r[0])}</small><b class="${r[2]}">${isoN(r[1])}</b></div>`).join('')}${rg.map(g=>`<div><small>${T('نطاق ','Range ')}${esc(g.k)}</small><b>${g.r.toFixed(1)}%</b></div>`).join('')}</div>${rg.length?`<div class="formula">${esc(rg.map(g=>`${g.k} ${g.st}\nrange = (max − min) / min = ${g.r.toFixed(1)}%`).join('\n')+'')}</div>`:''}</div>`}
 function peakWin(days){const n=x=>x.a+x.l+x.x;let best={s:0,i:0};for(let i=0;i+5<=days.length;i++){const s=days.slice(i,i+5).reduce((a,b)=>a+n(b),0);if(s>best.s)best={s,i}}return {s:best.s,a:days[best.i]?days[best.i].d:TODAY,b:days[Math.min(best.i+4,days.length-1)]?days[Math.min(best.i+4,days.length-1)].d:TODAY}}
 function eqLoad(){const days=loadData();const n=x=>x.a+x.l+x.x;const pk=days.reduce((a,b)=>n(b)>n(a)?b:a,days[0]);const w=peakWin(days);const tot=days.reduce((a,b)=>a+n(b),0);const ag=days.reduce((a,b)=>a+b.a,0);const end=days[days.length-1].d;
  const rows=[[T('ذروة يوم واحد','Peak day'),fd(pk.d,false)+' · '+n(pk)],[T('أثقل 5 أيام','Heaviest 5 days'),`${fds(w.a)}–${fds(w.b)} · ${w.s}`],[T('الإجمالي حتى ','Total to ')+fds(end),tot+T(' بندًا',' items')],[T('منها جمعيات','of which assemblies'),String(ag)]];
- return `<div class="eqb"><h4>${T('المعادلة','EQUATION')}</h4><div class="eqrows">${rows.map(r=>`<div><small>${esc(r[0])}</small><b>${isoN(r[1])}</b></div>`).join('')}</div><div class="formula">${esc(`load(day) = assemblies + listed actions + computed rights deadlines\npeak = ${pk.d} (${n(pk)})   ·   ${w.a}…${w.b} = ${w.s}`)}</div></div>`}
+ return `<div class="eqb"><h4>${T('المعادلة','EQUATION')}</h4><div class="eqrows">${rows.map(r=>`<div><small>${esc(r[0])}</small><b>${isoN(r[1])}</b></div>`).join('')}</div><div class="formula">${esc(T(`حمل اليوم = الجمعيات + إجراءات الشركات المدرجة + مواعيد الحقوق المحسوبة\nالذروة ${pk.d} (${n(pk)}) · أثقل 5 أيام ${w.a}…${w.b} = ${w.s}`,`load(day) = assemblies + listed actions + computed rights deadlines\npeak = ${pk.d} (${n(pk)})   ·   ${w.a}…${w.b} = ${w.s}`))}</div></div>`}
 const LOADDAYS=24;
 function loadData(){const end=addD(TODAY,LOADDAYS),days=[];for(let d=TODAY;d<=end;d=addD(d,1))days.push({d,a:0,l:0,x:0,it:[]});const at=d=>days.find(x=>x.d===d);
  (D.ev||[]).forEach(r=>{const x=at(r[0]);if(x){x.a++;x.it.push(lang==='ar'?r[1]:r[2])}});(D.ev2||[]).forEach(e=>{const x=at(e.d);if(x){x.l++;x.it.push(lang==='ar'?e.a:e.e)}});
@@ -902,7 +983,7 @@ function renderGantt(){const R=INF.items.filter(i=>i.kind==='rights'&&i.eq&&i.eq
   ${q.start&&q.rtEnd?bar(q.start,q.rtEnd,'t',T('تداول الحقوق','Rights trading')):''}${q.start?bar(q.start,q.subEnd||b,'s',T('الاكتتاب','Subscription'),!q.subEnd):''}${pt(c.cum,T('آخر شراء','Cum')+(ok?'':'؟'),dash)}${pt(q.rec,T('استحقاق','Record')+(ok?'':'؟'),dash)}${(q.last||c.last)?pt(q.last||c.last,'KMEFIC','red'):''}</div></div>`}).join('')+
  `<div class="glg"><span><i style="background:var(--blue)"></i>${T('تداول الحقوق','Rights trading')}</span><span><i style="background:var(--gold)"></i>${T('الاكتتاب','Subscription')}</span><span><i style="background:var(--down)"></i>${T('آخر يوم لدينا','Our deadline')}</span><span><i style="background:repeating-linear-gradient(90deg,var(--amber) 0 4px,transparent 4px 7px)"></i>${T('متوقع غير مؤكد','Expected, unconfirmed')}</span></div>`}
 function caMatch(e,k){return k==='all'||(k==='otc'&&e.m==='otc')||(k==='listed'&&e.m==='listed')||(k==='egm'&&e.egm)||(k==='rd'&&(e.rights||e.div))||(k==='unv'&&e.v!=='ok')}
-const HRS=[["kw",["بورصة الكويت","Boursa Kuwait"],"Asia/Kuwait",[0,1,2,3,4],"09:00","13:15",["مزاد الإقفال 13:00–13:10","Closing auction 13:00–13:10"]],["sa",["تداول السعودية","Saudi Exchange"],"Asia/Riyadh",[0,1,2,3,4],"10:00","15:10",null],["ae",["دبي وأبوظبي","Dubai & Abu Dhabi"],"Asia/Dubai",[1,2,3,4,5],"10:00","15:00",null],["qa",["بورصة قطر","Qatar"],"Asia/Qatar",[0,1,2,3,4],"09:30","13:15",null],["bh",["بورصة البحرين","Bahrain"],"Asia/Bahrain",[0,1,2,3,4],"09:30","13:00",null],["om",["بورصة مسقط","Muscat"],"Asia/Muscat",[0,1,2,3,4],"10:00","14:00",null],["eg",["البورصة المصرية","Egypt"],"Africa/Cairo",[0,1,2,3,4],"10:00","14:30",null],["us",["نيويورك","New York"],"America/New_York",[1,2,3,4,5],"09:30","16:00",null],["uk",["لندن","London"],"Europe/London",[1,2,3,4,5],"08:00","16:30",null],["tr",["إسطنبول","Istanbul"],"Europe/Istanbul",[1,2,3,4,5],"10:00","18:00",null]];
+const HRS=[["kw",["بورصة الكويت","Boursa Kuwait"],"Asia/Kuwait",[0,1,2,3,4],"09:00","13:15",["مزاد الإقفال 13:00–13:10","Closing auction 13:00–13:10"]],["sa",["السوق السعودية","Saudi Exchange"],"Asia/Riyadh",[0,1,2,3,4],"10:00","15:10",null],["ae",["دبي وأبوظبي","Dubai & Abu Dhabi"],"Asia/Dubai",[1,2,3,4,5],"10:00","15:00",null],["qa",["بورصة قطر","Qatar"],"Asia/Qatar",[0,1,2,3,4],"09:30","13:15",null],["bh",["بورصة البحرين","Bahrain"],"Asia/Bahrain",[0,1,2,3,4],"09:30","13:00",null],["om",["بورصة مسقط","Muscat"],"Asia/Muscat",[0,1,2,3,4],"10:00","14:00",null],["eg",["البورصة المصرية","Egypt"],"Africa/Cairo",[0,1,2,3,4],"10:00","14:30",null],["us",["نيويورك","New York"],"America/New_York",[1,2,3,4,5],"09:30","16:00",null],["uk",["لندن","London"],"Europe/London",[1,2,3,4,5],"08:00","16:30",null],["tr",["إسطنبول","Istanbul"],"Europe/Istanbul",[1,2,3,4,5],"10:00","18:00",null]];
 function zp(tz,d){const p=new Intl.DateTimeFormat('en-US',{timeZone:tz,year:'numeric',month:'2-digit',day:'2-digit',weekday:'short',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).formatToParts(d||new Date());const o={};p.forEach(x=>o[x.type]=x.value);return{ymd:`${o.year}-${o.month}-${o.day}`,wd:WEN.indexOf(o.weekday),min:+o.hour*60+ +o.minute}}
 const toM=s=>{const[a,b]=s.split(':');return +a*60+ +b},hm=m=>{m=((m%1440)+1440)%1440;return `${String(Math.floor(m/60)).padStart(2,'0')}:${String(m%60).padStart(2,'0')}`};
 function hrState(h){const[id,nm,tz,days,o,c]=h;const now=new Date(),kw=zp('Asia/Kuwait',now),z=zp(tz,now);let off=kw.min-z.min;if(kw.ymd>z.ymd)off+=1440;else if(kw.ymd<z.ymd)off-=1440;
@@ -938,7 +1019,7 @@ const U6={
  mm:['صانع السوق','Market making'],mmAl:['التنبيهات','Alerts'],
  mk:['الأسواق','Markets'],mkP:['آخر جلسة مكتملة لكل سوق، ومواعيد التداول الآن بتوقيت الكويت.','Last completed session per market, and trading hours now in Kuwait time.'],holT:['الإجازات القادمة','Upcoming holidays'],
  news:['الأخبار','News'],newsP:['مرتبة حسب الأثر، ولكل خبر أثره على الكويت وأمريكا وKMEFIC.','Ranked by impact, each with its effect on Kuwait, the US and KMEFIC.'],
- mgmt:['الإدارة','Management'],mgmtP:['السياق الأوسع لهذا الأسبوع.','The wider context for this week.'],
+ mgmt:['الإدارة','Management'],mgmtP:['لوحة واحدة لما يحتاج قرارًا أو متابعة من الإدارة: المواعيد الحرجة، وتعاميم العملاء، والمخاطر، وصناعة السوق، وضغط العمل، ودقة الاستنتاجات.','One board for what needs a management decision or follow-up: critical dates, client circulars, risks, market making, workload and conclusion accuracy.'],
  st:['الدراسات','Studies'],src:['المصادر والفجوات','Sources & gaps'],srcP:['كل رقم له مصدر، وما لم يتأكد مذكور هنا.','Every figure has a source; anything unconfirmed is listed here.']};
 const IC={calc:'M5 3h14v18H5zM8 7h8M8 11h2M12 11h2M16 11h0M8 15h2M12 15h2M8 18h6',kb:'M4 5a2 2 0 0 1 2-2h12v16H6a2 2 0 0 0-2 2zM4 21V5M8 7h6M8 11h6',ipo:'M12 2c3 3 4 7 4 11l-4 4-4-4c0-4 1-8 4-11zM9 17l-3 3M15 17l3 3M12 9h.01',ov:'M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z',inf:'M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.6.5 1 1.2 1.1 2.2h5c.1-1 .5-1.7 1.1-2.2A6 6 0 0 0 12 3z',today:'M4 6h16v14H4zM4 10h16M8 3v4M16 3v4',ca:'M3 7h18v12H3zM8 7V5h8v2M3 12h18',mm:'M7 4v16M7 4L4 7M7 4l3 3M17 20V4M17 20l-3-3M17 20l3-3',mk:'M4 19h16M6 16l4-5 3 3 5-7',news:'M5 4h11l3 3v13H5zM8 9h8M8 13h8M8 17h5',mgmt:'M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21a8 8 0 0 1 16 0',st:'M5 4h12a2 2 0 0 1 2 2v14H7a2 2 0 0 1-2-2zM5 18a2 2 0 0 1 2-2h12',src:'M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1'};
 const VIEWS=[['ov',['نظرة عامة','Overview']],['inf',['الاستنتاجات','Conclusions']],['today',['اليوم','Today']],['ca',['الإجراءات والموازي','Corp. actions']],['ipo',['رادار الاكتتابات','IPO radar']],['mm',['صانع السوق','Market making']],['mk',['الأسواق','Markets']],['news',['الأخبار','News']],['mgmt',['الإدارة','Management']],['st',['الدراسات','Studies']],['src',['المصادر','Sources']],['kb',['بنك الخبرة','Knowledge bank']],['calc',['حاسبة المحفظة','Portfolio calculator']]];
@@ -997,7 +1078,7 @@ function renderInf(){
    <p class="so">${esc(L(it.so))}</p>
    <div class="foot"><span>${it.rec.map(r=>esc(DEPN(r[0]))).join(' · ')}</span><span style="color:var(--gold)">${T('المعادلة والتوصيات ←','Equation & actions →')}</span></div>
    <div class="det"><div class="rv ch">${eqFor(it)}</div><div><span class="lbl">${T('يعني إيه','What it means')}</span><p>${esc(L(it.so))}</p>${it.warn?`<div class="warn">⚠ ${esc(L(it.warn))}</div>`:''}</div>
-    <div><span class="lbl" style="margin-bottom:6px">${T('التوصية لكل قسم','Recommendation by department')}</span><div class="recs">${it.rec.map(r=>`<div class="rec" data-dep="${r[0]}"><span class="chip">${esc(DEPN(r[0]))}</span><span>${esc(L(r[1]))}</span></div>`).join('')}</div></div>
+    <div><span class="lbl" style="margin-bottom:6px">${T('التوصية لكل قسم','Recommendation by department')}</span><div class="recs">${it.rec.map(r=>actCard(it,r)).join('')}</div></div>
     ${extra}${it.chk?`<div class="chk">◷ ${T('المراجعة','Review')} <b class="num">${fds(it.chk[0])}</b> · ${esc(L(it.chk[1]))}</div>`:''}${srcs(it.ev.filter(x=>!x[1].startsWith('#')),T('الدليل:','Evidence:'))}</div>
   </article>`}).join('');
  $('logT').innerHTML=`<thead><tr><th>${T('الاستنتاج','Conclusion')}</th><th class="hm">${T('الثقة','Confidence')}</th><th class="hm">${T('معيار التحقق','Check')}</th><th>${T('الموعد','Due')}</th><th>${T('الحالة','Status')}</th></tr></thead><tbody>`+(INF.log&&INF.log.length?INF.log:INF.items.filter(it=>it.chk)).filter(it=>it.chk).map(it=>{const r=it.res||'';const has=INF.items.some(x=>x.id===it.id);const RS={ok:['صحيح','Right','u'],no:['خاطئ','Wrong','r'],part:['جزئي','Partly','a']};const c=RS[r];return `<tr${has?` class="it" data-open="inf-${esc(it.id)}"`:''}><td>${esc(L(it.t))}${it.d?`<div class="mut num" style="font-size:11.5px">${fds(it.d)}</div>`:''}</td><td class="hm" style="white-space:nowrap">${conf(it.conf)}</td><td class="hm soft">${esc(L(it.chk[1]))}${it.resN?`<div class="mut" style="font-size:12px">${esc(L(it.resN))}</div>`:''}</td><td class="num">${fds(it.chk[0])}</td><td>${c?`<span class="chip ${c[2]}">${T(c[0],c[1])}</span>`:`<span class="chip b">${T('قيد المتابعة','Open')}</span>`}</td></tr>`}).join('')+'</tbody>'}
@@ -1042,10 +1123,11 @@ function renderMM(){const m=D.mm;if(!m||!(m.co||[]).length){$('mmD').textContent
  $('mmSrc').innerHTML=srcs(m.src)}
 /* ---------- markets ---------- */
 let mSel='kw';
+const biV=v=>{const s=String(v??'');const p=s.split(' / ');return p.length===2&&/[\u0600-\u06FF]/.test(p[0])&&!/[\u0600-\u06FF]/.test(p[1])?(lang==='ar'?p[0]:p[1]):s};
 function mkPanel(m){const u=m.unit?L(m.unit):'';const mx=Math.max(...[...(m.g||[]),...(m.l||[])].map(x=>Math.abs(sgn(x[2]))),1);
  const tb=(arr,h)=>arr&&arr.length?`<table class="mvt"><tr><th>${h}</th><th style="text-align:end">${esc(u)}</th><th style="text-align:end">%</th><th class="bw"></th></tr>${arr.map(x=>`<tr><td>${esc(L(x[0]))}</td><td class="n">${esc(x[1])}</td><td class="n ${cls(x[2])}">${esc(x[2])}</td><td class="bw"><div class="bb ${cls(x[2])}" data-w="${(Math.abs(sgn(x[2]))/mx*100).toFixed(0)}"></div></td></tr>`).join('')}</table>`:`<p class="mut" style="font-size:13px">${T('لا تتوفر قائمة موثوقة؛ السبب في الملاحظة.','No reliable list; see the note for why.')}</p>`;
  return `<div class="mpanel rv"><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><h3 style="font-size:19px">${esc(L(m.n))}</h3><span class="chip">${esc(L(m.d))}</span><span class="chip ${m.st==='ok'?'u':'a'}">${m.st==='ok'?T('بيانات مكتملة','Complete data'):T('بيانات جزئية','Partial data')}</span></div>
- ${m.at?newChip(m.at):''}<div class="idxs">${(m.idx||[]).map(x=>`<div><small>${esc(L(x[0]))}</small><span><b>${esc(x[1])}</b><em class="${cls(x[2])}">${esc(x[2])}</em></span></div>`).join('')}</div><p class="soft" style="font-size:14px;margin:0 0 12px">${esc(L(m.note||''))}</p>
+ ${m.at?newChip(m.at):''}<div class="idxs">${(m.idx||[]).map(x=>`<div><small>${esc(L(x[0]))}</small><span><b>${esc(biV(x[1]))}</b><em class="${cls(x[2])}">${esc(x[2])}</em></span></div>`).join('')}</div><p class="soft" style="font-size:14px;margin:0 0 12px">${esc(L(m.note||''))}</p>
  <div class="grid c2">${tb(m.g,T('الأكثر ارتفاعًا','Top gainers'))}${tb(m.l,T('الأكثر انخفاضًا','Top losers'))}</div>${srcs(m.src)}</div>`}
 function renderMk(){if(!D.mk.length){$('mtabs').innerHTML='';$('mpanel').innerHTML=`<div class="mpanel mut">${T('لا توجد بيانات أسواق لهذا اليوم.','No market data for this day.')}</div>`;return}if(!D.mk.find(x=>x.id===mSel))mSel=D.mk[0].id;$('mtabs').innerHTML=D.mk.map(m=>`<button type="button" data-mk="${m.id}" class="${mSel===m.id?'on':''}">${esc(L(m.n))} <span class="num ${mSel===m.id?'':cls(((m.idx||[])[0]||[])[2])}">${esc(((m.idx||[])[0]||[])[2]||'')}</span>${m.st!=='ok'?'<span class="dot" style="background:var(--amber);width:6px;height:6px"></span>':''}</button>`).join('');
  $('mpanel').innerHTML=mkPanel(D.mk.find(x=>x.id===mSel));requestAnimationFrame(()=>revealIn($('mpanel')))}
@@ -1061,7 +1143,63 @@ function renderNews(){const R=[['all',['الكل','All']],['me',['الشرق ا�
   <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><span class="imp">${[1,2,3].map(k=>`<i style="${k<=lv[n.imp]?'background:'+col[n.imp]:''}"></i>`).join('')}</span><span class="mut" style="font-size:12px">${esc(L(IL[n.imp]))} · ${esc(L(n.when))}</span>${n.unv?`<span class="chip a">${T('مصدر واحد / غير مؤكد','Single source / unverified')}</span>`:''}${newChip(n.at)}</div>
   <div class="ttl">${esc(L(n.t))}</div><div class="one">${esc(L(n.o))}</div>
   <div class="det"><p>${esc(L(n.what))}</p><div class="impg"><div><h4>${T('الأثر على الكويت','Effect on Kuwait')}</h4>${esc(L(n.kw))}</div><div><h4>${T('الأثر على أمريكا','Effect on the US')}</h4>${esc(L(n.us))}</div><div><h4>${T('الأثر على KMEFIC','Effect on KMEFIC')}</h4>${esc(L(n.km))}</div></div>${srcs(n.s)}</div></article>`).join('')}
-function renderMgmt(){$('mgList').innerHTML=D.mgmt.map((m,i)=>`<div class="g pad it" ${itAttrs('mg-'+i,L(m.t),L(m.when),new Set([...depsOf(m.w),'mgmt']))}>${stChip(m.st)} <span class="mut" style="font-size:12px">${esc(L(m.when))}</span><div style="font-weight:700;font-size:15.5px;margin:6px 0 2px">${esc(L(m.t))}</div><div class="soft" style="font-size:13.5px">${esc(L(m.o))}</div><div class="det"><p>${esc(L(m.b))}</p>${srcs(m.s)}</div></div>`).join('')}
+
+function actCard(it,r){const a=(it.act||{})[r[0]];const base=`<div class="rec" data-dep="${r[0]}"><span class="chip">${esc(DEPN(r[0]))}</span><span>${esc(L(r[1]))}</span></div>`;
+ if(!a)return base;const TL={circ:['التعميم الجاهز','Ready circular'],calc:['حاسبة المحفظة','Portfolio calculator'],ipo:['ملف الطرح في الرادار','IPO file in the radar'],kb:['بنك الخبرة','Knowledge bank'],ca:['جدول الإجراءات','Actions table']};
+ const row=(h,b)=>b?`<div class="acr"><small>${h}</small><div>${b}</div></div>`:'';
+ return `<div class="rec act" data-dep="${r[0]}"><div class="ach"><span class="chip">${esc(DEPN(r[0]))}</span><span>${esc(L(r[1]))}</span></div>`+
+  row(T('من يخصهم','Who it concerns'),a.who?esc(L(a.who)):'')+
+  row(T('الخيارات المتاحة للعميل','Client options'),(a.opts||[]).length?`<ol>${a.opts.map(o=>`<li>${esc(L(o))}</li>`).join('')}</ol>`:'')+
+  row(T('الموعد','Deadline'),a.when?`<b>${esc(L(a.when))}</b>`:'')+
+  row(T('المواد الجاهزة','Ready material'),(a.tools||[]).map(k=>TL[k]?`<span class="chip">${T(TL[k][0],TL[k][1])}</span>`:'').join(' '))+`</div>`}
+function mgDash(){const today=TODAY,wk=addD(TODAY,7);const tile=(l,v,s,cls,go)=>`<div class="g pad mgt${go?' it':''}"${go?` data-mgjump="${go}" role="button" tabindex="0"`:''}><small>${l}</small><b class="${cls||''}">${v}</b>${s?`<span class="mut">${s}</span>`:''}</div>`;
+ const R=INF.items.filter(i=>i.kind==='rights'&&i.eq);const circOf=it=>{const n=it.eq.ca||(it.eq.name||[])[0]||'';const c=CA.find(e=>e.circ&&e.na===n);if(c)return {id:'ca-'+c.id};const p=(PRI||[]).find(p=>p.circ&&n&&(L(p.t)+(p.t||[''])[0]).includes(n));return p?{id:'pi-'+p._k}:null};
+ const dl=[];CA.filter(e=>(e.rights||e.div||e.egm)&&e.d>=today&&e.d<=wk).forEach(e=>dl.push({d:e.d,t:(lang==='ar'?e.na:e.ne)+' · '+L(e.k),id:'ca-'+e.id}));
+ R.forEach(it=>{if(it.eq.last&&it.eq.last>=today&&it.eq.last<=addD(today,21))dl.push({d:it.eq.last,t:T('آخر يوم لطلبات KMEFIC · ','KMEFIC request deadline · ')+L(it.eq.name||[it.eq.ca,it.eq.ca]),id:'inf-'+it.id})});
+ INF.items.filter(i=>i.kind==='load').forEach(li=>(li.extra||[]).forEach(x=>{const lx=L(x[1]);if(x[0]>=today&&x[0]<=wk&&!dl.some(y=>y.d===x[0]&&(y.id.startsWith('inf-')&&/KMEFIC|كميفك/.test(y.t)&&/KMEFIC|كميفك/.test(lx)||y.t.includes(lx.slice(0,12)))))dl.push({d:x[0],t:lx,id:'inf-'+li.id})}));
+ dl.sort((a,b)=>a.d.localeCompare(b.d));
+ const circs=R.map(it=>{const c=circOf(it);const nm=L(it.eq.name||[it.eq.ca,it.eq.ca]);return {nm,ok:!!c,why:c?T('جاهز للتحميل','Ready to download'):(it.eq.v!=='ok'?T('غير جاهز: التواريخ لم تُؤكد رسميًا','Not ready: dates not officially confirmed'):T('غير جاهز','Not ready')),id:c?c.id:'inf-'+it.id}});
+ const hn=(D.news||[]).map((n,i)=>[n,i]).filter(([n])=>n.imp==='high');
+ const log=(INF.log||[]).filter(x=>x.res);const ok=log.filter(x=>x.res==='ok').length,part=log.filter(x=>x.res==='part').length,no=log.filter(x=>x.res==='no').length;
+ const acc=log.length?Math.round((ok+part*.5)/log.length*100)+'%':'—';
+ const mm=(D.mm&&D.mm.co)||[];const mmAl=((D.mm&&D.mm.alerts)||[]).filter(a=>a.d>=addD(today,-7));
+ const DEPK=['ops','et','am','wm','mm'];const load=DEPK.map(k=>({k,n:(PRI||[]).filter(p=>p._d&&p._d.has(k)).length,r:INF.items.reduce((a,it)=>a+(it.rec||[]).filter(r=>r[0]===k).length,0)}));const mx=Math.max(1,...load.map(x=>x.n+x.r));
+ const hi=(PRI||[]).filter(p=>p.st==='mgmt');
+ const li=(id,h,b,ch)=>`<div class="row it" data-open="${esc(id)}" style="grid-template-columns:${h?'auto ':''}minmax(0,1fr)${ch?' auto':''};padding:8px 10px;margin-bottom:5px">${h?`<b class="num" style="color:var(--gold)">${h}</b>`:''}<span style="font-size:13.5px">${b}</span>${ch||''}</div>`;
+ const box=(t2,b,n,cls,bid)=>`<div class="g pad ${cls||''}"${bid?` id="mgb-${bid}"`:''}><div class="ct"><span>${t2}</span>${n!=null?`<span class="chip">${n}</span>`:''}</div>${b}</div>`;
+ const none=s=>`<p class="mut" style="font-size:13px;margin:0">${s}</p>`;
+ return `<div class="grid c4 mgk">${tile(T('مواعيد حرجة خلال 7 أيام','Critical dates, next 7 days'),dl.length,'','','dates')}${tile(T('تعاميم العملاء','Client circulars'),`${circs.filter(c=>c.ok).length}/${circs.length}`,T('جاهز من المطلوب','ready of needed'),circs.some(c=>!c.ok)?'down':'up','circ')}${tile(T('أخبار عالية الأثر','High-impact news'),hn.length,hn.filter(([n])=>n.unv).length?T(`${hn.filter(([n])=>n.unv).length} غير مؤكد`,`${hn.filter(([n])=>n.unv).length} unconfirmed`):'','','risk')}${tile(T('دقة الاستنتاجات','Conclusion accuracy'),acc,log.length?T(`${ok} صحيح · ${part} جزئي · ${no} خاطئ`,`${ok} right · ${part} partly · ${no} wrong`):T('لا نتائج مراجعة بعد','No reviewed results yet'),'','log')}</div>
+ <div class="grid c2" style="margin-top:14px">
+  ${box(T('تحتاج انتباه الإدارة اليوم','Needs management attention today'),hi.length?hi.map(p=>li('pi-'+p._k,'',esc(L(p.t)))).join(''):none(T('لا بنود بأولوية عالية اليوم.','No high-priority items today.')),hi.length)}
+  ${box(T('المواعيد الحرجة خلال 7 أيام','Critical dates, next 7 days'),dl.length?dl.slice(0,10).map(x=>li(x.id,fds(x.d),esc(x.t))).join(''):none(T('لا مواعيد حرجة.','No critical dates.')),dl.length,'','dates')}
+  ${box(T('حالة تعاميم العملاء','Client circular status'),circs.length?circs.map(c=>li(c.id,'',esc(c.nm),`<span class="chip ${c.ok?'u':'a'}">${esc(c.why)}</span>`)).join(''):none(T('لا إصدارات حقوق خلال 30 يومًا.','No rights issues in the next 30 days.')),circs.length,'','circ')}
+  ${box(T('المخاطر والأخبار عالية الأثر','Risks and high-impact news'),hn.length?hn.map(([n,i])=>li('nw-'+i,'',esc(L(n.t)),n.unv?`<span class="chip a">${T('غير مؤكد','Unconfirmed')}</span>`:'')).join(''):none(T('لا أخبار عالية الأثر.','No high-impact news.')),hn.length,'','risk')}
+  ${box(T('صناعة السوق','Market making'),mm.length?`<div class="mgmm">${mm.map(c=>`<div class="it" data-mmco="${esc(c.code)}" role="button" tabindex="0"><small>${esc(c.code)}</small><b class="num">${esc(c.last)}</b><em class="num ${cls(c.chg)}">${esc(c.chg)}</em></div>`).join('')}</div><p class="mut" style="font-size:12.5px;margin:8px 0 0">${T(`${mmAl.length} تنبيهات خلال آخر 7 أيام`,`${mmAl.length} alerts in the last 7 days`)} · <button type="button" class="more" data-view="mm">${T('التفاصيل ←','Details →')}</button></p>`:none(T('لا بيانات.','No data.')))}
+  ${box(T('ضغط العمل على الأقسام اليوم','Department workload today'),`<div class="mgl">${load.map(x=>`<div class="it" data-depgo="${x.k}" role="button" tabindex="0" ><span>${esc(DEPN(x.k))}</span><i><b style="width:${((x.n+x.r)/mx*100).toFixed(0)}%"></b></i><em>${T(`${x.n} بنود · ${x.r} توجيهات`,`${x.n} items · ${x.r} notes`)}</em></div>`).join('')}</div>`)}
+ </div>
+ ${log.length?`<div class="g pad" id="mgb-log" style="margin-top:14px"><div class="ct"><span>${T('آخر الاستنتاجات المراجَعة','Latest reviewed conclusions')}</span></div>${log.slice(0,6).map(x=>`<div class="row" style="grid-template-columns:minmax(0,1fr) auto;padding:8px 10px;margin-bottom:5px"><span style="font-size:13px">${esc(L(x.t))}${x.resN?`<div class="mut" style="font-size:12px">${esc(L(x.resN))}</div>`:''}</span><span class="chip ${x.res==='ok'?'u':x.res==='no'?'r':'a'}">${x.res==='ok'?T('صحيح','Right'):x.res==='no'?T('خاطئ','Wrong'):T('جزئي','Partly')}</span></div>`).join('')}</div>`:''}
+ <div class="ct" style="margin:20px 2px 10px"><span>${T('سياق الأسبوع','This week\'s context')}</span></div>`}
+
+document.addEventListener('click',e=>{const g=e.target.closest('[data-gosrc]');if(!g)return;e.preventDefault();const id=g.dataset.gosrc;const el=document.querySelector(`[data-det-id="${CSS.escape(id)}"]`);closeDet();if(!el)return;const v=el.closest('.view');if(v)setView(v.dataset.v);setTimeout(()=>{el.scrollIntoView({behavior:'smooth',block:'center'});el.classList.add('flash');setTimeout(()=>el.classList.remove('flash'),1600)},450)});
+function openPanel(kind,title,html){lastFocus=document.activeElement;$('drwK').textContent=kind||'';$('drwT').textContent=title||'';$('drwB').innerHTML=html;$('drawer').classList.add('on');$('drawer').setAttribute('aria-hidden','false');$('scrim').classList.add('on');$('drwB').scrollTop=0;setTimeout(()=>{try{revealIn($('drwB'))}catch(e){}$('drwX').focus({preventScroll:true})},60)}
+document.addEventListener('click',e=>{if(e.target.closest('#drawer [data-view]'))closeDet()});
+function mmPanel(code){const c=((D.mm&&D.mm.co)||[]).find(x=>x.code===code);if(!c)return;const al=((D.mm&&D.mm.alerts)||[]).filter(a=>a.k===code);
+ const k=(l,v,cl)=>`<div><small>${l}</small><b class="num ${cl||''}">${esc(v||'—')}</b></div>`;
+ openPanel(T('صناعة السوق','Market making'),`${code} · ${L(c.n)}`,`<div class="dsum"><small>${T('الخلاصة','In short')}</small><p>${esc(L(c.note||['','']))||'—'}</p></div>
+ <section class="dsec"><h5>${T('آخر جلسة','Last session')} · ${esc(L((D.mm&&D.mm.d)||['','']))}</h5><div class="mgmm">${k(T('السعر (فلس)','Price (fils)'),c.last)}${k(T('التغير','Change'),c.chg,cls(c.chg))}${k(T('الكمية','Volume'),c.vol)}${k(T('القيمة (د.ك)','Value (KD)'),c.val)}</div></section>
+ <section class="dsec"><h5>${T('التنبيهات','Alerts')} (${al.length})</h5>${al.length?al.map(a=>`<div class="row" style="grid-template-columns:auto minmax(0,1fr);padding:8px 10px;margin-bottom:5px"><b class="num" style="color:var(--gold)">${fds(a.d)}</b><span style="font-size:13px">${esc(L(a.t))}<div class="mut" style="font-size:12px">${esc(L(a.o||['','']))}</div></span></div>`).join(''):`<p class="mut" style="font-size:13px">${T('لا تنبيهات.','No alerts.')}</p>`}</section>
+ <button type="button" class="mini" data-view="mm" style="align-self:flex-start;margin-top:12px">${T('افتح صفحة صانع السوق ←','Open market making →')}</button>`)}
+function depPanel(k){const pri=(PRI||[]).filter(p=>p._d&&p._d.has(k));const recs=[];INF.items.forEach(it=>(it.rec||[]).forEach(r=>{if(r[0]===k)recs.push({it,r})}));
+ const row=(id,b)=>`<div class="row it" data-open="${esc(id)}" style="grid-template-columns:minmax(0,1fr);padding:8px 10px;margin-bottom:5px"><span style="font-size:13.5px">${b}</span></div>`;
+ openPanel(T('ضغط العمل','Workload'),DEPN(k),`<div class="dsum"><small>${T('الخلاصة','In short')}</small><p>${T(`${pri.length} بنود اليوم و${recs.length} توجيهات لهذا القسم.`,`${pri.length} items today and ${recs.length} notes for this department.`)}</p></div>
+ <section class="dsec"><h5>${T('بنود اليوم','Today\'s items')} (${pri.length})</h5>${pri.length?pri.map(p=>row('pi-'+p._k,esc(L(p.t)))).join(''):`<p class="mut" style="font-size:13px">${T('لا بنود.','None.')}</p>`}</section>
+ <section class="dsec"><h5>${T('التوجيهات','Notes')} (${recs.length})</h5>${recs.length?`<div class="recs">${recs.map(x=>`<div class="it" data-open="inf-${esc(x.it.id)}" style="cursor:pointer"><small class="mut" style="font-size:11.5px">${esc(L(x.it.t))}</small>${actCard(x.it,x.r)}</div>`).join('')}</div>`:`<p class="mut" style="font-size:13px">${T('لا توجيهات.','None.')}</p>`}</section>
+ <button type="button" class="mini" data-depdesk="${k}" style="align-self:flex-start;margin-top:12px">${T('افتح مساحة القسم ←','Open the department desk →')}</button>`)}
+document.addEventListener('click',e=>{const m=e.target.closest('[data-mmco]');if(m){mmPanel(m.dataset.mmco);return}const d=e.target.closest('[data-depgo]');if(d){depPanel(d.dataset.depgo);return}
+ const dd=e.target.closest('[data-depdesk]');if(dd){closeDet();const s=$('depSel');if(s){s.value=dd.dataset.depdesk;s.dispatchEvent(new Event('change'))}window.scrollTo({top:0,behavior:'smooth'});return}
+ const j=e.target.closest('[data-mgjump]');if(j){const b=document.getElementById('mgb-'+j.dataset.mgjump);if(b){b.scrollIntoView({behavior:'smooth',block:'start'});b.classList.add('flash');setTimeout(()=>b.classList.remove('flash'),1600)}}});
+document.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.matches&&e.target.matches('[role=button][data-view],[role=button][data-depgo],[role=button][data-mmco],[role=button][data-mgjump]')){e.preventDefault();e.target.click()}});
+function renderMgmt(){const _md=$('mgDash');if(_md){try{_md.innerHTML=mgDash()}catch(e){console.error(e);_md.innerHTML=''}}$('mgList').innerHTML=D.mgmt.map((m,i)=>`<div class="g pad it" ${itAttrs('mg-'+i,L(m.t),L(m.when),new Set([...depsOf(m.w),'mgmt']))}>${stChip(m.st)} <span class="mut" style="font-size:12px">${esc(L(m.when))}</span><div style="font-weight:700;font-size:15.5px;margin:6px 0 2px">${esc(L(m.t))}</div><div class="soft" style="font-size:13.5px">${esc(L(m.o))}</div><div class="det"><p>${esc(L(m.b))}</p>${srcs(m.s)}</div></div>`).join('')}
 function renderStudies(){const S=D.studies||[];$('stP').textContent=S.length?T(`${S.length} دراسات${STDATE?' بتاريخ '+fd(STDATE):''}. اضغط أي دراسة لعرض الدليل والنتيجة والأثر والمطلوب.`,`${S.length} studies${STDATE?' dated '+fd(STDATE):''}. Tap one for evidence, finding, impact and actions.`):T('لا توجد دراسات لهذا اليوم.','No studies for this day.');
  $('stList').innerHTML=S.map((s,i)=>`<div class="g stc it" ${itAttrs('st-'+(s.k||i)+'-'+(s.dep||''),L(s.t),s.dep?DEPN(s.dep):'',s.dep?new Set([s.dep]):null)}><div><span class="k">${esc(s.k||'')}</span> ${s.dep?`<span class="chip">${esc(DEPN(s.dep))}</span>`:''}</div><h3>${esc(L(s.t))}</h3><div class="q">${esc(L(s.q))}</div><div class="vd"><b>${T('الخلاصة: ','Verdict: ')}</b>${esc(L(s.v))}</div><div class="det flds"><div><h4>${T('الدليل','Evidence')}</h4><p>${esc(L(s.e))}</p></div><div><h4>${T('النتيجة','Finding')}</h4><p>${esc(L(s.f))}</p></div><div><h4>${T('الأثر على KMEFIC','Impact on KMEFIC')}</h4><p>${esc(L(s.i))}</p></div>${s.a?`<div><h4>${T('المطلوب من القسم','What the department should do')}</h4><p>${esc(L(s.a))}</p></div>`:''}</div></div>`).join('')}
 function allLinks(){const m=new Map();const add=a=>(a||[]).forEach(x=>{if(x&&x[1]&&/^https?:/.test(x[1])&&!m.has(x[1]))m.set(x[1],x[0])});
@@ -1085,13 +1223,6 @@ function setView(v,quiet){if(!VIEWS.find(x=>x[0]===v))v='ov';VIEW=v;document.que
 document.addEventListener('click',e=>{const b=e.target.closest('[data-view]');if(b){e.preventDefault();setView(b.dataset.view)}});
 /* ---------- drawer ---------- */
 let lastFocus=null;
-function openDet(id){const el=document.querySelector(`[data-det-id="${CSS.escape(id)}"]`);if(!el)return;const v=el.closest('.view');if(v&&v.dataset.v!==VIEW)setView(v.dataset.v,true);
- const det=el.querySelector('.det');$('drwK').textContent=el.dataset.kind||'';$('drwT').textContent=el.dataset.title||'';
- const summ=el.cloneNode(true);summ.querySelectorAll('.det,.foot,.keys,h3,.ttl').forEach(x=>x.remove());
- $('drwB').innerHTML=(el.classList.contains('ic')||el.classList.contains('ipo')?'':`<div class="soft" style="font-size:13.5px">${summ.querySelector('.one,.q,.so,.soft')?esc(summ.querySelector('.one,.q,.so,.soft').textContent):''}</div>`)+(det?`<div class="det">${det.innerHTML}</div>`:'');
- $('drwB').querySelectorAll('.rec').forEach(r=>{r.classList.toggle('dim',dep!=='all'&&r.dataset.dep!==dep);r.classList.toggle('hit',dep!=='all'&&r.dataset.dep===dep)});
- lastFocus=document.activeElement;$('drawer').classList.add('on');$('drawer').setAttribute('aria-hidden','false');$('scrim').classList.add('on');$('drwB').scrollTop=0;
- setTimeout(()=>{revealIn($('drwB'));$('drwB').querySelectorAll('.ch').forEach(c=>c.classList.add('in'));$('drwX').focus({preventScroll:true})},60)}
 function closeDet(){$('drawer').classList.remove('on');$('drawer').setAttribute('aria-hidden','true');$('scrim').classList.remove('on');if(lastFocus&&lastFocus.focus)try{lastFocus.focus({preventScroll:true})}catch(e){}}
 $('drwX').addEventListener('click',closeDet);$('scrim').addEventListener('click',closeDet);
 addEventListener('keydown',e=>{if(e.key==='Escape'&&$('drawer').classList.contains('on'))closeDet();if(e.key==='Enter'&&document.activeElement&&document.activeElement.dataset&&document.activeElement.dataset.detId){openDet(document.activeElement.dataset.detId)}});
@@ -1255,7 +1386,7 @@ function renderDesk(){const el=$('desk');if(!el)return;if(dep==='all'){el.hidden
  const box=(t,b,n)=>`<div class="g pad"><div class="ct"><span>${t}</span>${n!=null?`<span class="chip">${n}</span>`:''}</div>${b}</div>`;
  el.innerHTML=`<div class="g pad deskh"><div><div class="kick">${T('مساحة القسم','DEPARTMENT DESK')}</div><h2 style="font-size:24px;margin-top:6px">${esc(DEPN(dep))}</h2><p class="soft" style="margin:4px 0 0;font-size:13.5px">${esc(L(DESKD[dep]||['','']))}</p></div><button type="button" class="btn" data-depall="1">${T('عرض كل الأقسام ✕','Show all departments ✕')}</button></div>
  <div class="grid c3" style="margin-top:14px">
-  ${box(T('للدراسة في قسمك اليوم','Worth studying in your department today'),recs.length?`<div class="recs">${recs.map(r=>`<div class="rec it" data-open="${esc(r.id)}" style="grid-template-columns:1fr;cursor:pointer"><span>${esc(r.t)}</span><small class="mut" style="font-size:11.5px">${esc(r.h)}</small></div>`).join('')}</div>`:`<p class="mut" style="font-size:13px">${INF.items.length?T('لا توجد نقاط خاصة بقسمك في استنتاجات اليوم.','Nothing specific to your department in today\'s conclusions.'):T('لا توجد استنتاجات لهذا اليوم.','No conclusions for this day.')}</p>`,recs.length)}
+  ${box(T('للدراسة في قسمك اليوم','Worth studying in your department today'),recs.length?`<div class="recs">${recs.map(r=>{const it=INF.items.find(x=>'inf-'+x.id===r.id);if(it&&it.act&&it.act[dep]){const rr=(it.rec||[]).find(x=>x[0]===dep);return `<div class="it" data-open="${esc(r.id)}" style="cursor:pointer"><small class="mut" style="font-size:11.5px">${esc(r.h)}</small>${actCard(it,rr)}</div>`}return `<div class="rec it" data-open="${esc(r.id)}" style="grid-template-columns:1fr;cursor:pointer"><span>${esc(r.t)}</span><small class="mut" style="font-size:11.5px">${esc(r.h)}</small></div>`}).join('')}</div>`:`<p class="mut" style="font-size:13px">${INF.items.length?T('لا توجد نقاط خاصة بقسمك في استنتاجات اليوم.','Nothing specific to your department in today\'s conclusions.'):T('لا توجد استنتاجات لهذا اليوم.','No conclusions for this day.')}</p>`,recs.length)}
   ${box(T('مواعيد قسمك خلال 14 يومًا','Your dates in the next 14 days'),ds.length?ds.map(x=>`<div class="row${x.id?' it':''}"${x.id?` data-open="${esc(x.id)}"`:''} style="grid-template-columns:auto minmax(0,1fr) auto;margin-bottom:6px;padding:8px 10px"><b class="num dlink" style="color:var(--gold)"${CA.some(e=>e.d===x.d)?` data-cadaygo="${x.d}" role="button" tabindex="0" title="${T('كل بنود هذا اليوم','Everything on this day')}"`:''}>${fds(x.d)}</b><span style="font-size:13px">${esc(x.t)}</span><span class="chip">${esc(x.k)}</span></div>`).join(''):`<p class="mut" style="font-size:13px">${T('لا مواعيد قريبة.','No upcoming dates.')}</p>`,ds.length)}
   ${box(T('بنود اليوم لقسمك','Today\'s items for you'),pri.length?pri.slice(0,6).map(p=>`<div class="row it" data-open="pi-${p._k}" style="grid-template-columns:auto minmax(0,1fr);margin-bottom:6px;padding:8px 10px"><span class="dot" style="background:${stDot[p.st]||stDot.info};margin-top:7px"></span><span style="font-size:13.5px">${esc(L(p.t))}</span></div>`).join('')+(pri.length>6?`<button type="button" class="more" data-view="today">${T('الكل ←','All →')} ${pri.length}</button>`:''):`<p class="mut" style="font-size:13px">${T('لا بنود خاصة بقسمك اليوم.','No items for your department today.')}</p>`,pri.length)}
  </div>
@@ -1283,18 +1414,31 @@ function countCheck(txt){const s=String(txt||'');const ds=datesIn(s);const warn=
  while((x=rx.exec(s))){const n=W[x[1]]||+x[1];const aft=s.slice(x.index+x[0].length,x.index+x[0].length+32),bef=s.slice(Math.max(0,x.index-32),x.index);if(/بين|حتى|إلى|between|through|until|to \d/i.test(aft+' '+bef.slice(-14)))continue;const na=datesIn(aft),nb=datesIn(bef);const pick=na.length===1?na[0]:(!na.length&&nb.length?nb[nb.length-1]:null);const d=pick||(/^\s*(?:عامة\s+)?(?:اليوم|today)/i.test(aft)?TODAY:null);if(!d)continue;
   const real=CA.filter(e=>e.d===d&&/جمعية|assembly/i.test(L(e.k)+' '+e.k.join(' '))).length;if(real!==n)warn.push({d,said:n,real})}
  return warn}
-function relBlock(txt,selfId){const ds=datesIn(txt).filter(d=>CA.some(e=>e.d===d));const nm=namesIn(txt).filter(e=>'ca-'+e.id!==selfId);const ip=ipoIn(txt).filter(it=>'ipo-'+it.id!==selfId);const w=countCheck(txt);
- if(!ds.length&&!nm.length&&!ip.length&&!w.length)return '';
- const byDay=ds.map(d=>{const rows=CA.filter(e=>e.d===d);return `<div style="margin-bottom:10px"><div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:4px"><b style="font-size:13.5px">${fd(d)} · ${rows.length} ${T('بندًا','items')}</b><button type="button" class="mini" data-cadaygo="${d}">${T('افتح في الإجراءات المؤسسية ←','Open in Corporate actions →')}</button></div>${rows.slice(0,12).map(e=>`<div class="row it" data-open="ca-${e.id}" style="grid-template-columns:minmax(0,1fr) auto;padding:7px 10px;margin-bottom:4px"><span style="font-size:13px">${esc(lang==='ar'?e.na:e.ne)} · <span class="soft">${esc(L(e.k))}</span></span><span class="chip ${e.m==='otc'?'b':''}">${e.m==='otc'?'OTC':T('مدرجة','Listed')}</span></div>`).join('')}${rows.length>12?`<div class="mut" style="font-size:12px">+${rows.length-12}</div>`:''}</div>`}).join('');
- const co=nm.filter(e=>!ds.includes(e.d)).map(e=>`<div class="row it" data-open="ca-${e.id}" style="grid-template-columns:auto minmax(0,1fr);padding:7px 10px;margin-bottom:4px"><b class="num" style="color:var(--gold)">${fds(e.d)}</b><span style="font-size:13px">${esc(lang==='ar'?e.na:e.ne)} · <span class="soft">${esc(L(e.k))}</span></span></div>`).join('');
- const ipr=ip.map(it=>`<div class="row it" data-open="ipo-${esc(it.id)}" style="grid-template-columns:minmax(0,1fr) auto;padding:7px 10px;margin-bottom:4px"><span style="font-size:13px">${esc(L(it.name))}</span><span class="chip g2">${T('رادار الاكتتابات','IPO radar')}</span></div>`).join('');
+function relBlock(txt,selfId,head){const s=String(txt||'');const hs=String(head||s);const ds=datesIn(s).filter(d=>CA.some(e=>e.d===d));const nm=namesIn(s).filter(e=>'ca-'+e.id!==selfId);const ip=ipoIn(s).filter(it=>'ipo-'+it.id!==selfId);const w=countCheck(s);
+ const cos=[...new Set(nm.flatMap(e=>[e.na,e.ne,(e.na||'').replace(/^(البنك|شركة)\s+/,'')]).filter(c=>c&&c.length>=4))];const coHit=x=>cos.some(c=>String(x||'').includes(c));
+ const TOP=[/الفيدرالي|\bFed\b/i,/برنت|النفط|\bBrent\b|\boil\b/i,/المركزي الأوروبي|\bECB\b/i,/أوبك|\bOPEC/i,/رأس تنورة|Ras Tanura/i];const tp=TOP.filter(r=>r.test(hs));const tpHit=x=>tp.some(r=>r.test(String(x||'')));
+ const hit=x=>coHit(x)||tpHit(x);
+ const row=(id,txt2,chip,date)=>`<div class="row it" data-open="${esc(id)}" style="grid-template-columns:${date?'auto ':''}minmax(0,1fr)${chip?' auto':''};padding:7px 10px;margin-bottom:4px">${date?`<b class="num" style="color:var(--gold)">${fds(date)}</b>`:''}<span style="font-size:13px">${txt2}</span>${chip?`<span class="chip">${chip}</span>`:''}</div>`;
+ const own=nm.slice().sort((a,b)=>a.d.localeCompare(b.d)).slice(0,10).map(e=>row('ca-'+e.id,esc(L(e.k)),e.m==='otc'?'OTC':T('مدرجة','Listed'),e.d)).join('');
+ const infs=INF.items.filter(it=>'inf-'+it.id!==selfId&&(hit(L(it.t)+' '+L(it.so))||(it.eq&&cos.includes(it.eq.ca)))).map(it=>row('inf-'+it.id,esc(L(it.t)),T('استنتاج','Conclusion'))).join('');
+ const pris=(PRI||[]).filter(p=>'pi-'+p._k!==selfId&&hit(L(p.t)+' '+L(p.o))).map(p=>row('pi-'+p._k,esc(L(p.t)),T('بند اليوم','Today'))).join('');
+ const nws=(D.news||[]).map((n,i)=>[n,i]).filter(([n,i])=>'nw-'+i!==selfId&&hit(L(n.t)+' '+L(n.o))).map(([n,i])=>row('nw-'+i,esc(L(n.t)),T('خبر','News'))).join('');
+ const ipr=ip.map(it=>row('ipo-'+it.id,esc(L(it.name)),T('رادار الاكتتابات','IPO radar'))).join('');
+ const days=ds.map(d=>{const rows=CA.filter(e=>e.d===d);const a=rows.filter(e=>/جمعية/.test(L(e.k)+e.k)).length;return `<div class="row" style="grid-template-columns:auto minmax(0,1fr) auto;padding:7px 10px;margin-bottom:4px"><b class="num" style="color:var(--gold)">${fds(d)}</b><span style="font-size:13px">${T(rows.length===1?'بند واحد في جدول هذا اليوم':rows.length===2?'بندان في جدول هذا اليوم':rows.length<=10?rows.length+' بنود في جدول هذا اليوم':rows.length+' بندًا في جدول هذا اليوم',rows.length+' items on this day')}${a?` · ${T(a===1?'جمعية واحدة':a===2?'جمعيتان':a<=10?a+' جمعيات':a+' جمعية',a+' assemblies')}`:''}</span><button type="button" class="mini" data-cadaygo="${d}">${T('افتح اليوم ←','Open day →')}</button></div>`}).join('');
  const wr=w.map(x=>`<div class="warn">⚠ ${T(`النص يذكر ${x.said} جمعيات يوم ${fd(x.d)}، والجدول فيه ${x.real}.`,`The text says ${x.said} assemblies on ${fd(x.d)}; the table has ${x.real}.`)}</div>`).join('');
- return `<div class="relb"><span class="lbl" style="margin-bottom:6px">${T('مرتبط بهذا البند','Related to this item')}</span>${wr}${byDay}${co}${ipr}</div>`}
-function openDet(id){const el=document.querySelector(`[data-det-id="${CSS.escape(id)}"]`);if(!el)return;const v=el.closest('.view');if(v&&v.dataset.v!==VIEW)setView(v.dataset.v,true);
+ const grp=(h,b)=>b?`<div class="rgrp"><h6>${h}</h6>${b}</div>`:'';
+ const body=wr+grp(T('مواعيد نفس الشركة','Same company dates'),own)+grp(T('بنود وأخبار واستنتاجات مرتبطة','Linked items, news and conclusions'),pris+infs+nws)+grp(T('في رادار الاكتتابات','In the IPO radar'),ipr)+(days?`<details class="rgrp rdays"><summary>${T('الأيام المذكورة في البند','Days mentioned')} (${ds.length})</summary>${days}</details>`:'');
+ if(!body)return '';
+ return `<details class="relb dsec" open><summary>${T('مرتبط بهذا البند','Related to this item')}</summary>${body}</details>`}
+function openDet(id){const el=document.querySelector(`[data-det-id="${CSS.escape(id)}"]`);if(!el)return;const v=el.closest('.view');const away=v&&v.dataset.v!==VIEW?v.dataset.v:null;
  const det=el.querySelector('.det');$('drwK').textContent=el.dataset.kind||'';$('drwT').textContent=el.dataset.title||'';
  const summ=el.cloneNode(true);summ.querySelectorAll('.det,.foot,.keys,h3,.ttl').forEach(x=>x.remove());
- const isCA=id.startsWith('ca-');const rel=isCA?'':relBlock((el.dataset.title||'')+' '+el.textContent,id);
- $('drwB').innerHTML=(el.classList.contains('ic')||el.classList.contains('ipo')?'':`<div class="soft" style="font-size:13.5px">${summ.querySelector('.one,.q,.so,.soft')?esc(summ.querySelector('.one,.q,.so,.soft').textContent):''}</div>`)+(det?`<div class="det">${det.innerHTML}</div>`:'')+rel+(isCA?`<button type="button" class="mini" data-cadaygo="${esc((CA.find(e=>'ca-'+e.id===id)||{}).d||'')}" style="align-self:flex-start">${T('كل بنود هذا اليوم ←','Everything on this day →')}</button>`:'');
+ const isCA=id.startsWith('ca-');const _sm=summ.querySelector('.one,.q,.so,.soft');const rel=isCA?'':relBlock((el.dataset.title||'')+' '+el.textContent,id,(el.dataset.title||'')+' '+(_sm?_sm.textContent:''));
+ let sumTxt=(el.classList.contains('ic')||el.classList.contains('ipo'))?'':(summ.querySelector('.one,.q,.so,.soft')?summ.querySelector('.one,.q,.so,.soft').textContent.trim():'');
+ const attrib=s=>s&&s.length<=90&&!/\d/.test(s)&&/(^وفق|^حسب|^نقلًا|^Per |^According|رويترز|Reuters|بلومبرغ|Bloomberg|وكالة|\/| عبر | via )/.test(s);
+ if(!sumTxt||attrib(sumTxt)){const p0=det&&det.querySelector('p');const s0=p0?p0.textContent.trim():'';if(s0){const m=s0.match(/^.+?[.؛!؟](\s|$)/);sumTxt=(m?m[0]:s0).trim()}}
+ let detH=det?det.innerHTML:'';let srcH='';if(detH){const tmp=document.createElement('div');tmp.innerHTML=detH;const ss=[...tmp.querySelectorAll(':scope > .srcs')];if(ss.length){const n=ss.reduce((a,x)=>a+x.querySelectorAll('a').length,0);srcH=`<details class="dsec dsrc"><summary>${T('المصادر','Sources')} (${n})</summary>${ss.map(x=>x.outerHTML).join('')}</details>`;ss.forEach(x=>x.remove())}detH=tmp.innerHTML}
+ $('drwB').innerHTML=(sumTxt?`<div class="dsum"><small>${T('الخلاصة','In short')}</small><p>${esc(sumTxt)}</p></div>`:'')+(detH?`<section class="dsec"><h5>${T('التفاصيل','Details')}</h5><div class="det">${detH}</div></section>`:'')+srcH+rel+(away?`<button type="button" class="mini gosrc" data-gosrc="${esc(id)}" style="align-self:flex-start;margin-top:12px">${T('افتح في صفحة ','Open in ')}${esc(L((VIEWS.find(x=>x[0]===away)||['',['','']])[1]))} ←</button>`:'')+(isCA?`<button type="button" class="mini" data-cadaygo="${esc((CA.find(e=>'ca-'+e.id===id)||{}).d||'')}" style="align-self:flex-start">${T('كل بنود هذا اليوم ←','Everything on this day →')}</button>`:'');
  $('drwB').querySelectorAll('.rec').forEach(r=>{r.classList.toggle('dim',dep!=='all'&&r.dataset.dep!==dep);r.classList.toggle('hit',dep!=='all'&&r.dataset.dep===dep)});
  lastFocus=document.activeElement;$('drawer').classList.add('on');$('drawer').setAttribute('aria-hidden','false');$('scrim').classList.add('on');$('drwB').scrollTop=0;
  setTimeout(()=>{revealIn($('drwB'));$('drwB').querySelectorAll('.ch').forEach(c=>c.classList.add('in'));$('drwX').focus({preventScroll:true})},60)}
@@ -1761,7 +1905,7 @@ document.addEventListener('change',e=>{if(e.target.id==='opsEv'){opsEv=e.target.
 let _opsT;document.addEventListener('input',e=>{if(e.target.id==='opsQ'){opsQ=e.target.value;clearTimeout(_opsT);_opsT=setTimeout(()=>{const pos=e.target.selectionStart;renderOps($('opsBox'));const q=$('opsQ');if(q){q.focus();try{q.setSelectionRange(pos,pos)}catch(_){}}},180)}});
 
 /* ================= live data layer (GitHub Pages, encrypted data) ================= */
-const BUILD="d1a4c7e2b0";
+const BUILD="e3b7a15c90";
 const GH="https://kmeficmarketing.github.io/Daily-Hub/",RAW="https://raw.githubusercontent.com/KmeficMarketing/Daily-Hub/main/";
 const ROOTS=/^https?:$/.test(location.protocol)?["./",GH,RAW]:[GH,RAW];
 let IXIPO=[],ICACHE={},IPODATE='',IXSD={},PREV=null,PC={},UPD={},LOADSIG="",SDATES=[],SCACHE={},DATES=[],LATEST=null,VIEWD=null,NOTE=null,BUSY=false,LAST_AT='',STDATE='',CALM=null;
@@ -1909,6 +2053,32 @@ document.documentElement.classList.add('app');gateText();
  try{const kj=await getKeyJ();if(kj&&!ls.get('hubKey'))ls.del('hubLatest');await loadIndex();await goDay(LATEST)}
  catch(e){NOTE='offline';renderAll();setView(VIEW,true);hideGate()}})();
 
+</script>
+<script id="v3js">
+(function(){
+ const NAV=['ov','today','ca','ipo','mk','news','inf','calc'];
+ const top=document.getElementById('top');if(!top)return;
+ const w=document.createElement('div');w.className='pnavw';w.innerHTML='<nav class="pnav g" id="pnav" aria-label="views"><span class="pill" id="pnPill"></span></nav>';top.after(w);
+ const nav=w.querySelector('#pnav'),pill=w.querySelector('#pnPill');let cur=null;
+ function render(){nav.querySelectorAll('button').forEach(b=>b.remove());NAV.forEach(k=>{const v=VIEWS.find(x=>x[0]===k);if(!v)return;const b=document.createElement('button');b.type='button';b.dataset.view=k;b.textContent=L(v[1]);if(VIEW===k)b.classList.add('on');nav.appendChild(b)});
+  const rest=VIEWS.filter(v=>!NAV.includes(v[0]));const inRest=rest.some(v=>v[0]===VIEW);
+  const m=document.createElement('button');m.type='button';m.id='pnMore';m.className=inRest?'on':'';m.textContent=(inRest?L(rest.find(v=>v[0]===VIEW)[1]):T('المزيد','More'))+' ▾';nav.appendChild(m);
+  mm.innerHTML=rest.map(v=>`<button type="button" data-view="${v[0]}" class="${VIEW===v[0]?'on':''}">${L(v[1])}</button>`).join('')}
+ const mm=document.createElement('div');mm.className='pnmenu g';mm.hidden=true;w.appendChild(mm);
+ document.addEventListener('click',e=>{if(e.target.closest('#pnMore')){e.stopPropagation();const r=e.target.getBoundingClientRect(),wr=w.getBoundingClientRect();mm.style.top=(r.bottom-wr.top+8)+'px';mm.style.left=(r.left-wr.left)+'px';mm.hidden=!mm.hidden;return}if(!e.target.closest('.pnmenu'))mm.hidden=true;else if(e.target.closest('[data-view]'))mm.hidden=true},true);
+ function edges(b){const nr=nav.getBoundingClientRect(),r=b.getBoundingClientRect();return{l:r.left-nr.left+nav.scrollLeft,r:nr.right-r.right-nav.scrollLeft}}
+ function place(anim){const b=nav.querySelector('button.on');if(!b){pill.style.opacity=0;return}pill.style.opacity=1;const e=edges(b);
+  if(!anim||!cur){pill.style.transition='none';pill.style.left=e.l+'px';pill.style.right=e.r+'px';cur=e;return}
+  const goingLeft=e.l<cur.l,fast='.36s cubic-bezier(.65,0,.35,1)',slow='.55s cubic-bezier(.33,1,.68,1)';
+  pill.style.transition=goingLeft?`left ${fast}, right ${slow}, opacity .2s`:`right ${fast}, left ${slow}, opacity .2s`;
+  requestAnimationFrame(()=>{pill.style.left=e.l+'px';pill.style.right=e.r+'px'});cur=e}
+ const orig=window.setView;let busy=false;
+ window.setView=function(v,quiet){const now=document.querySelector('.view.on');const same=now&&now.dataset.v===v;
+  if(quiet||same||busy||!now){orig(v,quiet);render();place(false);return}
+  busy=true;now.classList.add('v3out');
+  setTimeout(()=>{now.classList.remove('v3out');orig(v,quiet);render();place(true);busy=false},220)};
+ render();setTimeout(()=>place(false),60);addEventListener('resize',()=>place(false));
+})();
 </script>
 </body>
 </html>
