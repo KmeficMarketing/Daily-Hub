@@ -968,7 +968,8 @@ function priItems(){const dp=D.dept||{};const out=(D.pri||[]).map((p,i)=>{const 
 let PRI=[];
 function kwNowMin(){const p=new Intl.DateTimeFormat('en-US',{timeZone:'Asia/Kuwait',hour:'2-digit',minute:'2-digit',hourCycle:'h23',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());const o={};p.forEach(x=>o[x.type]=x.value);return{ymd:`${o.year}-${o.month}-${o.day}`,m:+o.hour*60+ +o.minute}}
 let CA=[];
-function buildCA(){const kk=k=>(k||['',''])[0]+' '+(k||['',''])[1];CA=[...(D.ev2||[]).map((e,i)=>({id:'e2'+i,d:e.d,na:e.a,ne:e.e,k:e.k||['',''],x:e.x,m:e.m==='otc'?'otc':'listed',egm:/غير عادية|Extraordinary/.test(kk(e.k)),rights:/رأس المال|حقوق|Rights|capital/i.test(kk(e.k)),div:/توزيع|Dividend/i.test(kk(e.k)),auc:!!e.auc,tk:e.tk,v:e.v||'ok',circ:e.circ,src:e.src||(e.m==='otc'?D.otcSrc:''),at:e.at})),
+const KA=k=>Array.isArray(k)?[String(k[0]||''),String(k[1]??k[0]??'')]:(k&&typeof k==='object')?[String(k.ar||k.a||''),String(k.en||k.e||'')]:typeof k==='string'?[k,k]:['',''];
+function buildCA(){const kk=k=>KA(k).join(' ');CA=[...(D.ev2||[]).map((e,i)=>({id:'e2'+i,d:e.d,na:e.a,ne:e.e,k:KA(e.k),x:e.x,m:e.m==='otc'?'otc':'listed',egm:/غير عادية|Extraordinary/.test(kk(e.k)),rights:/رأس المال|حقوق|Rights|capital/i.test(kk(e.k)),div:/توزيع|Dividend/i.test(kk(e.k)),auc:!!e.auc,tk:e.tk,v:e.v||'ok',circ:e.circ,src:e.src||(e.m==='otc'?D.otcSrc:''),at:e.at})),
  ...(D.ev||[]).map((r,i)=>({id:'ev'+i,d:r[0],na:r[1],ne:r[2],k:r[3]==='o'?['جمعية عامة عادية','Ordinary assembly']:r[3]==='oe'?['جمعية عادية وغير عادية','Ordinary & extraordinary assembly']:['جمعية عامة غير عادية','Extraordinary assembly'],x:r[4],m:'otc',egm:r[3]!=='o',v:'pend',src:D.otcSrc||'https://www.almowazi.com/',src2:'https://www.maqasa.com/ar/agm-schedule/',at:r[5]}))].sort((a,b)=>a.d.localeCompare(b.d))}
 let caF='all',caDay=null;
 const VB={ok:['مؤكد','Confirmed','u'],unv:['غير مؤكد','Unconfirmed','a'],pend:['قيد التحقق','Pending check','a'],old:['من نسخة سابقة','From earlier version','']};
@@ -1412,7 +1413,7 @@ function ipoIn(txt){const s=String(txt||'');const I=(typeof IPO==='function')?IP
 function countCheck(txt){const s=String(txt||'');const ds=datesIn(s);const warn=[];
  const rx=/(\d+|سبع|ست|خمس|أربع|ثلاث)\s*(جمعيات|جمعية|assemblies|AGMs)/g;const W={'ثلاث':3,'أربع':4,'خمس':5,'ست':6,'سبع':7};let x;
  while((x=rx.exec(s))){const n=W[x[1]]||+x[1];const aft=s.slice(x.index+x[0].length,x.index+x[0].length+32),bef=s.slice(Math.max(0,x.index-32),x.index);if(/بين|حتى|إلى|between|through|until|to \d/i.test(aft+' '+bef.slice(-14)))continue;const na=datesIn(aft),nb=datesIn(bef);const pick=na.length===1?na[0]:(!na.length&&nb.length?nb[nb.length-1]:null);const d=pick||(/^\s*(?:عامة\s+)?(?:اليوم|today)/i.test(aft)?TODAY:null);if(!d)continue;
-  const real=CA.filter(e=>e.d===d&&/جمعية|assembly/i.test(L(e.k)+' '+e.k.join(' '))).length;if(real!==n)warn.push({d,said:n,real})}
+  const real=CA.filter(e=>e.d===d&&/جمعية|assembly/i.test(KA(e.k).join(' '))).length;if(real!==n)warn.push({d,said:n,real})}
  return warn}
 function relBlock(txt,selfId,head){const s=String(txt||'');const hs=String(head||s);const ds=datesIn(s).filter(d=>CA.some(e=>e.d===d));const nm=namesIn(s).filter(e=>'ca-'+e.id!==selfId);const ip=ipoIn(s).filter(it=>'ipo-'+it.id!==selfId);const w=countCheck(s);
  const cos=[...new Set(nm.flatMap(e=>[e.na,e.ne,(e.na||'').replace(/^(البنك|شركة)\s+/,'')]).filter(c=>c&&c.length>=4))];const coHit=x=>cos.some(c=>String(x||'').includes(c));
@@ -1915,7 +1916,7 @@ document.addEventListener('change',e=>{if(e.target.id==='opsEv'){opsEv=e.target.
 let _opsT;document.addEventListener('input',e=>{if(e.target.id==='opsQ'){opsQ=e.target.value;clearTimeout(_opsT);_opsT=setTimeout(()=>{const pos=e.target.selectionStart;renderOps($('opsBox'));const q=$('opsQ');if(q){q.focus();try{q.setSelectionRange(pos,pos)}catch(_){}}},180)}});
 
 /* ================= live data layer (GitHub Pages, encrypted data) ================= */
-const BUILD="70fd83c5ef";
+const BUILD="c527b53b37";
 const GH="https://kmeficmarketing.github.io/Daily-Hub/",RAW="https://raw.githubusercontent.com/KmeficMarketing/Daily-Hub/main/";
 const ROOTS=/^https?:$/.test(location.protocol)?["./",GH,RAW]:[GH,RAW];
 let IXIPO=[],ICACHE={},IPODATE='',IXSD={},PREV=null,PC={},UPD={},LOADSIG="",SDATES=[],SCACHE={},DATES=[],LATEST=null,VIEWD=null,NOTE=null,BUSY=false,LAST_AT='',STDATE='',CALM=null;
@@ -2021,7 +2022,7 @@ $('calLatest').addEventListener('click',()=>{if(LATEST)goDay(LATEST)});
 $('calNote').addEventListener('click',e=>{if(e.target.id==='calBack'&&LATEST)goDay(LATEST)});
 /* --- what changed since the previous day --- */
 function caKeys(x){const m=new Map();(x.ev||[]).forEach(r=>m.set(`${r[0]}|${r[2]}|${r[3]}`,{d:r[0],co:r[2],ca:r[1],k:r[3]==='o'?['جمعية عادية','Ordinary assembly']:r[3]==='oe'?['جمعية عادية وغير عادية','Ordinary & extraordinary assembly']:['جمعية غير عادية','Extraordinary assembly'],m:'otc'}));
- (x.ev2||[]).forEach(e=>m.set(`${e.d}|${e.e}|${(e.k||[])[1]}`,{d:e.d,co:e.e,ca:e.a,k:e.k||['',''],m:'listed'}));return m}
+ (x.ev2||[]).forEach(e=>m.set(`${e.d}|${e.e}|${KA(e.k)[1]}`,{d:e.d,co:e.e,ca:e.a,k:KA(e.k),m:'listed'}));return m}
 function renderChanges(){const el=$('chgBox');const nw=CA.filter(e=>e.at);
  const today=nw.length?`<div style="margin-top:6px">${nw.map(e=>`<span style="font-size:13px;margin-inline-end:12px;display:inline-block">${newChip(e.at)} ${esc(lang==='ar'?e.na:e.ne)} · ${esc(L(e.k))} · ${fds(e.d)}</span>`).join('')}</div>`:'';
  if(!PREV){el.innerHTML=today?`<div class="chg"><b style="font-size:13.5px">${T('أضيف اليوم','Added today')}</b>${today}</div>`:'';return}
