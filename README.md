@@ -42,7 +42,9 @@ Morning market hub for KMEFIC Operations, Electronic Trading, Asset Management a
 - The page builds, for each opportunity, numbered options with steps (the decision stays with staff and management), ready answers for client questions, and a one-page management brief to copy or print.
 - The morning run writes the radar daily; intraday updates may replace or add items by `id`.
 
-## Daily refresh (Sunday–Friday, 07:37 Kuwait)
+## Morning run (file shape)
+
+Schedule, sources and steps live only in the private `hub-assets/RUNBOOK.md`, run on Rami's computer. Where this section differs, the runbook wins. It stays here for the file shapes.
 
 1. Build today's file from `schema.json`, which shows the structure without any content. Keep every key and the `[Arabic, English]` pair format. Earlier day files may be encrypted, so they are not used as templates.
 2. Set `today` and `stamp`.
@@ -57,7 +59,9 @@ Morning market hub for KMEFIC Operations, Electronic Trading, Asset Management a
 6. Save the plaintext outside the repo (for example `/tmp/YYYY-MM-DD.plain.json`). If `key.json` exists in the repo root, encrypt it into place with `node tools/encrypt.mjs /tmp/YYYY-MM-DD.plain.json data/YYYY-MM-DD.json` (same for studies). If there is no `key.json` yet, copy the plaintext into `data/`. Never commit plaintext once `key.json` exists.
 7. Add the date to `data/index.json` → `dates`, set `latest`, then commit and push to `main`.
 
-## Intraday additions (hourly 09:05–17:05 Kuwait, Sunday–Friday)
+## Afternoon updates (file shape)
+
+Schedule, sources and steps live only in the private `hub-assets/RUNBOOK.md`, run on Rami's computer. Where this section differs, the runbook wins. It stays here for the file shapes.
 
 - Each run adds only what is new since the last publication: news, corporate actions, priority items, and closes (Kuwait/GCC close after 13:00, US moves later). It writes `data/updates/<date>/<HHMM>.json`, encrypted when `key.json` exists, and adds `HHMM` to `index.json` → `upd[<date>]`. If nothing is new, it writes nothing.
 - The page merges these into the day and tags them "New · HH:MM". An update may also carry `inf` items (same shape as the morning `inf.items`; an item with an existing `id` replaces it), for example when a rights issue's dates are confirmed or the Kuwait close changes the market read. Market entries in an update replace the entry with the same `id`.
@@ -108,7 +112,7 @@ Sources in order: Kamco Invest "MENA Markets Daily Report" (all GCC + Egypt, top
 
 ## Official exchange sources (since 28 Oct 2026)
 
-Both routines read this list. Use these first for disclosures, corporate actions and closes; newspapers and data vendors come after. Disclosure attachments (PDF) may be scanned images: download them (the cloud environment allows these domains) and read the pages as images.
+Both routines read this list. Use these first for disclosures, corporate actions and closes; newspapers and data vendors come after. Disclosure attachments (PDF) may be scanned images: download them and read the pages as images.
 
 | Market | Use | URL |
 |---|---|---|
