@@ -42,36 +42,19 @@ Morning market hub for KMEFIC Operations, Electronic Trading, Asset Management a
 - The page builds, for each opportunity, numbered options with steps (the decision stays with staff and management), ready answers for client questions, and a one-page management brief to copy or print.
 - The morning run writes the radar daily; intraday updates may replace or add items by `id`.
 
-## Morning run (file shape)
+## Day and update files
 
-Schedule, sources and steps live only in the private `hub-assets/RUNBOOK.md`, run on Rami's computer. Where this section differs, the runbook wins. It stays here for the file shapes.
+How and when the files are made is in the private `hub-assets/RUNBOOK.md`; this section only describes the files.
 
-1. Build today's file from `schema.json`, which shows the structure without any content. Keep every key and the `[Arabic, English]` pair format. Earlier day files may be encrypted, so they are not used as templates.
-2. Set `today` and `stamp`.
-3. Research everything fresh from the web (do not use Awsat, which blocks cloud access):
-   - `signal`, `tape`, `pri`, `agenda`, `agendaSrc`, `mgmt`, `stk`, `otcSrc`, `caNotes`, `dept`, `sources`, and `inf` (conclusions, see above)
-   - `mk`: the Kuwait entry (`id` `kw`) must include the top 5 gainers and losers as `g` and `l` with price (fils) and % change. Kamco Invest's "MENA Markets Daily Report" is the first source to try; if it isn't available, use Boursa Kuwait, Argaam or Kuwaiti newspapers. Never leave the tables empty without saying why in the note and the gaps line.
-   - corporate actions: `ev` is Al‑Mowazi/OTC, `ev2` is main market. Cover upcoming and recent events.
-   - `news`: Regional & Political News tab, 6–10 items ranked by impact. Each item gives the facts, the likely effect on the Kuwaiti market, the US market and KMEFIC's brokerage and asset-management activity, plus its sources. Wording is neutral, with no political opinion and no investment advice. Mark single-source reports with `"unv": true`.
-     Axios is a primary source for US politics and regional diplomacy. Its "Exclusive" or anonymous-source stories are marked `"unv": true` unless Reuters, AP or an official statement confirms them. Never take market figures from Axios, and add a second source where possible.
-4. Studies are not stored in day files. On Sundays, write a fresh studies array to `data/studies/YYYY-MM-DD.json` (shape in `schema.json` under `_studies_example`) and add the date to `index.json` → `studies`. The page shows the latest studies file on or before the viewed day.
-5. The Arabic is formal. Cite a source for every figure. If a figure can't be confirmed, say so in the `sources` gaps line rather than guessing.
-6. Save the plaintext outside the repo (for example `/tmp/YYYY-MM-DD.plain.json`). If `key.json` exists in the repo root, encrypt it into place with `node tools/encrypt.mjs /tmp/YYYY-MM-DD.plain.json data/YYYY-MM-DD.json` (same for studies). If there is no `key.json` yet, copy the plaintext into `data/`. Never commit plaintext once `key.json` exists.
-7. Add the date to `data/index.json` → `dates`, set `latest`, then commit and push to `main`.
-
-## Afternoon updates (file shape)
-
-Schedule, sources and steps live only in the private `hub-assets/RUNBOOK.md`, run on Rami's computer. Where this section differs, the runbook wins. It stays here for the file shapes.
-
-- Each run adds only what is new since the last publication: news, corporate actions, priority items, and closes (Kuwait/GCC close after 13:00, US moves later). It writes `data/updates/<date>/<HHMM>.json`, encrypted when `key.json` exists, and adds `HHMM` to `index.json` → `upd[<date>]`. If nothing is new, it writes nothing.
-- The page merges these into the day and tags them "New · HH:MM". An update may also carry `inf` items (same shape as the morning `inf.items`; an item with an existing `id` replaces it), for example when a rights issue's dates are confirmed or the Kuwait close changes the market read. Market entries in an update replace the entry with the same `id`.
-- Duplicate check: `data/updates/<date>/seen.json` holds sha256 hashes of normalized titles/URLs already published that day. The morning run writes it too. Hashes reveal no content.
+- `data/<date>.json`: the day file, with every top-level key of `schema.json` in `[Arabic, English]` pairs, plus `today` and `stamp`. Encrypted, and listed in `index.json` → `dates` with `latest`.
+- `data/updates/<date>/<HHMM>.json`: an afternoon update holding only the keys it adds (`_update_example`), listed in `upd[<date>]`. The page merges it into the day and tags it "New · HH:MM". An item with an existing `id` (market entries, `inf` items, `ipo` items) replaces it.
+- `data/updates/<date>/seen.json`: sha256 hashes of what was already published that day, to avoid repeats. Hashes reveal no content.
+- `data/studies/<date>.json`: studies (`_studies_example`), listed in `studies` and `studiesDep`. The page shows the latest file on or before the viewed day.
+- Other dated files: `data/ipo/`, `data/calcupd/`, `data/opsupd/` (sections below).
 
 ## Markets: top movers for every market
 
 Last-close rule: each market shows its most recent completed session (indices, turnover and top 5 gainers/losers from that same session), with the session date in `d`. Kuwait, Saudi, Qatar, Oman, Bahrain and Egypt trade Sunday–Thursday; UAE, US, UK and Turkey trade Monday–Friday. So Friday's and Sunday's files show Thursday's Kuwait movers, and Monday's file shows Friday's UAE/US/UK/Turkey movers. Saturday has no file, so the page shows Friday's file. A market that did not trade since the previous file is never left empty for that reason.
-
-Sources in order: Kamco Invest "MENA Markets Daily Report" (all GCC + Egypt, top 5 each; MENAFN mirrors the PDF), then Investing.com "... at close of trade" reports (top 3 each; US Dow/S&P/Nasdaq, Saudi, UAE, Egypt, UK, Turkey), then official bulletins (Saudi Exchange daily report, DFM bulletin) and Business Recorder/Reuters and Arabic market wraps (e.g. Al-Shorouk). Never invent movers; say why when missing.
 
 ## Market making, studies by department, holidays
 
@@ -110,28 +93,13 @@ Sources in order: Kamco Invest "MENA Markets Daily Report" (all GCC + Egypt, top
 - Row fields: `id`, `o` (1 = from the Ops log, 0 = hub addition), `sent`, `mk` (kw | otc | ksa | na), `code` (Boursa code; Clearing code for OTC/unlisted), `name` (English), `nameAr` (Arabic, as Kuwait Clearing / Boursa / the company write it; never a made-up translation — leave empty if no source), `tk`, `ev` (cash | bonus | cashbonus | inc | dec | sub | spin | merge | other), `evT` (optional label), `cum` (last day to buy), `dist` (payment / completion date), `per` (details: price, subscription or rights-trading period), `pct` (fraction, 0.05 = 5%) or `pctT` (text), `u` (fields not yet confirmed: any of ev, cum, dist, pct, per), `uN` (why), `link`, `link2` (sources). Dates are YYYY-MM-DD.
 - Routine updates: each run that finds a new or changed corporate action (dividend, bonus, rights issue, capital decrease, merger, offer; Kuwait listed or OTC) writes `data/opsupd/<YYYY-MM-DD>.json` (or `<YYYY-MM-DD>_<HHMM>.json` intraday), encrypted, shaped `{"asof":"YYYY-MM-DD","rows":[...],"del":[]}`, and adds the name to `index.json` → `opsUpd`. A row replaces the row with the same `id`, or the row with the same code + ev + dist (or cum when there is no dist); otherwise it is added. Use `id` = `h-<code>-<ev>-<dist or cum>`, `o:0`. Only send the fields you know; an empty `u` clears the unconfirmed marks, so leave `u` out unless you are changing it. Every row needs a source in `link`; `cum` derived from a record date (record minus 3 Sun–Thu trading days, skipping official holidays) is allowed and counts as confirmed. Kuwait Clearing's dividend table (https://www.maqasa.com/ar/dividend-distribution/) is the official source for amounts and payment dates; Boursa disclosures (ifsahdocs) for timetables.
 
-## Official exchange sources (since 28 Oct 2026)
-
-Both routines read this list. Use these first for disclosures, corporate actions and closes; newspapers and data vendors come after. Disclosure attachments (PDF) may be scanned images: download them and read the pages as images.
-
-| Market | Use | URL |
-|---|---|---|
-| Boursa Kuwait | Company disclosures and announcements (rights-issue timetables, record/ex dates, assemblies, results) | https://www.boursakuwait.com.kw/ar/announcements/news-and-announcements/announcements |
-| Al-Mowazi (OTC) | First source for unlisted/OTC company news and assemblies | https://www.almowazi.com/CompaniesNews.aspx?tab=1&language=ar |
-| Saudi Exchange | Closes, market reports, company announcements | https://www.saudiexchange.sa/ |
-| Qatar Stock Exchange | Company news and disclosures | https://www.qe.com.qa/ar/moreInformationSearch?InformationType=News&InformationCategory=Company&FromLocalSite=N&CompanyCode=&MoreNewsTitle=1 |
-| Abu Dhabi (ADX) | Closes and announcements | https://www.adx.ae/ar-AE |
-| Dubai (DFM) | Closes, bulletins and announcements | https://www.dfm.ae/ar |
-| Muscat (MSX) | Company news by month: set `month` and `year` to the current month | https://www.msx.om/newsbytype.aspx?type=1&month=<M>&year=<YYYY> |
-| Bahrain Bourse | Company announcements | https://bahrainbourse.com/ar/News%20and%20Events/CompanyAnnouncements |
-
 ## Theme preview (since 1 Nov 2026)
 
 `preview-v3.html` is a full copy of the hub with the proposed new design (dark glass and ivory-on-beige light themes, one top menu with a More dropdown, side card in fixed sections, management board, structured department action cards). It reads the same data and key as `index.html` and changes nothing there. The live page stays `index.html` until the preview is approved.
 
 ## IPO radar staleness check (since 1 Nov 2026)
 
-`node tools/qa_check.mjs /tmp/<today>.ipo.plain.json --ipo <today>` fails when a radar date has passed but is still marked "exp", or when a key date passed after an item's latest news line, so a priced, covered, listed or delayed deal can never sit unchanged on the radar. Update files with an "ipo" block are checked automatically by `--update`.
+`node tools/qa_check.mjs <radar plaintext> --ipo <today>` fails when a radar date has passed but is still marked "exp", or when a key date passed after an item's latest news line, so a priced, covered, listed or delayed deal can never sit unchanged on the radar. Update files with an "ipo" block are checked automatically by `--update`.
 
 ## Calculator daily update (since 1 Nov 2026)
 `data/calc.json` stays as the fixed base. Each morning a small overlay file `data/calcupd/<date>.json` (encrypted like all data files) refreshes the numbers:
