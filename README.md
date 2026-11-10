@@ -2,7 +2,7 @@
 
 Morning market hub for KMEFIC Operations, Electronic Trading, Asset Management and Wealth Management. General market information only, gathered from public sources. Not investment advice.
 
-- `index.html`: the hub page. It loads its data from `data/` at open time. A copy of this file can be shared once, and it keeps fetching the latest day.
+- `index.html`: the new hub, with the whole page encrypted with the team key. The password opens it in the browser. Only `trial/hub3/publish_live.mjs` writes it. The previous page is kept under the git tag `old-hub-final`.
 - `data/index.json`: `{"dates":[...sorted YYYY-MM-DD], "latest":"YYYY-MM-DD"}`. This is the archive list behind the calendar. Never delete entries.
 - `data/YYYY-MM-DD.json`: one file per working day. The schema is the same as the previous day's file. Never edit or delete past days.
 
